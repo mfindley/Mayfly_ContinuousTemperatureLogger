@@ -11,7 +11,7 @@ The [Mayfly Starter Kit](https://www.envirodiy.org/mayfly/hardware/starter-kit/)
 
 `https://www.envirodiy.org/mayfly/hardware/starter-kit/`  
 
-Stroud Water Research offers this kit through [Amazon](https://www.envirodiy.org/mayfly/hardware/starter-kit/) for $90 plus shipping cost.  
+Stroud Water Research offers this kit through [Amazon](https://www.amazon.com/EnviroDIY-Mayfly-Logger-Arduino-Compatible/dp/B01F9B4WCG) for $90 plus shipping cost.  
 
 `https://www.amazon.com/EnviroDIY-Mayfly-Logger-Arduino-Compatible/dp/B01F9B4WCG`  
 
