@@ -6,7 +6,20 @@ This document describes what you will need to build a Continuous Temperature Log
   
 **TABLE OF CONTENTS**  
   
-{{TOC}}  
+- [Introduction](#introduction)
+- [Hardware](#hardware)
+  * [Starter Kit](#starter-kit)
+  * [Real-time Clock and Main Batteries](#real-time-clock-and-main-batteries)
+  * [One Wire Temperature Sensor](#one-wire-temperature-sensor)
+  * [Installing the Real-time clock battery](#installing-the-real-time-clock-battery)
+- [Setting up the Arduino Desktop IDE Software](#setting-up-the-arduino-desktop-ide-software)
+  * [Adding the EnviroDIY board to Arduino](#adding-the-envirodiy-board-to-arduino)
+  * [Connecting to a Computer](#connecting-to-a-computer)
+- [Setting the date and time on the Real-time clock](#setting-the-date-and-time-on-the-real-time-clock)
+- [Address Discovery of OneWire Temperature Sensor](#address-discovery-of-onewire-temperature-sensor)
+- [Field Installation](#field-installation)
+- [MonitorMyWatershed.org](#monitormywatershedorg)
+- [Definitions](#definitions)  
 
 ## Hardware  
 
