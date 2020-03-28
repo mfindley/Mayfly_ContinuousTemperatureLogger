@@ -4,8 +4,12 @@ This document describes what you will need to build a Continuous Temperature Log
   
 `https://www.envirodiy.org/mayfly/`    
   
-## Hardware  
+**TABLE OF CONTENTS**  
   
+{{TOC}}  
+
+## Hardware  
+
 ### Starter Kit  
 The [Mayfly Starter Kit](https://www.envirodiy.org/mayfly/hardware/starter-kit/) supplies you with the essential components for getting started in EnviroyDIY programming and building your own data logger.  
 
@@ -40,33 +44,56 @@ Seeed Studio offers a [OneWire temperature sensor](https://www.seeedstudio.com/O
 
 `https://www.seeedstudio.com/One-Wire-Temperature-Sensor-p-1235.html`  
 
-## Installing the Real-time clock battery  
+### Installing the Real-time clock battery  
   
 Install the CR1220 battery for the real-time clock on your Mayfly board. Make sure that the orientation of the polarity (+ and -) is correct.    
 
-## Setting up the Arduino IDE Software    
+## Setting up the Arduino Desktop IDE Software    
   
-  `https://www.envirodiy.org/mayfly-sensor-station-manual/#preparing-the-mayfly-data-logger`  
+Detailed information on setting up the Arduino software can be found on the Arduino website.  You will need to [download](https://www.arduino.cc/en/main/software) version 1.6.5 or greater.
 
-### Download the Arduino IDE (version 1.6.5 or newer) 
-
-`https://www.arduino.cc/en/main/software`  
-
-### Install the Arduino IDE  
+  `https://www.arduino.cc/en/main/software`  
   
-Run th installer software and follow the instructions provided.  
+Please read the instructions for the coresponding operating system you have installed:
+  
+  * [Windows](https://www.arduino.cc/en/Guide/Windows)  
+  * [MacOS](https://www.arduino.cc/en/Guide/MacOSX)  
+  * [Linux](https://www.arduino.cc/en/Guide/Linux)  
+  * [Portable IDE](https://www.arduino.cc/en/Guide/PortableIDE) (Windows and Linux)   
+  
+There is also an [introduction](https://www.arduino.cc/en/Guide/Introduction) on what Arduino is and why you would want to use it.  
 
 ### Adding the EnviroDIY board to Arduino  
 
 Start the Arduino software, then click on **File > Preferences** and paste the following URL into the box labeled **Additional Boards Manager URLs**:  
 
-`https://raw.githubusercontent.com/EnviroDIY/Arduino_boards/master/package_EnviroDIY_index.json`
+`https://raw.githubusercontent.com/EnviroDIY/Arduino_boards/master/package_EnviroDIY_index.json`  
+
+You will need to nect need to go to **Tools > Board > Boards Manager** from the menu of the main screen. A new window will open and in the dropdown list on the top left of the screen ("**Type**"), select "**Contributed**" and then select the **EnviroDIY ATmega Boards** from the list provided. Finally, click  the "Install" button to complete your selection.
   
 ### Connecting to a Computer  
   
-`https://www.envirodiy.org/mayfly-sensor-station-manual/#connecting-a-computer-to-the-mayfly-data-logger`   
+Follow the [instructions](https://www.envirodiy.org/mayfly-sensor-station-manual/#connecting-a-computer-to-the-mayfly-data-logger) on the EnviroDIY website to connect the Mayfly to your computer.  
 
-Download the code for setting the real-time clock and follow the instructions for compiling and uploading.  
+`https://www.envirodiy.org/mayfly-sensor-station-manual/#connecting-a-computer-to-the-mayfly-data-logger`   
+  
+## Setting the date and time on the Real-time clock  
+
+[Download](https://github.com/movingplaid/Mayfly_RealTimeClock) the code for setting the real-time clock and follow the instructions for compiling and uploading.  
+  
+  `https://github.com/movingplaid/Mayfly_RealTimeClock`
+  
+## Address Discovery of OneWire Temperature Sensor  
+  
+[Download](https://github.com/movingplaid/Mayfly_OneWireAddress) and compile the code for the OneWire sensor discovery.  
+  
+`https://github.com/movingplaid/Mayfly_OneWireAddress`  
+
+Upload the compiled code to the Mayfly and record the sensor address found.
+
+## Field Installation  
+  
+## MonitorMyWatershed.org  
 
 ## Definitions  
 
