@@ -4,6 +4,10 @@ This document describes what you will need to build a Continuous Temperature Log
   
 `https://www.envirodiy.org/mayfly/`    
   
+The example data logger used in this document was meant to be assembled as easily as possible and for a low cost. It does not utilize the Xbee cellular modual which means that it will not offer real-time data via the Monitor My Watershed portal. All data will be saved to the onboard microSD card and will have to be retrieved and uploaded manually.  
+
+In addition, the use of the Adrduio programming environment will be needed to compile and upload code to the Mayfly. The process is fairly straight-forward and  all of the code has been provided.  
+  
 **TABLE OF CONTENTS**  
   
 - [Introduction](#introduction)
@@ -27,16 +31,15 @@ This document describes what you will need to build a Continuous Temperature Log
 ## Hardware  
 
 ### Starter Kit  
-The [Mayfly Starter Kit](https://www.envirodiy.org/mayfly/hardware/starter-kit/) supplies you with the essential components for getting started in EnviroyDIY programming and building your own data logger.  
+The [Mayfly Starter Kit](https://www.envirodiy.org/mayfly/hardware/starter-kit/) supplies you with the essential components for building your own data logger.  
 
 `https://www.envirodiy.org/mayfly/hardware/starter-kit/`  
 
-Stroud Water Research offers this kit through [Amazon](https://www.amazon.com/EnviroDIY-Mayfly-Logger-Arduino-Compatible/dp/B01F9B4WCG) for $90 plus shipping cost.  
+Stroud Water Research offers this kit through [Amazon](https://www.amazon.com/EnviroDIY-Mayfly-Logger-Arduino-Compatible/dp/B01F9B4WCG) for about $90 plus shipping cost.  
 
 `https://www.amazon.com/EnviroDIY-Mayfly-Logger-Arduino-Compatible/dp/B01F9B4WCG`  
 
-The starter kit includes the following items:  
-
+The Starter Kit includes the following items:  
 
   * EnviroDIY Mayfly Data Logger Board
   * Waterproof enclosure with clear lid
@@ -44,16 +47,31 @@ The starter kit includes the following items:
   * 2 Grove cables (20cm long)
   * 4GB microSD memory card with SDcard-size adapter
   * 0.5 watt solar panel with JST connector
-  * Mayfly microSD vertical adapter board
-  * 6-pin header adapter for FTDI devices
-  
+  * Mayfly microSD vertical adapter board  
+
+Some additional items will need to be purchased separately from the Starter Kit to make the logger fully operational:  
+
 ### Real-time Clock (RTC) Battery  
   
-Install the CR1220 battery for the real-time clock on your Mayfly board. Make sure that the orientation of the polarity (+ and -) is correct.    
+The Real-time clock battery is a small 3 volt button cell battery (like a watch battery) that helps the Mayfly retain the data and time when external power (Li-Po battery or USB) has been removed from the board. They are very common and can be purchased from many retailers (Amazon, grocery stores, big box stores).  
   
-### 3.7 Volt Lithium Polymer (Lipo) Battery  
+Install the CR1220 battery for the real-time clock on your Mayfly board. Make sure that the orientation of the polarity (+ and -) is correct.  
   
-It is important to look at the polarity (positive & negative) of the wires coming from the battery in relation to the polarity on the Mayfly board. 
+### 3.7 Volt Lithium Polymer (Li-Po) Battery  
+  
+There are many different types of batteries available for use. It is important to select a battery with enough storage capacity to operate for a period of time without being charged or with very little opportunity to charge (not unlike your phone). This is important for installation sites that are well shaded or recieve partial sunlight during the day (forests, shaded slopes or valleys).  
+  
+Battery manufactures use a rating of mAh or milliampere-hours (A smartphone battery usually has between 2500 and 4000 milliampere-hours of electric capacity). The temperature logger that this document is based on is using a 1200 mAh but it may be wise to use something a little larger for optimal operation (2000-3000 mAh - **need verification**).    
+  
+The battery must also have a 2 pin JST-PH connector. This is a small (2mm) connector with a key or ridge on one side that mates with the connector on the Mayfly.   
+
+**It is important to look at the polarity (positive & negative) of the wires coming from the battery in relation to the polarity on the Mayfly board.**
+  
+Each connector on the Mayfly will have a plus (+) and minus (-) symbol printed on the circut board. The battery will have two wires attached to it, a positive (red) and a negative (black). These must match up when connecting the battery to the Mayfly (red + & black -). If your battery does not match up you will need to change the wires so they do.  
+  
+**Conecting a battery with incorrect polarity can be hazardous to your well being and to the Mayfly.**    
+  
+The Li-Po battery is not immediately required for setting up the Mayfly board but it will be needed when you want to run the board without being connected to your computer (ie. in the field).  
 
 ### One Wire Temperature Sensor  
   
@@ -61,7 +79,7 @@ Seeed Studio offers a [OneWire temperature sensor](https://www.seeedstudio.com/O
 
 `https://www.seeedstudio.com/One-Wire-Temperature-Sensor-p-1235.html`  
 
-Each temperature sensor has a unique address to identify it.  Use the code in the "Address Discovery of OneWire Temperature Sensor" section to find the address of your sensor. Be sure to keep this number on hand when you get to compiling the code for temperature logging. 
+Each temperature sensor has a unique address to identify it.  Use the code in the "**Address Discovery of OneWire Temperature Sensor**" section to find the address of your sensor. Be sure to keep this number on hand when you get to compiling the code for temperature logging. 
 
 ## Setting up the Arduino Desktop IDE Software    
   
@@ -92,6 +110,11 @@ Follow the [instructions](https://www.envirodiy.org/mayfly-sensor-station-manual
 
 `https://www.envirodiy.org/mayfly-sensor-station-manual/#connecting-a-computer-to-the-mayfly-data-logger`   
   
+  * Attach the USB cable to the Mayfly and to the computer  
+  * Turn on the Mayfly  
+  * Select the COM port in the Arduino software ( **Tools > Port** )  
+  * Open the Serial Monitor in the Adduino software (top right corner of the window) to view the output from the pre-loaded sketch
+  
 ## Compiling and Uploading Code  
 
 ### Installing Libraries  
@@ -110,6 +133,10 @@ The following library is requires to compile this code:
   
   * Sodaq_DS3231 (Sodaq_DS3231.h)
   
+In the Arduino software, go to **Tools > Manage Libraries** and type "**Sodaq_DS3231**" in the serach bar and press "**Enter**" on your keyboard.  
+
+Select the library named "**Sodaq_DS3231**" and click the "**Install**" button.  
+
 ### Address Discovery of OneWire Temperature Sensor  
   
 [Download](https://github.com/movingplaid/Mayfly_OneWireAddress) and compile the code for the OneWire sensor discovery.  
@@ -119,14 +146,29 @@ The following library is requires to compile this code:
 The following library is requires to compile this code:  
   
   * OneWire (OneWire.h)
+  
+In the Arduino software, go to **Tools > Manage Libraries** and type "**OneWire**" in the serach bar and press "**Enter**" on your keyboard.  
+
+Select the library named "**OneWire**" and click the "**Install**" button. 
 
 Upload the compiled code to the Mayfly and record the sensor address found.
   
 ### Continuous Temperature Logging Code  
+  
+[Download](https://github.com/movingplaid/Mayfly_TempProbeLogging) the Temperature Logging code from GitHub   
+  
+  `https://github.com/movingplaid/Mayfly_TempProbeLogging`  
+  
+You will need to edit the TempProbLogging code to replace the DeviceAddres with the address discoved for your sensor (see **Address Discovery of OneWire Temperature Sensor**)  
 
-Download  
-Change Sensor Address  
-Install Libraries  
+Open the code in the Arduino software and serach for the line:  
+
+`DeviceAddress TempSensor = { 0x28, 0x48, 0x98, 0xD6, 0x0B, 0x00, 0x00, 0x8A };`  
+  
+**Note:** The address may be slightly differect from the one show above.  
+
+The following libraries will need to be installed via **Manage Libraries** found under **Tools > Manage Libraries**. This procedure can be found under the section **Installing Libraries** in this document.  
+
 Upload to Mayfly  
   
 ## Field Installation  
@@ -136,13 +178,19 @@ Mounting Hardware
 
 ## MonitorMyWatershed.org  
   
-Creating an account  
-Registering a Sensor Station  
-Customizing Header Information
-Uploading the Sensor Data  
+### Creating an account  
 
+`https://monitormywatershed.org/register/`  
+
+### Registering a Sensor Station  
+  
+`https://monitormywatershed.org/sites/register/`  
+
+### Customizing Header Information & Uploading the CSV Sensor Data  
+  
+  `https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#sensor-data`  
+  
 ## Definitions  
 
-  * JST  
-  * FTDI  
+  * JST   
   * mAh  
