@@ -14,7 +14,7 @@ In addition, the use of the Adrduio programming environment will be needed to co
 - [Hardware](#hardware)
   * [Starter Kit](#starter-kit)
   * [Real-time Clock (RTC) Battery](#real-time-clock--rtc--battery)
-  * [3.7 Volt Lithium Polymer (Lipo) Battery](#37-volt-lithium-polymer--lipo--battery)
+  * [3.7 Volt Lithium Polymer (Li-Po) Battery](#37-volt-lithium-polymer--li-po--battery)
   * [One Wire Temperature Sensor](#one-wire-temperature-sensor)
 - [Setting up the Arduino Desktop IDE Software](#setting-up-the-arduino-desktop-ide-software)
   * [Adding the EnviroDIY board to Arduino](#adding-the-envirodiy-board-to-arduino)
@@ -26,7 +26,10 @@ In addition, the use of the Adrduio programming environment will be needed to co
   * [Continuous Temperature Logging Code](#continuous-temperature-logging-code)
 - [Field Installation](#field-installation)
 - [MonitorMyWatershed.org](#monitormywatershedorg)
-- [Definitions](#definitions)  
+  * [Creating an account](#creating-an-account)
+  * [Registering a Sensor Station](#registering-a-sensor-station)
+  * [Customizing Header Information & Uploading the CSV Sensor Data](#customizing-header-information---uploading-the-csv-sensor-data)
+- [Definitions](#definitions) 
 
 ## Hardware  
 
