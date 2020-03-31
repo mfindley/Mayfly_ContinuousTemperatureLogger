@@ -112,8 +112,18 @@ There is also an [introduction](https://www.arduino.cc/en/Guide/Introduction) on
 Start the Arduino software, then click on `File > Preferences` and paste the following URL into the box labeled `Additional Boards Manager URLs`:  
 
 `https://raw.githubusercontent.com/EnviroDIY/Arduino_boards/master/package_EnviroDIY_index.json`  
-
-You will need to go to `Tools > Board > Boards Manager` from the menu of the main screen. A new window will open and in the dropdown list on the top left of the screen ("`Type`"), select "`Contributed`" and then select the `EnviroDIY ATmega Boards` from the list provided. Finally, click  the "`Install`" button to complete your selection.
+  
+![](/images/arduino_preferences.jpg)  
+  
+You will need to go to `Tools > Board > Boards Manager` from the menu of the main screen. A new window will open and in the dropdown list on the top left of the screen ("`Type`"), select "`Contributed`" and then type in  `EnviroDIY ATmega Boards` In the search bar. 
+  
+You should see a search result for the `EnviroDIY ATmega Boards`. Finally, click  the "`Install`" button to complete your selection.
+  
+![](/images/arduino_board-manager.jpg) 
+  
+Now, from the `Tools > Board` menu, select the EnviroDIY Mayfly 1284P board.
+  
+![](/images/arduino_board-menu.jpg) 
   
 ### Connecting to a Computer  
   
@@ -122,55 +132,56 @@ Follow the [instructions](https://www.envirodiy.org/mayfly-sensor-station-manual
   * Attach the USB cable to the Mayfly and to the computer  
   * Turn on the Mayfly  
   * Select the COM port in the Arduino software (`Tools > Port`)  
+  
+![](/images/arduino_com-port.jpg)  
+  
   * Open the Serial Monitor in the Adduino software (top right corner of the window) to view the output from the pre-loaded sketch
   
 ## Compiling and Uploading Code  
 
 ### Setting the date and time on the Real-time clock    
 
-One of the first things that need to be done before using the Mayfly for data logging is setting the correct date and time on the real-time clock (RTC). 
+One of the first things that need to be done before using the Mayfly for data logging is setting the date and time on the real-time clock (RTC). 
 
 [Download](https://github.com/movingplaid/Mayfly_RealTimeClock/blob/master/Mayfly_RealTimeClock.ino) the code for setting the real-time clock.  
-   
+  
+This sketch is meant to be a simple as possible, but you need to do things in the right order to obtain the best possible time setting. Since we are setting the time based on the compile time of the sketch, the faster you compile and upload the less difference you will have between the system time and the Mayfly time.
+
+  * Complile and upload the sketch
+  * Comment out the line for setting the clock
+  * Complile and upload again
+  
+We do a second compile and upload after commenting out the portion of the code that sets the time so that the next time you open the Serial Monitor or turn the Mayfly on, the time will not get reset to the compile time again.   
+  
 Open the file (`Mayfly_RealTimeClock.ino`) in the Arduino IDE. Before compiling, you will need to install the following library:  
   
-  * `Sodaq_DS3231`
+  * `RTClib`
   
-In the Arduino software, go to `Tools > Manage Libraries` and type "`Sodaq_DS3231`" in the serach bar and press "`Enter`" on your keyboard.  
-
-Select the library named "`Sodaq_DS3231`" and click the "`Install`" button.  
+In the Arduino software, go to `Tools > Manage Libraries` and type "`RTClib`" in the serach bar and press "`Enter`" on your keyboard.  
   
-To compile the code you can click the `Compile` button, hold `Ctrl+R` or select `Sketch > Verify/Compile` from the menu.  
-
-Once compiled you can upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu.  
+![](/images/arduino_rtclib.jpg)  
+  
+Select the library named "`RTClib`" and click the "`Install`" button.  
+  
+To compile and upload the code you can click the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu.   
+  
+Now, comment out the line of code:  
+  
+`rtc.adjust(DateTime(F(__DATE__),F(__TIME__)));`  
+  
+So it looks like this (Use // in front of the line):  
+  
+![](/images/arduino_rtc-time-commented-out.jpg)  
+  
+Compile and upload again.  
 
 Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu.  Make sure the "`baud`" rate option at the bottom right side of the widnow is set to "`9600`".
   
 ![](/images/arduino_baud.jpg)
   
-The Serial Monitor should output the date and time currently set on the RTC. Unless you have found a way to travel back in time, it will be wrong. Close the Serial Monitor and return to the code for the next step.
+The Serial Monitor should output the date and time currently set on the RTC.  
 
-You will need to enter a correct date and time to set the RTC to.  For this tutorial, we will call this the target time.  Search the code for the line that looks like this:
-  
-`DateTime dt(2020, 3, 20, 14, 04, 0, 1);`  
-   
-The order of the variables is:  
-   
-`Year, Month, Date, Hour, Min, Sec and Day-of-Week`  
-  
-The Day-of-Week starts from 0 and goes to 6 (Sunday to Saturday).  
-
-Change this line of code to be the target date and time you want to set. You are basically synchronizing the RTC time with the actual time so you will need to pick a time in the near future. This will give you time to compile, upload and set the time correctly. The above example would set the date and time to the following:  
-  
-`3/30/2020 @ 14:04:00 on Monday`  
-  
-This code works by printing out the current date-time of the RTC in the Serial Monitor and when you press the user defined button (`D21 Button`) on the Mayfly, the RTC gets set to the target time defined by `DateTime dt();` as shown above. 
-  
-Repeat the process for compiling and uploading as above and then open the Serial Monotor again.  
-
-Use a clock or watch to observe the current time.  When the current time nears the target time you want to set, press and hold the user defined button (`D21 Button`) on the Mayfly for about a second and then release it. The Serial Monitor will continue to print out the date and time of the RTC, starting with the target time you entered. 
-  
-If you need to start over or are not close enough in your synchronization, close the Serial Monitor, change the date-time string, compile, upload and open the Serial Monitor again for another attempt.  
+![](/images/arduino_serial-monitor-rtc.jpg)  
 
 ### Address Discovery of OneWire Temperature Sensor  
   
