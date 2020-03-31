@@ -2,7 +2,7 @@
 
 This document describes what you will need to build a Continuous Temperature Logger with the [EnviroDIY Mayfly data logger](https://www.envirodiy.org/mayfly/).  
   
-/images/mayfly_board-only.jpg
+![Mayfly Data Logger](https://github.com/movingplaid/Mayfly_CTL_Documentation/blob/master/images/mayfly_board-only.jpg)  
   
 `https://www.envirodiy.org/mayfly/`    
   
