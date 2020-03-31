@@ -2,7 +2,7 @@
 
 This document describes what you will need to build a Continuous Temperature Logger with the [EnviroDIY Mayfly data logger](https://www.envirodiy.org/mayfly/).  
   
-![Mayfly Data Logger](/images/mayfly_board-only.jpg)  
+![](/images/mayfly_board-only.jpg)  
   
 `https://www.envirodiy.org/mayfly/`    
   
@@ -38,7 +38,7 @@ In addition, the use of the Adrduio programming environment will be needed to co
 ### Starter Kit  
 The [Mayfly Starter Kit](https://www.envirodiy.org/mayfly/hardware/starter-kit/) supplies you with the essential components for building your own data logger.  
   
-/images/mayfly_starter-kit.jpg  
+![](/images/mayfly_starter-kit.jpg)
   
 `https://www.envirodiy.org/mayfly/hardware/starter-kit/`  
 
@@ -62,7 +62,7 @@ Some additional items will need to be purchased separately from the Starter Kit 
   
 The Real-time clock (RTC) battery is a small 3 volt button cell battery (like a watch battery) that helps the Mayfly retain the data and time when external power (Li-Po battery or USB) has been removed from the board. They are very common and can be purchased from many retailers (Amazon, grocery stores, big box stores).  
   
-/images/battery_cr1220.jpg
+![](/images/battery_cr1220.jpg)
   
 Install the CR1220 battery for the real-time clock on your Mayfly board. Make sure that the orientation of the polarity (+ and -) is correct.  
   
@@ -70,13 +70,13 @@ Install the CR1220 battery for the real-time clock on your Mayfly board. Make su
   
 There are many different types of batteries available for use. It is important to select a battery with enough storage capacity to operate for a period of time without being charged or with very little opportunity to charge (not unlike your phone). This is important for installation sites that are well shaded or recieve partial sunlight during the day (forests, shaded slopes or valleys).  
   
-/images/battery_3.7v-lipo.jpg
+![](/images/battery_3.7v-lipo.jpg)
   
 Battery manufactures use a rating of `mAh` or `milliampere-hours` (A smartphone battery usually has between 2500 and 4000 milliampere-hours of electric capacity). The temperature logger that this document is based on is using a 1200 mAh but it may be wise to use something a little larger for optimal operation (2000-3000 mAh - **need verification**).    
   
 The battery must also have a `2 pin JST-PH` connector. This is a small (2mm) connector with a key or ridge on one side that mates with the connector on the Mayfly.   
   
-/images/connector_jst-ph.jpg
+![](/images/connector_jst-ph.jpg)
   
 **It is important to look at the polarity (positive & negative) of the wires coming from the battery in relation to the polarity on the Mayfly board.**
   
@@ -90,7 +90,7 @@ The Li-Po battery is not immediately required for setting up the Mayfly board bu
   
 Seeed Studio offers a [OneWire temperature sensor](https://www.seeedstudio.com/One-Wire-Temperature-Sensor-p-1235.html) that comes complete with a Grove connector, making it very simple to connect and use the sensor with little to no modification.  
   
-/images/seeed_onewire-sensor.jpg  
+![](/images/seeed_onewire-sensor.jpg)  
   
 `https://www.seeedstudio.com/One-Wire-Temperature-Sensor-p-1235.html`  
   
