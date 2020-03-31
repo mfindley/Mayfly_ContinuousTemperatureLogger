@@ -2,13 +2,17 @@
 
 This document describes what you will need to build a Continuous Temperature Logger with the [EnviroDIY Mayfly data logger](https://www.envirodiy.org/mayfly/).  
   
-![](/images/mayfly_board-only.jpg)  
+![](/images/mayfly_board-only.jpg)    
   
-`https://www.envirodiy.org/mayfly/`    
+From the EnviroDIY website:
   
+> "The EnviroDIY Mayfly Data Logger is a powerful, user-programmable microprocessor board that is fully compatible with the Arduino IDE software."
+
+> "The memory card socket, RTC, and solar charging features make it very easy to use this board for data logging and low-power operation. But it can also be used by itself, or with a wide variety of devices and accessories.  The Mayfly can be powered by a 3.7v lithium battery or through the microUSB port."  
+
 The example data logger used in this document was meant to be assembled as easily as possible and for a low cost. It does not utilize the Xbee cellular modual which means that it will not offer real-time data via the Monitor My Watershed portal. All data will be saved to the onboard microSD card and will have to be retrieved and uploaded manually.  
 
-In addition, the use of the Adrduio programming environment will be needed to compile and upload code to the Mayfly. The process is fairly straight-forward and  all of the code has been provided.  
+The use of the Adrduio programming environment (Arduino IDE) will be needed to compile and upload code to the Mayfly. The process is fairly straight-forward and  all of the code has been provided.  
   
 **TABLE OF CONTENTS**  
   
@@ -38,14 +42,10 @@ In addition, the use of the Adrduio programming environment will be needed to co
 ### Starter Kit  
 The [Mayfly Starter Kit](https://www.envirodiy.org/mayfly/hardware/starter-kit/) supplies you with the essential components for building your own data logger.  
   
-![](/images/mayfly_starter-kit.jpg)
+![](/images/mayfly_starter-kit.jpg)  
   
-`https://www.envirodiy.org/mayfly/hardware/starter-kit/`  
-
-Stroud Water Research offers this kit through [Amazon](https://www.amazon.com/EnviroDIY-Mayfly-Arduino-Compatible-Starter/dp/B01FCVALDW/ref=sr_1_2?keywords=Stroud+Water+Research+Center&qid=1585584911&sr=8-2) for about $90 plus shipping cost.  
-
-`https://www.amazon.com/EnviroDIY-Mayfly-Arduino-Compatible-Starter/dp/B01FCVALDW/ref=sr_1_2?keywords=Stroud+Water+Research+Center&qid=1585584911&sr=8-2`  
-
+Stroud Water Research offers this kit through [Amazon](https://www.amazon.com/EnviroDIY-Mayfly-Arduino-Compatible-Starter/dp/B01FCVALDW/ref=sr_1_2?keywords=Stroud+Water+Research+Center&qid=1585584911&sr=8-2) for about $90 plus shipping cost.    
+  
 The Starter Kit includes the following items:  
 
   * EnviroDIY Mayfly Data Logger Board
@@ -92,15 +92,11 @@ Seeed Studio offers a [OneWire temperature sensor](https://www.seeedstudio.com/O
   
 ![](/images/seeed_onewire-sensor.jpg)  
   
-`https://www.seeedstudio.com/One-Wire-Temperature-Sensor-p-1235.html`  
-  
 Each temperature sensor has a unique address to identify it.  Use the code in the "**Address Discovery of OneWire Temperature Sensor**" section to find the address of your sensor. Be sure to keep this number on hand when you get to compiling the code for temperature logging. 
 
 ## Setting up the Arduino Desktop IDE Software    
   
-Detailed information on setting up the Arduino software can be found on the Arduino website.  You will need to [download](https://www.arduino.cc/en/main/software) `version 1.6.5 or greater`.
-
-  `https://www.arduino.cc/en/main/software`  
+Detailed information on setting up the Arduino software can be found on the Arduino website.  You will need to [download](https://www.arduino.cc/en/main/software) `version 1.6.5 or greater`. 
   
 Please read the instructions for the coresponding operating system you have installed:
   
@@ -121,10 +117,8 @@ You will need to go to `Tools > Board > Boards Manager` from the menu of the mai
   
 ### Connecting to a Computer  
   
-Follow the [instructions](https://www.envirodiy.org/mayfly-sensor-station-manual/#connecting-a-computer-to-the-mayfly-data-logger) on the EnviroDIY website to connect the Mayfly to your computer.  
-
-`https://www.envirodiy.org/mayfly-sensor-station-manual/#connecting-a-computer-to-the-mayfly-data-logger`   
-  
+Follow the [instructions](https://www.envirodiy.org/mayfly-sensor-station-manual/#connecting-a-computer-to-the-mayfly-data-logger) on the EnviroDIY website to connect the Mayfly to your computer.   
+    
   * Attach the USB cable to the Mayfly and to the computer  
   * Turn on the Mayfly  
   * Select the COM port in the Arduino software (`Tools > Port`)  
@@ -137,9 +131,7 @@ Follow the [instructions](https://www.envirodiy.org/mayfly-sensor-station-manual
 One of the first things that need to be done before using the Mayfly for data logging is setting the correct date and time on the real-time clock (RTC). 
 
 [Download](https://github.com/movingplaid/Mayfly_RealTimeClock/blob/master/Mayfly_RealTimeClock.ino) the code for setting the real-time clock.  
-  
-  `https://github.com/movingplaid/Mayfly_RealTimeClock/blob/master/Mayfly_RealTimeClock.ino`  
-    
+   
 Open the file (`Mayfly_RealTimeClock.ino`) in the Arduino IDE. Before compiling, you will need to install the following library:  
   
   * `Sodaq_DS3231`
@@ -153,7 +145,9 @@ To compile the code you can click the `Compile` button, hold `Ctrl+R` or select 
 Once compiled you can upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu.  
 
 Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu.  Make sure the "`baud`" rate option at the bottom right side of the widnow is set to "`9600`".
-
+  
+![](/images/arduino_baud.jpg)
+  
 The Serial Monitor should output the date and time currently set on the RTC. Unless you have found a way to travel back in time, it will be wrong. Close the Serial Monitor and return to the code for the next step.
 
 You will need to enter a correct date and time to set the RTC to.  For this tutorial, we will call this the target time.  Search the code for the line that looks like this:
@@ -170,11 +164,11 @@ Change this line of code to be the target date and time you want to set. You are
   
 `3/30/2020 @ 14:04:00 on Monday`  
   
-This code works by printing out the current date-time of the RTC in the Serial Monitor and when you press the black button (`D21 Button`) on the Mayfly, the RTC gets set to the target time defined by `DateTime dt();` as shown above. 
+This code works by printing out the current date-time of the RTC in the Serial Monitor and when you press the user defined button (`D21 Button`) on the Mayfly, the RTC gets set to the target time defined by `DateTime dt();` as shown above. 
   
 Repeat the process for compiling and uploading as above and then open the Serial Monotor again.  
 
-Use a clock or watch to observe the current time.  When the current time nears the target time you want to set, press and hold the black button (`D21 Button`) on the Mayfly for about a second and then release it. The Serial Monitor will continue to print out the date and time of the RTC, starting with the target time you entered. 
+Use a clock or watch to observe the current time.  When the current time nears the target time you want to set, press and hold the user defined button (`D21 Button`) on the Mayfly for about a second and then release it. The Serial Monitor will continue to print out the date and time of the RTC, starting with the target time you entered. 
   
 If you need to start over or are not close enough in your synchronization, close the Serial Monitor, change the date-time string, compile, upload and open the Serial Monitor again for another attempt.  
 
@@ -182,8 +176,6 @@ If you need to start over or are not close enough in your synchronization, close
   
 [Download](https://github.com/movingplaid/Mayfly_OneWireAddress/blob/master/Mayfly_OneWireAddress.ino) the code for the OneWire Device Address discovery.  
   
-`https://github.com/movingplaid/Mayfly_OneWireAddress/blob/master/Mayfly_OneWireAddress.ino`  
-
 The following library is requires to compile this code:  
   
   * OneWire
@@ -199,6 +191,8 @@ To compile the code you can click the `Compile` button, hold `Ctrl+R` or select 
 Once compiled you can upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu.  
 
 Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu. Make sure the "`baud`" rate option at the bottom right side of the widnow is set to "`9600`".
+  
+![](/images/arduino_baud.jpg)
   
 The Serial Monitor should output a string of characters that is your sensors address. Write this address down or save it somewhere to access it later when building the Temperature Logging Code.  
 
@@ -223,8 +217,6 @@ Read Temperature
 ### Continuous Temperature Logging Code  
   
 [Download](https://github.com/movingplaid/Mayfly_TempProbeLogging) the Temperature Logging code from GitHub   
-  
-  `https://github.com/movingplaid/Mayfly_TempProbeLogging`  
   
 You will need to edit the TempProbLogging code to replace the DeviceAddres with the address discoved for your sensor (see `Address Discovery of OneWire Temperature Sensor`)  
 
