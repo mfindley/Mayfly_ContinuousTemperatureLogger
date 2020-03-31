@@ -2,6 +2,8 @@
 
 This document describes what you will need to build a Continuous Temperature Logger with the [EnviroDIY Mayfly data logger](https://www.envirodiy.org/mayfly/).  
   
+/images/mayfly_board-only.jpg
+  
 `https://www.envirodiy.org/mayfly/`    
   
 The example data logger used in this document was meant to be assembled as easily as possible and for a low cost. It does not utilize the Xbee cellular modual which means that it will not offer real-time data via the Monitor My Watershed portal. All data will be saved to the onboard microSD card and will have to be retrieved and uploaded manually.  
@@ -13,28 +15,31 @@ In addition, the use of the Adrduio programming environment will be needed to co
 - [Introduction](#introduction)
 - [Hardware](#hardware)
   * [Starter Kit](#starter-kit)
-  * [Real-time Clock (RTC) Battery](#real-time-clock--rtc--battery)
+  * [Real-time Clock Battery](#real-time-clock-battery)
   * [3.7 Volt Lithium Polymer Battery](#37-volt-lithium-polymer-battery)
   * [One Wire Temperature Sensor](#one-wire-temperature-sensor)
 - [Setting up the Arduino Desktop IDE Software](#setting-up-the-arduino-desktop-ide-software)
   * [Adding the EnviroDIY board to Arduino](#adding-the-envirodiy-board-to-arduino)
   * [Connecting to a Computer](#connecting-to-a-computer)
 - [Compiling and Uploading Code](#compiling-and-uploading-code)
-  * [Setting the date and time on the Real-time clock (RTC)](#setting-the-date-and-time-on-the-real-time-clock--rtc-)
+  * [Setting the date and time on the Real-time clock](#setting-the-date-and-time-on-the-real-time-clock)
   * [Address Discovery of OneWire Temperature Sensor](#address-discovery-of-onewire-temperature-sensor)
+  * [Testing the OneWire Temperature Sensor](#testing-the-onewire-temperature-sensor)
   * [Continuous Temperature Logging Code](#continuous-temperature-logging-code)
 - [Field Installation](#field-installation)
 - [MonitorMyWatershed.org](#monitormywatershedorg)
   * [Creating an account](#creating-an-account)
   * [Registering a Sensor Station](#registering-a-sensor-station)
   * [Customizing Header Information & Uploading the CSV Sensor Data](#customizing-header-information---uploading-the-csv-sensor-data)
-- [Definitions](#definitions)  
+- [Definitions](#definitions)
   
 ## Hardware  
 
 ### Starter Kit  
 The [Mayfly Starter Kit](https://www.envirodiy.org/mayfly/hardware/starter-kit/) supplies you with the essential components for building your own data logger.  
-
+  
+/images/mayfly_starter-kit.jpg  
+  
 `https://www.envirodiy.org/mayfly/hardware/starter-kit/`  
 
 Stroud Water Research offers this kit through [Amazon](https://www.amazon.com/EnviroDIY-Mayfly-Arduino-Compatible-Starter/dp/B01FCVALDW/ref=sr_1_2?keywords=Stroud+Water+Research+Center&qid=1585584911&sr=8-2) for about $90 plus shipping cost.  
@@ -53,9 +58,11 @@ The Starter Kit includes the following items:
 
 Some additional items will need to be purchased separately from the Starter Kit to make the logger fully operational:  
 
-### Real-time Clock (RTC) Battery  
+### Real-time Clock Battery  
   
-The Real-time clock battery is a small 3 volt button cell battery (like a watch battery) that helps the Mayfly retain the data and time when external power (Li-Po battery or USB) has been removed from the board. They are very common and can be purchased from many retailers (Amazon, grocery stores, big box stores).  
+The Real-time clock (RTC) battery is a small 3 volt button cell battery (like a watch battery) that helps the Mayfly retain the data and time when external power (Li-Po battery or USB) has been removed from the board. They are very common and can be purchased from many retailers (Amazon, grocery stores, big box stores).  
+  
+/images/battery_cr1220.jpg
   
 Install the CR1220 battery for the real-time clock on your Mayfly board. Make sure that the orientation of the polarity (+ and -) is correct.  
   
@@ -63,10 +70,14 @@ Install the CR1220 battery for the real-time clock on your Mayfly board. Make su
   
 There are many different types of batteries available for use. It is important to select a battery with enough storage capacity to operate for a period of time without being charged or with very little opportunity to charge (not unlike your phone). This is important for installation sites that are well shaded or recieve partial sunlight during the day (forests, shaded slopes or valleys).  
   
+/images/battery_3.7v-lipo.jpg
+  
 Battery manufactures use a rating of `mAh` or `milliampere-hours` (A smartphone battery usually has between 2500 and 4000 milliampere-hours of electric capacity). The temperature logger that this document is based on is using a 1200 mAh but it may be wise to use something a little larger for optimal operation (2000-3000 mAh - **need verification**).    
   
 The battery must also have a `2 pin JST-PH` connector. This is a small (2mm) connector with a key or ridge on one side that mates with the connector on the Mayfly.   
-
+  
+/images/connector_jst-ph.jpg
+  
 **It is important to look at the polarity (positive & negative) of the wires coming from the battery in relation to the polarity on the Mayfly board.**
   
 Each connector on the Mayfly will have a `plus (+)` and `minus (-)` symbol printed on the circut board. The battery will have two wires attached to it, a `positive (red)` and a `negative (black)`. These must match up when connecting the battery to the Mayfly `(red + & black -)`. If your battery does not match up you will need to change the wires so they do.  
@@ -78,9 +89,11 @@ The Li-Po battery is not immediately required for setting up the Mayfly board bu
 ### One Wire Temperature Sensor  
   
 Seeed Studio offers a [OneWire temperature sensor](https://www.seeedstudio.com/One-Wire-Temperature-Sensor-p-1235.html) that comes complete with a Grove connector, making it very simple to connect and use the sensor with little to no modification.  
-
+  
+/images/seeed_onewire-sensor.jpg  
+  
 `https://www.seeedstudio.com/One-Wire-Temperature-Sensor-p-1235.html`  
-
+  
 Each temperature sensor has a unique address to identify it.  Use the code in the "**Address Discovery of OneWire Temperature Sensor**" section to find the address of your sensor. Be sure to keep this number on hand when you get to compiling the code for temperature logging. 
 
 ## Setting up the Arduino Desktop IDE Software    
@@ -119,7 +132,7 @@ Follow the [instructions](https://www.envirodiy.org/mayfly-sensor-station-manual
   
 ## Compiling and Uploading Code  
 
-### Setting the date and time on the Real-time clock (RTC)  
+### Setting the date and time on the Real-time clock    
 
 One of the first things that need to be done before using the Mayfly for data logging is setting the correct date and time on the real-time clock (RTC). 
 
@@ -139,7 +152,7 @@ To compile the code you can click the `Compile` button, hold `Ctrl+R` or select 
 
 Once compiled you can upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu.  
 
-Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu.  
+Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu.  Make sure the "`baud`" rate option at the bottom right side of the widnow is set to "`9600`".
 
 The Serial Monitor should output the date and time currently set on the RTC. Unless you have found a way to travel back in time, it will be wrong. Close the Serial Monitor and return to the code for the next step.
 
@@ -157,11 +170,11 @@ Change this line of code to be the target date and time you want to set. You are
   
 `3/30/2020 @ 14:04:00 on Monday`  
   
-This code works by printing out the current date-time of the RTC in the Serial Monitor and when you press the black button on the Mayfly, the RTC gets set to the target time defined by `DateTime dt();` as shown above. 
+This code works by printing out the current date-time of the RTC in the Serial Monitor and when you press the black button (`D21 Button`) on the Mayfly, the RTC gets set to the target time defined by `DateTime dt();` as shown above. 
   
 Repeat the process for compiling and uploading as above and then open the Serial Monotor again.  
 
-Use a clock or watch to observe the current time.  When the current time nears the target time you want to set, press and hold the black button on the Mayfly for about a second and then release it. The Serial Monitor will continue to print out the date and time of the RTC, starting with the target time you entered. 
+Use a clock or watch to observe the current time.  When the current time nears the target time you want to set, press and hold the black button (`D21 Button`) on the Mayfly for about a second and then release it. The Serial Monitor will continue to print out the date and time of the RTC, starting with the target time you entered. 
   
 If you need to start over or are not close enough in your synchronization, close the Serial Monitor, change the date-time string, compile, upload and open the Serial Monitor again for another attempt.  
 
@@ -185,7 +198,27 @@ To compile the code you can click the `Compile` button, hold `Ctrl+R` or select 
 
 Once compiled you can upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu.  
 
-Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu.
+Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu. Make sure the "`baud`" rate option at the bottom right side of the widnow is set to "`9600`".
+  
+The Serial Monitor should output a string of characters that is your sensors address. Write this address down or save it somewhere to access it later when building the Temperature Logging Code.  
+
+Example output from this sketch:  
+
+`Start oneWireSearch.ino`
+
+`0x28, 0x48, 0x98, 0xD6, 0x0B, 0x00, 0x00, 0x8A	// CRC OK`
+`Number of Devices Found: 1`
+
+`End oneWireSearch.ino`
+
+If you need to run the sketch again, press the "`reset`" button on the Mayfly or upload the sketch again.
+  
+### Testing the OneWire Temperature Sensor
+  
+Download Code  
+Compile  
+Upload  
+Read Temperature  
   
 ### Continuous Temperature Logging Code  
   
