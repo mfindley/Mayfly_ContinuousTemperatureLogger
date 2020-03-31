@@ -220,10 +220,27 @@ If you need to run the sketch again, press the "`reset`" button on the Mayfly or
   
 ### Testing the OneWire Temperature Sensor
   
-Download Code  
-Compile  
-Upload  
-Read Temperature  
+[Download](https://github.com/movingplaid/Mayfly_OneWireAddress/blob/master/Mayfly_OneExample.ino) the code for the OneWire Example.  
+ 
+Change theh DeviceAddress to match your temperature sensor.  
+
+The following library is requires to compile this code:  
+  
+  * OneWire
+  
+In the Arduino software, go to `Tools > Manage Libraries` and type "`OneWire`" in the serach bar and press "`Enter`" on your keyboard.  
+
+Select the library named "`OneWire`" and click the "`Install`" button. 
+
+Plug the OnewWire Temperature Sensor into the Grove port marked `D4-5` on the Mayfly board.  
+  
+Upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu.  
+
+Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu. Make sure the "`baud`" rate option at the bottom right side of the widnow is set to "`9600`".
+  
+![](/images/arduino_baud.jpg)
+  
+The Serial Monitor should output the current temperature that the sensor is reading. 
   
 ### Continuous Temperature Logging Code  
   
