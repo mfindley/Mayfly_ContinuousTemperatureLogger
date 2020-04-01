@@ -1,18 +1,14 @@
 ## Introduction  
 
-This document describes what you will need to build a Continuous Temperature Logger with the [EnviroDIY Mayfly data logger](https://www.envirodiy.org/mayfly/).  
+This document outlines what you will need to build a Continuous Temperature Logger with the [EnviroDIY Mayfly data logger](https://www.envirodiy.org/mayfly/) and will try to cover as much ground as possible while keeping the information clear and simple.  
   
-From the EnviroDIY website:
+![](/images/mayfly_board-only.jpg)  
   
-> "The EnviroDIY Mayfly Data Logger is a powerful, user-programmable microprocessor board that is fully compatible with the Arduino IDE software."
-
-> "The memory card socket, RTC, and solar charging features make it very easy to use this board for data logging and low-power operation. But it can also be used by itself, or with a wide variety of devices and accessories.  The Mayfly can be powered by a 3.7v lithium battery or through the microUSB port."  
+Originally set up as a low cost experiment to evaluate possible uses for Citizen Science and Educators, the example data logger used for this document was assembled with off-the-shelf-components and is currently deployed on Stillwater Run in Berks County, PA.  
   
-![](/images/mayfly_board-only.jpg)    
+It does not utilize the Xbee cellular modual which means that it will not offer real-time data via the [Monitor My Watershed](https://monitormywatershed.org/) portal. All data is saved to the onboard microSD card and  and uploaded manually.     
 
-The example data logger used in this document was meant to be assembled as easily as possible and for a low cost. It does not utilize the Xbee cellular modual which means that it will not offer real-time data via the [Monitor My Watershed](https://monitormywatershed.org/) portal. All data will be saved to the onboard microSD card and will have to be retrieved and uploaded manually.  
-
-The use of the [Arduino Desktop IDE](https://www.arduino.cc/en/Main/Software) will be needed to compile and upload the [sketches](https://www.arduino.cc/en/Tutorial/Sketch) to the Mayfly. The process is fairly straight-forward and all of the sketches are provided.  
+Use of the [Arduino Desktop IDE](https://www.arduino.cc/en/Main/Software) will be needed to compile and upload the [sketches](https://www.arduino.cc/en/Tutorial/Sketch) to the Mayfly. The process is fairly straight-forward and all of the sketches are provided for you to use and modify.  
   
 **TABLE OF CONTENTS**  
   
@@ -42,6 +38,12 @@ The use of the [Arduino Desktop IDE](https://www.arduino.cc/en/Main/Software) wi
 ### Starter Kit  
 The [Mayfly Starter Kit](https://www.envirodiy.org/mayfly/hardware/starter-kit/) supplies you with the essential components for building your own data logger.  
   
+From the EnviroDIY website:
+  
+> "The EnviroDIY Mayfly Data Logger is a powerful, user-programmable microprocessor board that is fully compatible with the Arduino IDE software."
+
+> "The memory card socket, RTC, and solar charging features make it very easy to use this board for data logging and low-power operation. But it can also be used by itself, or with a wide variety of devices and accessories.  The Mayfly can be powered by a 3.7v lithium battery or through the microUSB port."  
+  
 ![](/images/mayfly_starter-kit.jpg)  
   
 Stroud Water Research offers this kit through [Amazon](https://www.amazon.com/EnviroDIY-Mayfly-Arduino-Compatible-Starter/dp/B01FCVALDW/ref=sr_1_2?keywords=Stroud+Water+Research+Center&qid=1585584911&sr=8-2) for about $90 plus shipping cost.    
@@ -64,7 +66,7 @@ The Real-time clock (RTC) battery is a small 3 volt button cell battery (like a 
   
 ![](/images/battery_cr1220.jpg)
   
-Install the CR1220 battery for the real-time clock on your Mayfly board. Make sure that the orientation of the polarity (+ and -) is correct.  
+Install the CR1220 battery for the real-time clock on your Mayfly board by sliding it into the circular metal battery holder located on the board. Make sure that the orientation of the polarity (+ and -) is correct so the board is not damaged.  
   
 ### 3.7 Volt Lithium Polymer Battery  
   
@@ -72,7 +74,7 @@ There are many different types of batteries available for use. It is important t
   
 ![](/images/battery_3.7v-lipo.jpg)
   
-Battery manufactures use a rating of `mAh` or milliampere-hours (A smartphone battery usually has between 2500 and 4000 milliampere-hours of electric capacity). The temperature logger that this document is based on is using a 1200 mAh but it may be wise to use something a little larger for optimal operation (2000-3000 mAh - **need verification**).    
+Battery manufactures use a rating of `mAh` or milliampere-hours (A smartphone battery usually has between 2500 and 4000 milliampere-hours of electric capacity). The temperature logger that this document is based on is using a 1200 mAh battery and is located in an area that receives a  lot of direct sunlight. If you plan to install the logger in a location with less available light, you may want to choose a higher mAh rating to ensure consistant power between charging periods.  
   
 The battery must also have a 2 pin [JST-PH](https://en.wikipedia.org/wiki/JST_connector) connector. This is a small (2mm) connector with a key or ridge on one side that mates with the connector on the Mayfly.   
   
@@ -80,9 +82,9 @@ The battery must also have a 2 pin [JST-PH](https://en.wikipedia.org/wiki/JST_co
   
 **It is important to look at the polarity (positive & negative) of the wires coming from the battery in relation to the polarity on the Mayfly board.**  
   
-Not all manufacturers configure their batteries the same way and you might receive a battery thatis wired backwards.
+Not all manufacturers configure their batteries the same way and you might receive a battery that is wired in reverse from the way the Mayfly is set up.
   
-Each battery connector on the Mayfly will have a `plus (+)` and `minus (-)` symbol printed on the circut board. The battery will have two wires attached to it, a `positive (red)` and a `negative (black)`. These must match up when connecting the battery to the Mayfly `(red + & black -)`. If your battery does not match up you will need to change the wires so they do.  
+Each battery connector on the Mayfly will have a `plus (+)` and `minus (-)` symbol printed on the circut board. The battery will have two wires attached to the connector, a `positive (red)` and a `negative (black)`. These must match up when connecting the battery to the Mayfly `(red + & black -)`. If your battery does not match up you will need to change the wires so they do.  
   
 **CONNECTING A BATTERY WITH INCORRECT POLARITY CAN BE HAZARDOUS TO YOUR WELL BEING AND TO THE MAYFLY**    
   
@@ -94,7 +96,7 @@ Seeed Studio offers a [OneWire temperature sensor](https://www.seeedstudio.com/O
   
 ![](/images/seeed_onewire-sensor.jpg)  
   
-Each temperature sensor has a unique address to identify it.  Use the code in the "**Address Discovery of OneWire Temperature Sensor**" section to find the address of your sensor. Be sure to keep this number on hand when you get to compiling the code for temperature logging. 
+Each temperature sensor has a unique address to identify it.  Use the sketch in the "**Address Discovery of OneWire Temperature Sensor**" section to find the address of your sensor. Be sure to keep this number on hand when you get to compiling the code for temperature logging. 
 
 ## Setting up the Arduino Desktop IDE Software    
   
@@ -133,11 +135,11 @@ Follow the [instructions](https://www.envirodiy.org/mayfly-sensor-station-manual
     
   * Attach the USB cable to the Mayfly and to the computer  
   * Turn on the Mayfly using the `off/on` switch  
-  * Select the COM port in the Arduino software under the menu `Tools > Port`  
+  * Select the `COM Port` in the Arduino software under the menu `Tools > Port`  
   
 ![](/images/arduino_com-port.jpg)  
   
-  * Open the Serial Monitor in the Adruino software (top right corner of the window) to view the output from the pre-loaded sketch that come with the Mayfly
+  * Open the Serial Monitor to view the pre-loaded sketch that come with the Mayfly by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu.  Make sure the "`baud`" rate option at the bottom right side of the widnow is set to "`9600`".
   
 ## Compiling and Uploading Code  
 
@@ -145,17 +147,19 @@ Follow the [instructions](https://www.envirodiy.org/mayfly-sensor-station-manual
 
 One of the first things that need to be done before using the Mayfly for data logging is setting the date and time on the real-time clock (RTC). 
 
-[Download](https://github.com/movingplaid/Mayfly_RealTimeClock/blob/master/Mayfly_RealTimeClock.ino) the code for setting the real-time clock.  
+[Download](https://github.com/movingplaid/Mayfly_RealTimeClock/blob/master/Mayfly_RealTimeClock.ino) the code for setting the real-time clock and open it in the Arduino IDE.  
   
-This sketch is meant to be a simple as possible, but you need to do things in the right order to obtain the best possible time setting. Since we are setting the time based on the compile time of the sketch, the faster you compile and upload the less difference you will have between the system time and the Mayfly time.
-
+This sketch is meant to be a simple as possible, but you need to do things in the right order to obtain the best possible time setting. 
+  
+Since we are setting the time based on the compile time of the sketch, there will be a slight difference between the system time and the Mayfly time (about 10 seconds).
+  
   * Complile and upload the sketch
   * Comment out the line for setting the clock
   * Complile and upload again
   
 We do a second compile and upload after commenting out the portion of the code that sets the time so that the next time you open the Serial Monitor or turn the Mayfly on, the time will not get reset to the compile time again.   
   
-Open the file (`Mayfly_RealTimeClock.ino`) in the Arduino IDE. Before compiling, you will need to install the following library:  
+Before compiling, you will need to install the following library:  
   
   * `RTClib`
   
@@ -222,7 +226,15 @@ If you need to run the sketch again, press the "`reset`" button on the Mayfly or
   
 [Download](https://github.com/movingplaid/Mayfly_OneWireAddress/blob/master/Mayfly_OneExample.ino) the code for the OneWire Example.  
  
-Change theh DeviceAddress to match your temperature sensor.  
+Open the code in the Arduino software and serach for the line:  
+
+`DeviceAddress TempSensor = `   
+
+Copy the DeviceAddress you found previously and paste it into your code between the curly braces {}.    
+  
+Example:  
+  
+`DeviceAddress TempSensor = { 0x28, 0x48, 0x98, 0xD6, 0x0B, 0x00, 0x00, 0x8A };`   
 
 The following library is requires to compile this code:  
   
@@ -268,7 +280,7 @@ The following libraries will need to be installed via the library manager found 
   
 For each library you will need to do the following:  
   
-In the Arduino software, go to `Tools > Manage Libraries` and type the name of the library in the serach bar and press "`Enter`" on your keyboard.  
+In the Arduino IDE, go to `Tools > Manage Libraries` and type the name of the library in the serach bar and press "`Enter`" on your keyboard.  
   
 Select the library found and click the "`Install`" button.  
 
@@ -303,4 +315,14 @@ Mounting Hardware
 
   * JST   
   * mAh  
+  * sketches  
+  * code  
+  * IDE  
+  * Grove   
+  * IDE  
+  * CSV  
+  * header  
+  * compile  
+  * upload  
+  * Button Cell - Also known as lithium coin battery, that is mainly used in high power devices such as keyless entry devices, glucose monitors, heart-rate monitors, and toys & games. 
   
