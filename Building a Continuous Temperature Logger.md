@@ -62,7 +62,7 @@ Some additional items will need to be purchased separately from the Starter Kit 
 
 ### Real-time Clock Battery  
   
-The Real-time clock (RTC) battery is a small 3 volt button cell battery (like a watch battery) that helps the Mayfly retain the data and time when external power (Li-Po battery or USB) has been removed from the board. They are fairly common and can be purchased from many retailers (online, grocery stores, drug stores, etc.).  
+The [Real-time clock](https://en.wikipedia.org/wiki/Real-time_clock) (RTC) battery is a small 3 volt button cell battery (like a watch battery) that helps the Mayfly retain the data and time when external power (Li-Po battery or USB) has been removed from the board. They are fairly common and can be purchased from many retailers (online, grocery stores, drug stores, etc.).  
   
 ![](/images/battery_cr1220.jpg)
   
@@ -99,10 +99,12 @@ Seeed Studio offers a [OneWire temperature sensor](https://www.seeedstudio.com/O
 ![](/images/seeed_onewire-sensor.jpg)  
   
 Each temperature sensor has a unique address to identify it.  Use the sketch in the "**Address Discovery of OneWire Temperature Sensor**" section to find the address of your sensor. Be sure to keep this number on hand when you get to compiling the code for temperature logging. 
-
+  
+If you are looking for addtional information on the DS18B20 chip used in this sensor (to modify or build your own), [Last Minute Engineers](https://lastminuteengineers.com/ds18b20-arduino-tutorial/) has an article on interfacing with the Arduino that might be helpful.  
+  
 ## Setting up the Arduino Desktop IDE Software    
   
-Detailed information on setting up the Arduino software can be found on the Arduino website.  You will need to [download](https://www.arduino.cc/en/main/software) `version 1.6.5 or greater`. 
+Detailed information on installing the Arduino software can be found on the Arduino website.  You will need to [download](https://www.arduino.cc/en/main/software) `version 1.6.5 or greater`. 
   
 Please read the instructions for the coresponding operating system you have installed:
   
@@ -111,29 +113,35 @@ Please read the instructions for the coresponding operating system you have inst
   * [Linux](https://www.arduino.cc/en/Guide/Linux)  
   * [Portable IDE](https://www.arduino.cc/en/Guide/PortableIDE) (Windows and Linux)   
   
-There is also an [introduction](https://www.arduino.cc/en/Guide/Introduction) on what Arduino is and why you would want to use it.  
+There is an [introduction](https://www.arduino.cc/en/Guide/Introduction) on what Arduino is and why you would want to use it as well as many other resources available on the website.  
 
 ### Adding the EnviroDIY board to Arduino  
 
+Before the Arduini IDE can use the Mayfly, we need to add some information to tell it a little about the specifics of the board.  
+  
 Start the Arduino software, then click on `File > Preferences` and paste the following URL into the box labeled `Additional Boards Manager URLs`:  
 
 `https://raw.githubusercontent.com/EnviroDIY/Arduino_boards/master/package_EnviroDIY_index.json`  
   
 ![](/images/arduino_preferences.jpg)  
   
-You will need to go to `Tools > Board > Boards Manager` from the menu of the main screen. A new window will open and in the dropdown list on the top left of the screen ("`Type`"), select "`Contributed`" and then type in  `EnviroDIY ATmega Boards` In the search bar. 
+Click the "`OK`" button to close this window and return to the main screen.  
   
-You should see a search result for the `EnviroDIY ATmega Boards`. Finally, click  the "`Install`" button to complete your selection.
+You will need to select the Mayfly to make it the active board in the IDE  by going to `Tools > Board > Boards Manager` from the menu of the main screen. 
+  
+A new window will open and in the dropdown list on the top left of the screen `Type > Contributed`" and then type in  `EnviroDIY` In the search bar. 
+  
+You should see a search result for the `EnviroDIY ATmega Boards`. Click the "`Install`" button to complete your selection and click the "`Close`" button when it has finished.  
   
 ![](/images/arduino_board-manager.jpg) 
   
-Now, from the `Tools > Board` menu, select the EnviroDIY Mayfly 1284P board.
+Now, from the `Tools > Board` menu in the main window of the IDE, select the `EnviroDIY Mayfly 1284P` from the list of available boards.
   
 ![](/images/arduino_board-menu.jpg) 
   
 ### Connecting to a Computer  
   
-Follow the [instructions](https://www.envirodiy.org/mayfly-sensor-station-manual/#connecting-a-computer-to-the-mayfly-data-logger) on the EnviroDIY website to connect the Mayfly to your computer.   
+Follow the instructions in the [Sensor Station Manual](https://www.envirodiy.org/mayfly-sensor-station-manual/) on the EnviroDIY website to connect the Mayfly to your computer. (`Section 4.2.Connecting a Computer to the Mayfly Data Logger`)  
     
   * Attach the USB cable to the Mayfly and to the computer  
   * Turn on the Mayfly using the `off/on` switch  
@@ -193,19 +201,23 @@ The Serial Monitor should output the date and time currently set on the RTC.
 
 ### Address Discovery of OneWire Temperature Sensor  
   
+Before you can use the OneWire Temperature Sensor, you will need to find the specific address assigned to it. Each sensor has a unique address so that multiple sensors can be used at the same time.  
+  
 [Download](https://github.com/movingplaid/Mayfly_OneWireAddress/blob/master/Mayfly_OneWireAddress.ino) the code for the OneWire Device Address discovery.  
   
-The following library is requires to compile this code:  
+The following libraries are requires to compile this code:  
   
   * OneWire
   
 In the Arduino software, go to `Tools > Manage Libraries` and type "`OneWire`" in the serach bar and press "`Enter`" on your keyboard.  
+  
+Select the library named "`OneWire`" and click the "`Install`" button.   
 
-Select the library named "`OneWire`" and click the "`Install`" button. 
-
+Close the Library Manager window by clicking the "`Close`" button when finished.  
+  
 Plug the OnewWire Temperature Sensor into the Grove port marked `D4-5` on the Mayfly board.  
   
-Upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu.  
+Compile and Upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu.  
 
 Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu. Make sure the "`baud`" rate option at the bottom right side of the widnow is set to "`9600`".
   
@@ -226,6 +238,8 @@ If you need to run the sketch again, press the "`reset`" button on the Mayfly or
   
 ### Testing the OneWire Temperature Sensor
   
+To verify that your sensor has been correctly indentified, you can run this simple sketch.  
+
 [Download](https://github.com/movingplaid/Mayfly_OneWireAddress/blob/master/Mayfly_OneExample.ino) the code for the OneWire Example.  
  
 Open the code in the Arduino software and serach for the line:  
@@ -241,10 +255,17 @@ Example:
 The following library is requires to compile this code:  
   
   * OneWire
+  * DallasTemperature
   
 In the Arduino software, go to `Tools > Manage Libraries` and type "`OneWire`" in the serach bar and press "`Enter`" on your keyboard.  
-
+  
 Select the library named "`OneWire`" and click the "`Install`" button. 
+  
+Do the same for the DallasTemperature library. Type "`DallasTemperature`" in the serach bar and press "`Enter`" on your keyboard.  
+  
+Select the library named "`DallasTemperature`" and click the "`Install`" button.  
+
+Close the Library Manager window by clicking the "`Close`" button when finished.  
 
 Plug the OnewWire Temperature Sensor into the Grove port marked `D4-5` on the Mayfly board.  
   
@@ -254,7 +275,9 @@ Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shif
   
 ![](/images/arduino_baud.jpg)
   
-The Serial Monitor should output the current temperature that the sensor is reading. 
+The Serial Monitor should output the current temperature that the sensor is reading.  This is also helpful in conducting some QC tests to determine how accurate your sensor is.  
+  
+![](/images/image-needed.jpg)  
   
 ### Continuous Temperature Logging Code  
   
@@ -297,34 +320,44 @@ Upload to Mayfly
 ## Field Installation  
   
 Location  
+  
+![](/images/image-needed.jpg) 
+  
 Mounting Hardware  
-
+  
+![](/images/image-needed.jpg)  
+  
 ## MonitorMyWatershed.org  
   
 ### Creating an account  
 
-`https://monitormywatershed.org/register/`  
-
+`https://monitormywatershed.org/register/`   
+  
+![](/images/image-needed.jpg) 
+  
 ### Registering a Sensor Station  
   
-`https://monitormywatershed.org/sites/register/`  
+`https://monitormywatershed.org/sites/register/`
+  
+![](/images/image-needed.jpg)  
 
 ### Customizing Header Information & Uploading the CSV Sensor Data  
   
   `https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#sensor-data`  
-  
+    
+  ![](/images/image-needed.jpg)  
+    
 ## Definitions  
 
-  * JST   
-  * mAh  
-  * sketches  
-  * code  
-  * IDE  
-  * Grove   
-  * IDE  
-  * CSV  
-  * header  
-  * compile  
-  * upload  
-  * Button Cell - Also known as lithium coin battery, that is mainly used in high power devices such as keyless entry devices, glucose monitors, heart-rate monitors, and toys & games. 
+  * [JST](https://en.wikipedia.org/wiki/JST_connector) - JST connectors are electrical connectors manufactured to the design standards originally developed by J.S.T. Mfg. Co.  JST connectors are used in many types of products, and commonly used by electronics hobbyists and consumer products.   
+  * [mAh](https://whatis.techtarget.com/definition/milliampere-hour-mAh) - A milliampere hour (mAh) is 1000th of an ampere hour ( Ah ). Both measures are commonly used to describe the energy charge that a battery will hold and how long a device will run before the battery needs recharging.    
+  * [Sketch](https://www.arduino.cc/en/tutorial/sketch) - A sketch is the name that Arduino uses for a program. It's the unit of code that is uploaded to and run on an Arduino board.    
+  * [Code](https://en.wikipedia.org/wiki/Source_code) - In computing, source code is any collection of code, possibly with comments, written using a human-readable programming language, usually as plain text.  
+  * [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment)  -An integrated development environment (IDE) is a software application that provides comprehensive facilities to computer programmers for software development. An IDE normally consists of at least a source code editor, build automation tools and a debugger.  
+  * [Grove](http://wiki.seeedstudio.com/Grove_System/) - Grove is a modular, standardized connector prototyping system.    
+  * [CSV](https://en.wikipedia.org/wiki/Comma-separated_values) - A comma-separated values (CSV) file is a delimited text file that uses a comma to separate values. Each line of the file is a data record. Each record consists of one or more fields, separated by commas.  
+  * [Header](https://en.wikipedia.org/wiki/Header_(computing)) - In information technology, header refers to supplemental data placed at the beginning of a block of data being stored or transmitted. In data transmission, the data following the header is sometimes called the payload or body.   
+  * [Compile](https://en.wikipedia.org/wiki/Compiler) - A compiler is a computer program that translates computer code written in one programming language (the source language) into another language (the target language).  
+  * [Upload](https://www.arduino.cc/en/Guide/ArduinoUno) - When you upload a sketch, you're using the Arduino bootloader, a small program that has been loaded on to the microcontroller on your board. It allows you to upload code without using any additional hardware.   
+  * [Button Cell](https://en.wikipedia.org/wiki/Button_cell) - Also known as lithium coin battery, that is mainly used in high power devices such as keyless entry devices, glucose monitors, heart-rate monitors, and toys & games. 
   
