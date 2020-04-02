@@ -1,14 +1,14 @@
 ## Introduction  
 
-This document outlines what you will need to build a Continuous Temperature Logger with the [EnviroDIY Mayfly data logger](https://www.envirodiy.org/mayfly/) and will try to cover as much ground as possible while keeping the information clear and simple.  
+This document outlines what you will need to build a Continuous Temperature Logger with the [EnviroDIY Mayfly data logger](https://www.envirodiy.org/mayfly/).  It is meant to keep the information as simple and clear for new users, but those with more experience may want to expand on the application.  
   
 ![](/images/mayfly_board-only.jpg)  
   
-Originally set up as a low cost experiment to evaluate possible uses for Citizen Science and Educators, the example data logger used for this document was assembled with off-the-shelf-components and is currently deployed on Stillwater Run in Berks County, PA.  
+Originally set up as a low cost experiment to evaluate possible uses for Citizen Science and Educators, the example data logger used for this document was assembled with off-the-shelf-components and has been [deployed](https://monitormywatershed.org/sites/STWTR2/) since February 16th, 2020.  
   
-It does not utilize the Xbee cellular modual which means that it will not offer real-time data via the [Monitor My Watershed](https://monitormywatershed.org/) portal. All data is saved to the onboard microSD card and  and uploaded manually.     
+It does not utilize the Xbee cellular module which means that it will not offer real-time data via the [Monitor My Watershed](https://monitormywatershed.org/) portal. All data is saved to the on-board micro-SD card and uploaded manually.  
 
-Use of the [Arduino Desktop IDE](https://www.arduino.cc/en/Main/Software) will be needed to compile and upload the [sketches](https://www.arduino.cc/en/Tutorial/Sketch) to the Mayfly. The process is fairly straight-forward and all of the sketches are provided for you to use and modify.  
+Use of the [Arduino Desktop IDE](https://www.arduino.cc/en/Main/Software) will be needed to compile and upload the [sketches](https://www.arduino.cc/en/Tutorial/Sketch) to the Mayfly. While the process is fairly straight-forward and all of the sketches are provided for you to use and modify, you may want to take some time to explore the Arduino website as well as the EnviroDIY GitHub repository to better understand the concepts explained in this document.    
   
 **TABLE OF CONTENTS**  
   
@@ -54,15 +54,15 @@ The Starter Kit includes the following items:
   * Waterproof enclosure with clear lid  
   * microUSB programming cable (1-meter long)  
   * 2 [Grove](http://wiki.seeedstudio.com/Grove_System/) cables (20cm long)  
-  * 4GB [microSD](https://en.wikipedia.org/wiki/SD_card) memory card with SDcard-size adapter  
+  * 4GB [microSD](https://en.wikipedia.org/wiki/SD_card) memory card with SD card size adapter  
   * 0.5 watt solar panel with [JST connector](https://en.wikipedia.org/wiki/JST_connector)  
-  * Mayfly microSD vertical adapter board  
+  * Mayfly micro-SD vertical adapter board  
 
 Some additional items will need to be purchased separately from the Starter Kit to make the logger fully operational:  
 
 ### Real-time Clock Battery  
   
-The [Real-time clock](https://en.wikipedia.org/wiki/Real-time_clock) (RTC) battery is a small 3 volt button cell battery (like a watch battery) that helps the Mayfly retain the data and time when external power (Li-Po battery or USB) has been removed from the board. They are fairly common and can be purchased from many retailers (online, grocery stores, drug stores, etc.).  
+The [Real-time clock](https://en.wikipedia.org/wiki/Real-time_clock) (RTC) battery is a small 3 volt button cell battery (like a watch battery) that helps the Mayfly retain the data and time when external power (Li-Po battery or USB) has been removed from the board. They are fairly common and can be purchased from many retailers (on-line, grocery stores, drug stores, etc.).  
   
 ![](/images/battery_cr1220.jpg)
   
@@ -70,11 +70,11 @@ Install the CR1220 battery for the real-time clock on your Mayfly board by slidi
   
 ### 3.7 Volt Lithium Polymer Battery  
   
-There are many different types of batteries available for use. It is important to select a battery with enough storage capacity to operate for a period of time without being charged or with very little opportunity to charge (not unlike your phone). This is important for installation sites that are well shaded or recieve partial sunlight during the day (forests, shaded slopes or valleys).  
+There are many different types of batteries available for use. It is important to select a battery with enough storage capacity to operate for a period of time without being charged or with very little opportunity to charge (not unlike your phone). This is important for installation sites that are well shaded or receive partial sunlight during the day (forests, shaded slopes or valleys).  
   
 ![](/images/battery_3.7v-lipo.jpg)
   
-Battery manufactures use a rating of `mAh` or milliampere-hours (A smartphone battery usually has between 2500 and 4000 milliampere-hours of electric capacity). The temperature logger that this document is based on is using a 1200 mAh battery and is located in an area that receives a  lot of direct sunlight. If you plan to install the logger in a location with less available light, you may want to choose a higher mAh rating to ensure consistant power between charging periods.  
+Battery manufactures use a rating of `mAh` or milliampere-hours (A smart-phone battery usually has between 2500 and 4000 milliampere-hours of electric capacity). The temperature logger that this document is based on is using a 1200 mAh battery and is located in an area that receives a  lot of direct sunlight. If you plan to install the logger in a location with less available light, you may want to choose a higher mAh rating to ensure consistent power between charging periods.  
   
 The battery must also have a 2 pin [JST-PH](https://en.wikipedia.org/wiki/JST_connector) connector. This is a small (2mm) connector with a key or ridge on one side that mates with the connector on the Mayfly.   
   
@@ -84,13 +84,13 @@ The battery must also have a 2 pin [JST-PH](https://en.wikipedia.org/wiki/JST_co
   
 Not all manufacturers configure their batteries the same way and you might receive a battery that is wired in reverse from the way the Mayfly is set up.
   
-Each battery connector on the Mayfly will have a `plus (+)` and `minus (-)` symbol printed on the circut board. The battery will have two wires attached to the connector, a `positive (red)` and a `negative (black)`. These must match up when connecting the battery to the Mayfly `(red + & black -)`. If your battery does not match up you will need to change the wires so they do.  
+Each battery connector on the Mayfly will have a `plus (+)` and `minus (-)` symbol printed on the circuit board. The battery will have two wires attached to the connector, a `positive (red)` and a `negative (black)`. These must match up when connecting the battery to the Mayfly `(red + & black -)`. If your battery does not match up you will need to change the wires so they do.  
   
 ![](/images/danger_symbol.jpg)
   
 **CONNECTING A BATTERY WITH INCORRECT POLARITY CAN BE HAZARDOUS TO YOUR WELL BEING AND TO THE MAYFLY**    
   
-The Li-Po battery is not immediately required for setting up the Mayfly board but it will be needed when you want to run the board without being connected to your computer (ie. in the field).  
+The Li-Po battery is not immediately required for setting up the Mayfly board but it will be needed when you want to run the board without being connected to your computer (i.e. in the field).  
 
 ### OneWire Temperature Sensor  
   
@@ -100,13 +100,13 @@ Seeed Studio offers a [OneWire temperature sensor](https://www.seeedstudio.com/O
   
 Each temperature sensor has a unique address to identify it.  Use the sketch in the "**Address Discovery of OneWire Temperature Sensor**" section to find the address of your sensor. Be sure to keep this number on hand when you get to compiling the code for temperature logging. 
   
-If you are looking for addtional information on the DS18B20 chip used in this sensor (to modify or build your own), [Last Minute Engineers](https://lastminuteengineers.com/ds18b20-arduino-tutorial/) has an article on interfacing with the Arduino that might be helpful.  
+If you are looking for additional information on the DS18B20 chip used in this sensor (to modify or build your own), [Last Minute Engineers](https://lastminuteengineers.com/ds18b20-arduino-tutorial/) has an article on interfacing with the Arduino that might be helpful.  
   
 ## Setting up the Arduino Desktop IDE Software    
   
 Detailed information on installing the Arduino software can be found on the Arduino website.  You will need to [download](https://www.arduino.cc/en/main/software) `version 1.6.5 or greater`. 
   
-Please read the instructions for the coresponding operating system you have installed:
+Please read the instructions for the corresponding operating system you have installed:
   
   * [Windows](https://www.arduino.cc/en/Guide/Windows)  
   * [MacOS](https://www.arduino.cc/en/Guide/MacOSX)  
@@ -117,7 +117,7 @@ There is an [introduction](https://www.arduino.cc/en/Guide/Introduction) on what
 
 ### Adding the EnviroDIY board to Arduino  
 
-Before the Arduini IDE can use the Mayfly, we need to add some information to tell it a little about the specifics of the board.  
+Before the Arduino IDE can use the Mayfly, we need to add some information to tell it a little about the specifics of the board.  
   
 Start the Arduino software, then click on `File > Preferences` and paste the following URL into the box labeled `Additional Boards Manager URLs`:  
 
@@ -129,7 +129,7 @@ Click the "`OK`" button to close this window and return to the main screen.
   
 You will need to select the Mayfly to make it the active board in the IDE  by going to `Tools > Board > Boards Manager` from the menu of the main screen. 
   
-A new window will open and in the dropdown list on the top left of the screen `Type > Contributed`" and then type in  `EnviroDIY` In the search bar. 
+A new window will open and in the drop-down list on the top left of the screen `Type > Contributed`" and then type in  `EnviroDIY` In the search bar. 
   
 You should see a search result for the `EnviroDIY ATmega Boards`. Click the "`Install`" button to complete your selection and click the "`Close`" button when it has finished.  
   
@@ -149,23 +149,35 @@ Follow the instructions in the [Sensor Station Manual](https://www.envirodiy.org
   
 ![](/images/arduino_com-port.jpg)  
   
-  * Open the Serial Monitor to view the pre-loaded sketch that come with the Mayfly by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu.  Make sure the "`baud`" rate option at the bottom right side of the widnow is set to "`9600`".
+  * Open the Serial Monitor to view the pre-loaded sketch that come with the Mayfly by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu.  Make sure the "`baud`" rate option at the bottom right side of the window is set to "`9600`".
   
 ## Compiling and Uploading Code  
+  
+The following information will get the Mayfly set up for the temperature logging code that will run once the unit has been deployed in the field.  
+  
+In each of the three sections of code to follow, there will be a link to a sketch for the Arduino IDE. The link will open a web browser window to the repository on GitHub, where the sketch is hosted.  
+  
+You will need to look for the file that ends with the extension `.ino`. This is the sketch for the Arduino IDE.  
 
+Use your mouse to `Right Click` on the file and select `Save Link As`.  
+  
+The Arduino IDE expects to have files in a folder with the same name so, once you have downloaded the file, create a folder with the same name of the file, minus the `.ino` extension and place the file in that folder (ex. the file `Mayfly_RealTimeClock.ino` would be placed in a folder named `Mayfly_RealTimeClock`).  
+  
+The Arduino IDE creates a folder, usually in `Documents/Arduino/sketches`, for you to save your sketches. You do not have to save them here but it makes it easier to find them later and they will appear in the menu under `File > Sketchbook > sketches`.
+  
 ### Setting the date and time on the Real-time clock    
 
-One of the first things that need to be done before using the Mayfly for data logging is setting the date and time on the real-time clock (RTC). 
+One of the most important first steps that needs to be done is setting up the real-time clock (RTC). 
 
-[Download](https://github.com/movingplaid/Mayfly_RealTimeClock/blob/master/Mayfly_RealTimeClock.ino) the code for setting the real-time clock and open it in the Arduino IDE.  
+[Download](https://github.com/movingplaid/Mayfly_RealTimeClock) the code for setting the real-time clock and open it in the Arduino IDE.  
   
 This sketch is meant to be a simple as possible, but you need to do things in the right order to obtain the best possible time setting. 
   
 Since we are setting the time based on the compile time of the sketch, there will be a slight difference between the system time and the Mayfly time (about 10 seconds).
   
-  * Complile and upload the sketch
+  * Compile and upload the sketch
   * Comment out the line for setting the clock
-  * Complile and upload again
+  * Compile and upload again
   
 We do a second compile and upload after commenting out the portion of the code that sets the time so that the next time you open the Serial Monitor or turn the Mayfly on, the time will not get reset to the compile time again.   
   
@@ -173,7 +185,7 @@ Before compiling, you will need to install the following library:
   
   * `RTClib`
   
-In the Arduino software, go to `Tools > Manage Libraries` and type "`RTClib`" in the serach bar and press "`Enter`" on your keyboard.  
+In the Arduino software, go to `Tools > Manage Libraries` and type "`RTClib`" in the search bar and press "`Enter`" on your keyboard.  
   
 ![](/images/arduino_rtclib.jpg)  
   
@@ -191,7 +203,7 @@ So it looks like this (Use // in front of the line):
   
 Compile and upload again.  
 
-Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu.  Make sure the "`baud`" rate option at the bottom right side of the widnow is set to "`9600`".
+Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu.  Make sure the "`baud`" rate option at the bottom right side of the window is set to "`9600`".
   
 ![](/images/arduino_baud.jpg)
   
@@ -209,17 +221,17 @@ The following libraries are requires to compile this code:
   
   * OneWire
   
-In the Arduino software, go to `Tools > Manage Libraries` and type "`OneWire`" in the serach bar and press "`Enter`" on your keyboard.  
+In the Arduino software, go to `Tools > Manage Libraries` and type "`OneWire`" in the search bar and press "`Enter`" on your keyboard.  
   
 Select the library named "`OneWire`" and click the "`Install`" button.   
 
 Close the Library Manager window by clicking the "`Close`" button when finished.  
   
-Plug the OnewWire Temperature Sensor into the Grove port marked `D4-5` on the Mayfly board.  
+Plug the OneWire Temperature Sensor into the Grove port marked `D4-5` on the Mayfly board.  
   
 Compile and Upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu.  
 
-Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu. Make sure the "`baud`" rate option at the bottom right side of the widnow is set to "`9600`".
+Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu. Make sure the "`baud`" rate option at the bottom right side of the window is set to "`9600`".
   
 ![](/images/arduino_baud.jpg)
   
@@ -238,11 +250,11 @@ If you need to run the sketch again, press the "`reset`" button on the Mayfly or
   
 ### Testing the OneWire Temperature Sensor
   
-To verify that your sensor has been correctly indentified, you can run this simple sketch.  
+To verify that your sensor has been correctly identified, you can run this simple sketch.  
 
 [Download](https://github.com/movingplaid/Mayfly_OneWireAddress/blob/master/Mayfly_OneExample.ino) the code for the OneWire Example.  
  
-Open the code in the Arduino software and serach for the line:  
+Open the code in the Arduino software and search for the line:  
 
 `DeviceAddress TempSensor = `   
 
@@ -257,21 +269,21 @@ The following library is requires to compile this code:
   * OneWire
   * DallasTemperature
   
-In the Arduino software, go to `Tools > Manage Libraries` and type "`OneWire`" in the serach bar and press "`Enter`" on your keyboard.  
+In the Arduino software, go to `Tools > Manage Libraries` and type "`OneWire`" in the search bar and press "`Enter`" on your keyboard.  
   
 Select the library named "`OneWire`" and click the "`Install`" button. 
   
-Do the same for the DallasTemperature library. Type "`DallasTemperature`" in the serach bar and press "`Enter`" on your keyboard.  
+Do the same for the DallasTemperature library. Type "`DallasTemperature`" in the search bar and press "`Enter`" on your keyboard.  
   
 Select the library named "`DallasTemperature`" and click the "`Install`" button.  
 
 Close the Library Manager window by clicking the "`Close`" button when finished.  
 
-Plug the OnewWire Temperature Sensor into the Grove port marked `D4-5` on the Mayfly board.  
+Plug the OneWire Temperature Sensor into the Grove port marked `D4-5` on the Mayfly board.  
   
 Upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu.  
 
-Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu. Make sure the "`baud`" rate option at the bottom right side of the widnow is set to "`9600`".
+Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu. Make sure the "`baud`" rate option at the bottom right side of the window is set to "`9600`".
   
 ![](/images/arduino_baud.jpg)
   
@@ -283,9 +295,9 @@ The Serial Monitor should output the current temperature that the sensor is read
   
 [Download](https://github.com/movingplaid/Mayfly_TempProbeLogging) the Temperature Logging code from GitHub   
   
-You will need to edit the TempProbLogging code to replace the DeviceAddres with the address discoved for your sensor (see `Address Discovery of OneWire Temperature Sensor`)  
+You will need to edit the TempProbLogging code to replace the DeviceAddress with the address discovered for your sensor (see `Address Discovery of OneWire Temperature Sensor`)  
 
-Open the code in the Arduino software and serach for the line:  
+Open the code in the Arduino software and search for the line:  
 
 `DeviceAddress TempSensor = `   
 
@@ -305,7 +317,7 @@ The following libraries will need to be installed via the library manager found 
   
 For each library you will need to do the following:  
   
-In the Arduino IDE, go to `Tools > Manage Libraries` and type the name of the library in the serach bar and press "`Enter`" on your keyboard.  
+In the Arduino IDE, go to `Tools > Manage Libraries` and type the name of the library in the search bar and press "`Enter`" on your keyboard.  
   
 Select the library found and click the "`Install`" button.  
 
@@ -358,6 +370,11 @@ Mounting Hardware
   * [CSV](https://en.wikipedia.org/wiki/Comma-separated_values) - A comma-separated values (CSV) file is a delimited text file that uses a comma to separate values. Each line of the file is a data record. Each record consists of one or more fields, separated by commas.  
   * [Header](https://en.wikipedia.org/wiki/Header_(computing)) - In information technology, header refers to supplemental data placed at the beginning of a block of data being stored or transmitted. In data transmission, the data following the header is sometimes called the payload or body.   
   * [Compile](https://en.wikipedia.org/wiki/Compiler) - A compiler is a computer program that translates computer code written in one programming language (the source language) into another language (the target language).  
-  * [Upload](https://www.arduino.cc/en/Guide/ArduinoUno) - When you upload a sketch, you're using the Arduino bootloader, a small program that has been loaded on to the microcontroller on your board. It allows you to upload code without using any additional hardware.   
-  * [Button Cell](https://en.wikipedia.org/wiki/Button_cell) - Also known as lithium coin battery, that is mainly used in high power devices such as keyless entry devices, glucose monitors, heart-rate monitors, and toys & games. 
+  * [Upload](https://www.arduino.cc/en/Guide/ArduinoUno) - When you upload a sketch, you're using the Arduino boot-loader, a small program that has been loaded on to the micro-controller on your board. It allows you to upload code without using any additional hardware.   
+  * [Button Cell](https://en.wikipedia.org/wiki/Button_cell) - Also known as lithium coin battery, that is mainly used in high power devices such as key-less entry devices, glucose monitors, heart-rate monitors, and toys & games. 
+    
+## About Me  
   
+I am a PA Master Naturalist and Citizen Scientist focusing on forests and watersheds. In addition to the volunteer work I do with watershed associations in Berks and Lancaster counties, I conduct monthly stream testing on Stillwater Run in Nolde Forest State Park where the Continuous Temperature Logger, used for this document, is located.  
+  
+
