@@ -1,6 +1,6 @@
 ## Introduction  
 
-This document outlines what you will need to build a Continuous Temperature Logger with the [EnviroDIY Mayfly data logger](https://www.envirodiy.org/mayfly/).  It is meant to keep the information as simple and clear for new users, but those with more experience may want to expand on the application.  
+This document outlines what you will need to build a Continuous Temperature Logger with the [EnviroDIY Mayfly data logger](https://www.envirodiy.org/mayfly/).  It is meant to be simple and clear for new users, but those with more experience may want to expand on the application.  
   
 ![](/images/mayfly_board-only.jpg)  
   
@@ -8,7 +8,7 @@ Originally set up as a low cost experiment to evaluate possible uses for Citizen
   
 It does not utilize the Xbee cellular module which means that it will not offer real-time data via the [Monitor My Watershed](https://monitormywatershed.org/) portal. All data is saved to the on-board micro-SD card and uploaded manually.  
 
-Use of the [Arduino Desktop IDE](https://www.arduino.cc/en/Main/Software) will be needed to compile and upload the [sketches](https://www.arduino.cc/en/Tutorial/Sketch) to the Mayfly. While the process is fairly straight-forward and all of the sketches are provided for you to use and modify, you may want to take some time to explore the Arduino website as well as the EnviroDIY GitHub repository to better understand the concepts explained in this document.    
+Use of the [Arduino Desktop IDE](https://www.arduino.cc/en/Main/Software) will be needed to compile and upload the [sketches](https://www.arduino.cc/en/Tutorial/Sketch) to the Mayfly. While the process is fairly straight-forward and all of the sketches are provided for you to use and modify, you may want to take some time to explore the [Arduino website](https://www.arduino.cc/) as well as the [EnviroDIY GitHub](https://github.com/EnviroDIY) repository to better understand the concepts explained in this document.    
   
 **TABLE OF CONTENTS**  
   
@@ -30,8 +30,10 @@ Use of the [Arduino Desktop IDE](https://www.arduino.cc/en/Main/Software) will b
 - [MonitorMyWatershed.org](#monitormywatershedorg)
   * [Creating an account](#creating-an-account)
   * [Registering a Sensor Station](#registering-a-sensor-station)
-  * [Customizing Header Information & Uploading the CSV Sensor Data](#customizing-header-information---uploading-the-csv-sensor-data)
+  * [Customizing Header Information](#customizing-header-information)
+- [Uploading the CSV Sensor Data](#uploading-the-csv-sensor-data)
 - [Definitions](#definitions)
+- [About Me](#about-me)  
   
 ## Hardware  
 
@@ -322,7 +324,7 @@ This is the header information for the values that will be written to the SD car
   * Battery voltage  
   * Temperature (of the Mayfly)  
  
-If you do not plan to upload your data to MonitorMyWatershed, you can rename these values as you like, but the must stay in this order unless you make further changes to the sketch.  
+If you do not plan to upload your data to MonitorMyWatershed.org, you can rename these values as you like, but the must stay in this order unless you make further changes to the sketch.  
 
 **NOTE:** MonitorMyWatershed expects values to be in a specific order which is not covered in this section. Please refer to the section `Registering a Sensor Station` later in this document.  
   
@@ -378,29 +380,79 @@ Mounting Hardware
   
 ## MonitorMyWatershed.org  
   
-### Creating an account  
-
-`https://monitormywatershed.org/register/`   
+Getting started with MonitorMyWatershed is (almost) as easy as one-two-three.  
   
-![](/images/image-needed.jpg) 
+![](images/mmw_setup-steps.jpg)  
+  
+The reality of this is actually:
+  
+  * Create a new account (unless you already have one active)
+  * Register a site (this is a physical location)
+  * Add your sensors (temperature sensor, battery and the Mayfly)
+  * Upload your data (in this example we are manually uploading data and it must be formatted correctly)
+  * View your data  (fingers crossed)
+  
+### Creating an account  
+  
+The very first step to getting your data on-line is to [register](https://monitormywatershed.org/register/) a new account.  Like many other websites, some basic information is required to sign up:
+  
+  * First name  
+  * Last name  
+  * Email address  
+  * Username  
+  * Password  
+  * Organization (optional)  
+  
+![](/images/mmw_signup.jpg)  
+  
+Once you have enter this information, all you need to do is agree to the [Terms of Use](https://monitormywatershed.org/terms/) for the website and click the `Register` button.  
   
 ### Registering a Sensor Station  
   
-`https://monitormywatershed.org/sites/register/`
-![](/images/image-needed.jpg)  
+On the menu bar at the top of the page, click on [My Sites](https://monitormywatershed.org/sites/). This will open a new page where you can register a new site or display the sites you have already created.   
   
-You will also need to edit the header information (DATA_HEADER) to match your individual site (see `Customizing Header Information & Uploading the CSV Sensor Data`).  
+There will be a button on this page that reads [Register a New Site](https://monitormywatershed.org/sites/register/).
   
-Example: 
+![](/images/mmw_register-new-site.jpg)  
   
-`Sampling Feature UUID: [sampling feature UUID],,,\r\nSensor Name:,Maxim_DS18B20,EnviroDIY_Mayfly Data Logger,EnviroDIY_Mayfly Data Logger\r\nVariable Name:,Temperature_C,Battery_Voltage,Board_Temp_C\r\nResult Unit:,degreeCelsius,volt,degreeCelsius\r\nResult UUID:,[variable 1 UUID],[variable 1 UUID],[variable 1 UUID]\r\nDate and Time in UTC-5,Temperature,Battery voltage,Temperature` 
+This will open the page where can enter the specific information about your site such as location and type.  
+  
+![](/images/mmw_register-site-page.jpg)   
+   
+### Adding Sensors 
+  
+Once your site is set up, you can proceed to adding sensor information.  Look for the button `MANAGE SENSORS` and click on it.  
+  
+![](/images/mmw_manage-sensors.jpg)  
+  
+The page will open to show which sensors have been added to the site. If this is a new site there will be no sensors listed. This example shows the list for the logger on Stillwater Run.  
 
-### Customizing Header Information & Uploading the CSV Sensor Data  
+![](/images/mmw_manage-sensor-results.jpg) 
+  
+It is important to note that anything you want to record and display data for is considered a sensor. Even the Mayfly and the battery are sensors in this context.  
+  
+Click on the plus sign `+` to create a new sensor entry and fill out the required fields for each sensor you wish to add.  You should have a total of three when you are finished:  
+  
+  * DS18B20 Waterproof Digital temperature sensor (Maxim_DS18B20_Temp)  
+  * Mayfly Data Logger (EnviroDIY_Mayfly_Batt)  
+  * Mayfly Data Logger (EnviroDIY_Mayfly_Temp)  
+  
+![](images/mmw_add-new-sensor.jpg)  
+
+### Uploading Data
   
   `https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#sensor-data`  
     
   ![](/images/image-needed.jpg)  
     
+  You will also need to edit the header information (DATA_HEADER) to match your individual site (see `Customizing Header Information & Uploading the CSV Sensor Data`).  
+  
+Example: 
+  
+`Sampling Feature UUID: [sampling feature UUID],,,\r\nSensor Name:,Maxim_DS18B20,EnviroDIY_Mayfly Data Logger,EnviroDIY_Mayfly Data Logger\r\nVariable Name:,Temperature_C,Battery_Voltage,Board_Temp_C\r\nResult Unit:,degreeCelsius,volt,degreeCelsius\r\nResult UUID:,[variable 1 UUID],[variable 1 UUID],[variable 1 UUID]\r\nDate and Time in UTC-5,Temperature,Battery voltage,Temperature`  
+  
+### Viewing You Data  
+  
 ## Definitions  
 
   * [JST](https://en.wikipedia.org/wiki/JST_connector) - JST connectors are electrical connectors manufactured to the design standards originally developed by J.S.T. Mfg. Co.  JST connectors are used in many types of products, and commonly used by electronics hobbyists and consumer products.   
