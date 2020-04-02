@@ -86,6 +86,8 @@ Not all manufacturers configure their batteries the same way and you might recei
   
 Each battery connector on the Mayfly will have a `plus (+)` and `minus (-)` symbol printed on the circut board. The battery will have two wires attached to the connector, a `positive (red)` and a `negative (black)`. These must match up when connecting the battery to the Mayfly `(red + & black -)`. If your battery does not match up you will need to change the wires so they do.  
   
+![](/images/danger_symbol.jpg)
+  
 **CONNECTING A BATTERY WITH INCORRECT POLARITY CAN BE HAZARDOUS TO YOUR WELL BEING AND TO THE MAYFLY**    
   
 The Li-Po battery is not immediately required for setting up the Mayfly board but it will be needed when you want to run the board without being connected to your computer (ie. in the field).  
