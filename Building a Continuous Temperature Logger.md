@@ -151,75 +151,67 @@ Follow the instructions in the [Sensor Station Manual](https://www.envirodiy.org
   
 ![](/images/arduino_com-port.jpg)  
   
-  * Open the Serial Monitor to view the pre-loaded sketch that come with the Mayfly by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu.  Make sure the "`baud`" rate option at the bottom right side of the window is set to "`9600`".
+  * Open the Serial Monitor to view the pre-loaded sketch that come with the Mayfly by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu.  Make sure the "`baud`" rate option at the bottom right side of the window is set to "`xxxx`".
   
 ## Compiling and Uploading Code  
   
-The following information will get the Mayfly set up for the temperature logging code that will run once the unit has been deployed in the field.  
-  
-In each of the three sections of code to follow, there will be a link to a sketch for the Arduino IDE. The link will open a web browser window to the repository on GitHub, where the sketch is hosted.  
-  
-You will need to look for the file that ends with the extension `.ino`. This is the sketch for the Arduino IDE.  
+The following information will get the Mayfly set up for the temperature logging code that will run once the unit has been deployed in the field. 
 
-Use your mouse to `Right Click` on the file and select `Save Link As`.  
-  
-![](images/browser_save-as.jpg)  
-  
-The Arduino IDE expects to have files in a folder with the same name. Once you have downloaded the file, create a folder with the same name of the file, minus the `.ino` extension and place the file in that folder (e.g. the file `Mayfly_RealTimeClock.ino` would be placed in a folder named `Mayfly_RealTimeClock`).  
-  
-The Arduino IDE creates a folder, usually in `Documents/Arduino/sketches`, for you to save your sketches. You do not have to save them here but it makes it easier to find them later and they will appear in the menu under `File > Sketchbook > sketches`.
+**NOTE:** Give more explanation on how the process works (compiling, uploading, serial monitor, etc.)  
   
 ### Setting the date and time on the Real-time clock    
 
-One of the most important first steps that needs to be done is setting up the real-time clock (RTC) so that your time-stamps in your logger data are correct.
+One of the most important first steps that needs to be done is setting up the real-time clock (RTC) so that your time-stamps in your logger data are correct.     
+  
+Before getting started, you will need to install the following library:  
+  
+  * `Sodaq_DS3231`
+  
+In the Arduino software, go to `Tools > Manage Libraries` and type "`Sodaq_DS3231`" in the search bar and press "`Enter`" on your keyboard.  
+  
+![](/images/image-needed.jpg)  
+  
+Select the library named "`Sodaq_DS3231`" and click the "`Install`" button.  Close this window when the installation has completed. 
+  
+From the menu, select `File >  Examples > Sodaq_DS3231 > adjust`.  
 
-[Download](https://github.com/movingplaid/Mayfly_RealTimeClock) the code for setting the real-time clock and open it in the Arduino IDE. Don't forget to place the file in a folder with the same name as mentioned at the start of this section.   
+Look at the following line of code in the `setup()` function. This is where the sketch sets the time:
   
-This sketch is meant to be a simple as possible for the user, but if you do a search on the Internet, you will find several variations on how to do the same thing.
-  
-In this code, we are setting the time based on the time we compile the sketch. There will be a slight difference between the system time and the Mayfly time (about 10 seconds) due to the time it takes your computer to upload the sketch to the Mayfly.  
-  
-We do a second compile and upload AFTER commenting out the portion of the code that sets the time so that the next time you open the Serial Monitor or turn the Mayfly on, the time will not get reset to the compile time again.   
-  
-**NOTE:** It is helpful to understand that Arduino sketches contain two important sections. A `setup()` function and a `loop()` function.  The `setup()` function runs once when the board is powered on or when the reset button is pressed.  There is also a `loop()` function that runs continuously after the `setup()` function is finished and continues on until the board is powered off.   
-  
-Before compiling, you will need to install the following library:  
-  
-  * `RTClib`
-  
-In the Arduino software, go to `Tools > Manage Libraries` and type "`RTClib`" in the search bar and press "`Enter`" on your keyboard.  
-  
-![](/images/arduino_rtclib.jpg)  
-  
-Select the library named "`RTClib`" and click the "`Install`" button.   
-  
-Look at this line of code in the `setup()` function and make sure that it looks the same (this is where the sketch sets the time):
-  
-`rtc.adjust(DateTime(F(__DATE__),F(__TIME__)));`  
+`DateTime dt(2011, 11, 10, 15, 18, 0, 5);`   
+
+This line of code translates to `year, month, date, hour, min, sec and week-day(starts from 0-Sunday and goes to 6-Saturday)`  
+   
+Change the time in this line of code to be a time in the near future (about a minute or two).  We will call this the "target time". 
   
 Compile and upload the sketch, by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu.   
   
-At this point, the time is set. The code sets the time in the `setup()` function and then continues to the `loop()` function where is prints out the time.  
+Use a "reference" point like like [Time.gov](http://www.time.gov/) to view the current time.  When the reference is about 3 seconds from the "target time" we set in the code, press the `Reset` button on the Mayfly (this gives the Mayfly a few seconds to reset itself).  
+  
+Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu.  Make sure the "`baud`" rate option at the bottom right side of the window is set to "`57600`".  
+  
+![](/images/image-needed.jpg)  
 
-Now, we want to change that line of code so that the time is NOT SET AGAIN in the `setup()` function. Use two slashes in front of the line of code so it looks like the following:  
+The Serial Monitor should output the current date-time set on the Mayfly.  If you are unsatisfied with the results or you missed the reference time, change the "target time" (`DateTime dt()`) in the code, upload the sketch to the Mayfly and try again.
+
+At this point, the RTC is set but if you were to turn the Mayfly off and back on or press the `Reset` button a second time, the time would revert to the time we set in `DateTime dt()`. We want to change that line of code so that the time is NOT SET AGAIN in the `setup()` function.  
   
-`// rtc.adjust(DateTime(F(__DATE__),F(__TIME__)));`  
+Close the Serial Monitor and return the the line where we set the date-time (`DateTime dt();`).  Use two slashes in front of the line of code so it looks like the following:  
   
+`// DateTime dt(2011, 11, 10, 15, 18, 0, 5);`    
+
 Compile and upload again by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu.    
 
-Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu.  Make sure the "`baud`" rate option at the bottom right side of the window is set to "`9600`".
+Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu.  Make sure the "`baud`" rate option at the bottom right side of the window is set to "`57600`".
   
-![](/images/arduino_baud.jpg)
-  
-The Serial Monitor should output the date and time currently set on the RTC and you will not have to do this again unless you change the battery or you notice errors in you date-time stamp.
+The Serial Monitor should continue to output the correct date and time currently set on the real-time clock. 
 
 ![](/images/arduino_serial-monitor-rtc.jpg)  
+  
+When you are finished, you can close the Arduino window and select `No` when asked to save the file.  
 
 ### Address Discovery of OneWire Temperature Sensor  
   
-Before you can use the OneWire Temperature Sensor, you will need to find the specific address assigned to it. Each sensor has a unique address so that multiple sensors can be used at the same time.  
-  
-[Download](https://github.com/movingplaid/Mayfly_OneWireAddress) the code for the OneWire Device Address discovery and open it in the Arduino IDE.  Don't forget to place the file in a folder with the same name as mentioned at the start of this section.  
+Before you can use the OneWire Temperature Sensor, you will need to find the specific address assigned to it. Each sensor has a unique address so that multiple sensors can be used at the same time.    
   
 The following libraries are requires to compile this code:  
   
@@ -227,46 +219,35 @@ The following libraries are requires to compile this code:
   
 In the Arduino software, go to `Tools > Manage Libraries` and type "`OneWire`" in the search bar and press "`Enter`" on your keyboard.  
   
+![](images/image-needed.jpg)  
+
 Select the library named "`OneWire`" and click the "`Install`" button.   
 
 Close the Library Manager window by clicking the "`Close`" button when finished.  
   
 Plug the OneWire Temperature Sensor into the Grove port marked `D4-5` on the Mayfly board.  
   
+From the menu select `File > Examples > Dallas Temperature > oneWireSearch'.  
+  
 Compile and Upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu.  
 
-Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu. Make sure the "`baud`" rate option at the bottom right side of the window is set to "`9600`".
+Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu. Make sure the "`baud`" rate option at the bottom right side of the window is set to "`115200`".
   
-![](/images/arduino_baud.jpg)
+![](/images/image-needed.jpg)
   
-The Serial Monitor should output a string of characters that is your sensors address. Write this address down or save it somewhere to access it later when using the OneWireExample or building the Temperature Logging Code.  
+The Serial Monitor should output some information based on what it found. The most important piece of information is the sensor address.  It should look similar to the following:    
 
-Example output from this sketch:  
-
-`Start oneWireSearch.ino`
-
-`0x28, 0x48, 0x98, 0xD6, 0x0B, 0x00, 0x00, 0x8A	// CRC OK`  
-`Number of Devices Found: 1`
-
-`End oneWireSearch.ino`
-
+`0x28, 0x48, 0x98, 0xD6, 0x0B, 0x00, 0x00, 0x8A`
+  
+Write this address down or save it somewhere to access it later when building the Temperature Logging Code.  
+  
 If you need to run the sketch again, press the "`reset`" button on the Mayfly or upload the sketch again.
+  
+When you are finished, you can close the Arduino window and select `No` when asked to save the file.   
   
 ### Testing the OneWire Temperature Sensor
   
-To verify that your sensor has been correctly identified, you can run this simple sketch.  
-
-[Download](https://github.com/movingplaid/Mayfly_OneWireExample) the code for the OneWire Example.  Don't forget to place the file in a folder with the same name as mentioned at the start of this section.  
- 
-Open the code in the Arduino software and search for the line:  
-
-`DeviceAddress TempSensor = `   
-
-Copy the DeviceAddress you found previously and paste it into your code between the curly braces {}.    
-  
-Example:  
-  
-`DeviceAddress TempSensor = { 0x28, 0x48, 0x98, 0xD6, 0x0B, 0x00, 0x00, 0x8A };`   
+To verify that your sensor is functioning correctly, you can run a simple sketch from the examples.  
 
 The following libraries are requires to compile this code:  
   
@@ -284,6 +265,16 @@ Select the library named "`DallasTemperature`" and click the "`Install`" button.
 Close the Library Manager window by clicking the "`Close`" button when finished.  
 
 Plug the OneWire Temperature Sensor into the Grove port marked `D4-5` on the Mayfly board.  
+
+From the menu select `File > Examples > Dallas Temperature > tester'. 
+
+Open the code in the Arduino software and search for the line:  
+
+`#define ONE_WIRE_BUS 2`   
+  
+Change this line of code so that it reads as follows:  
+  
+`#define ONE_WIRE_BUS 4`       
   
 Upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu.  
 
@@ -294,6 +285,17 @@ Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shif
 The Serial Monitor should output the current temperature that the sensor is reading.  This is also helpful in conducting QC tests to determine how accurate your sensor is.  
   
 ![](/images/image-needed.jpg)  
+  
+**Extra Credit**  
+The output from the Serial Monitor scrolls by pretty quick but if you are comfortable with with making some changes, you can insert a `delay();` statement in the code to slow it down.  
+  
+In the first line of the `loop()` function, right after the first opening brace `{`, insert the following line of code:  
+  
+`delay(500);`  
+  
+This will make the sketch wait briefly before printing the next temperature reading and make it easier to read.
+  
+When you are finished, you can close the Arduino window and select `No` when asked to save the file.   
   
 ### Continuous Temperature Logging Code  
   
@@ -466,6 +468,7 @@ Example:
   * [Compile](https://en.wikipedia.org/wiki/Compiler) - A compiler is a computer program that translates computer code written in one programming language (the source language) into another language (the target language).  
   * [Upload](https://www.arduino.cc/en/Guide/ArduinoUno) - When you upload a sketch, you're using the Arduino boot-loader, a small program that has been loaded on to the micro-controller on your board. It allows you to upload code without using any additional hardware.   
   * [Button Cell](https://en.wikipedia.org/wiki/Button_cell) - Also known as lithium coin battery, that is mainly used in high power devices such as key-less entry devices, glucose monitors, heart-rate monitors, and toys & games. 
+  * [Baud Rate](https://en.wikipedia.org/wiki/Baud) - The speed of communication over a data channel.
     
 ## About Me  
   
