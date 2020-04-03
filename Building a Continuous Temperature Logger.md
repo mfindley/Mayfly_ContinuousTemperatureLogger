@@ -30,8 +30,9 @@ Use of the [Arduino Desktop IDE](https://www.arduino.cc/en/Main/Software) will b
 - [MonitorMyWatershed.org](#monitormywatershedorg)
   * [Creating an account](#creating-an-account)
   * [Registering a Sensor Station](#registering-a-sensor-station)
-  * [Customizing Header Information](#customizing-header-information)
-- [Uploading the CSV Sensor Data](#uploading-the-csv-sensor-data)
+  * [Adding Sensors](#adding-sensors)
+  * [Uploading Data](#uploading-data)
+  * [Viewing You Data](#viewing-you-data)
 - [Definitions](#definitions)
 - [About Me](#about-me)  
   
