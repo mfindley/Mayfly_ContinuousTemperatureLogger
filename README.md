@@ -139,6 +139,8 @@ Now, from the `Tools > Board` menu in the main window of the IDE, select the `En
   
 ### Connecting to a Computer  
   
+**NOTE:** Give more explanation on how the process works (compiling, uploading, serial monitor, etc.)  
+  
 Follow the instructions in the [Sensor Station Manual](https://www.envirodiy.org/mayfly-sensor-station-manual/) on the EnviroDIY website to connect the Mayfly to your computer. (`Section 4.2.Connecting a Computer to the Mayfly Data Logger`)  
   
 ![](images/arduino_connect-usb.jpg)
@@ -153,25 +155,21 @@ Follow the instructions in the [Sensor Station Manual](https://www.envirodiy.org
   
 ## Compiling and Uploading Code  
   
-The following information will get the Mayfly set up for the temperature logging code that will run once the unit has been deployed in the field. 
-
-**NOTE:** Give more explanation on how the process works (compiling, uploading, serial monitor, etc.)  
+This section will help you get your Mayfly set up for the temperature logging code that will run once the unit has been deployed in the field. These sketches are provided with  the libraries that will be installed in each example.
   
 ### Setting the date and time on the Real-time clock    
 
-One of the most important first steps that needs to be done is setting up the real-time clock (RTC) so that your time-stamps in your logger data are correct.     
+One of the most important first steps that needs to be done is setting up the real-time clock (RTC) so that your time-stamps in your logger data are correct.      
   
-Before getting started, you will need to install the following library:  
+In the Arduino software:  
+
+  * Open up the Library Manager: `Tools > Manage Libraries`  
+  * Type "`Sodaq_DS3231`" in the search bar   
+  * Select the library named "`Sodaq_DS3231`"  
+  * Click the "`Install`" button
+  * Close this window when finished 
   
-  * `Sodaq_DS3231`
-  
-In the Arduino software, go to `Tools > Manage Libraries` and type "`Sodaq_DS3231`" in the search bar and press "`Enter`" on your keyboard.  
-  
-![](/images/image-needed.jpg)  
-  
-Select the library named "`Sodaq_DS3231`" and click the "`Install`" button.  Close this window when the installation has completed. 
-  
-From the menu, select `File >  Examples > Sodaq_DS3231 > adjust`.  
+From the menu, select `File >  Examples > Sodaq_DS3231 > adjust` to open the example code from this library.  
 
 Look at the following line of code in the `setup()` function. This is where the sketch sets the time:
   
@@ -209,35 +207,28 @@ When you are finished, you can close the Arduino window and select `No` when ask
 
 ### Address Discovery of OneWire Temperature Sensor  
   
-Before you can use the OneWire Temperature Sensor, you will need to find the specific address assigned to it. Each sensor has a unique address so that multiple sensors can be used at the same time.    
+Before you can use the OneWire Temperature Sensor with the Temperature Logging code, you will need to find the specific address assigned to it. Each sensor has a unique address so that multiple sensors can be used at the same time.    
   
-The following libraries are requires to compile this code:  
-  
-  * OneWire
-  
-In the Arduino software, go to `Tools > Manage Libraries` and type "`OneWire`" in the search bar and press "`Enter`" on your keyboard.  
-  
-![](images/image-needed.jpg)  
+In the Arduino software:  
 
-Select the library named "`OneWire`" and click the "`Install`" button.   
-
-Close the Library Manager window by clicking the "`Close`" button when finished.  
+  * Open up the Library Manager: `Tools > Manage Libraries`  
+  * Type "`OneWire`" in the search bar   
+  * Select the library named "`OneWire`"  
+  * Click the "`Install`" button
+  * Close this window when finished  
   
 Plug the OneWire Temperature Sensor into the Grove port marked `D4-5` on the Mayfly board.  
   
-From the menu select `File > Examples > Dallas Temperature > oneWireSearch'.  
-  
-Compile and Upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu.  
-
-Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu. Make sure the "`baud`" rate option at the bottom right side of the window is set to "`115200`".
-  
+  * From the menu select `File > Examples > Dallas Temperature > oneWireSearch` to open the example code from this library  
+  * Compile and Upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu  
+  * Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu.  
+  * Make sure the "`baud`" rate option at the bottom right side of the window is set to "`115200`"  
+   
 ![](/images/image-needed.jpg)
   
-The Serial Monitor should output some information based on what it found. The most important piece of information is the sensor address.  It should look similar to the following:    
+The Serial Monitor should output some information based on what it found. The most important piece of information is the sensor address.  Write this address down or save it somewhere to access it later when building the Temperature Logging Code. It should look similar to the following:    
 
-`0x28, 0x48, 0x98, 0xD6, 0x0B, 0x00, 0x00, 0x8A`
-  
-Write this address down or save it somewhere to access it later when building the Temperature Logging Code.  
+`0x28, 0x48, 0x98, 0xD6, 0x0B, 0x00, 0x00, 0x8A` 
   
 If you need to run the sketch again, press the "`reset`" button on the Mayfly or upload the sketch again.
   
@@ -247,38 +238,22 @@ When you are finished, you can close the Arduino window and select `No` when ask
   
 To verify that your sensor is functioning correctly, you can run a simple sketch from the examples.  
 
-The following libraries are requires to compile this code:  
-  
-  * OneWire
-  * DallasTemperature
-  
-In the Arduino software, go to `Tools > Manage Libraries` and type "`OneWire`" in the search bar and press "`Enter`" on your keyboard.  
-  
-Select the library named "`OneWire`" and click the "`Install`" button. 
-  
-Do the same for the DallasTemperature library. Type "`DallasTemperature`" in the search bar and press "`Enter`" on your keyboard.  
-  
-Select the library named "`DallasTemperature`" and click the "`Install`" button.  
+In the Arduino software:  
 
-Close the Library Manager window by clicking the "`Close`" button when finished.  
+  * Open up the Library Manager: `Tools > Manage Libraries`  
+  * Type "`DallasTemperature`" in the search bar   
+  * Select the library named "`DallasTemperature`"  
+  * Click the "`Install`" button
+  * Close this window when finished   
 
 Plug the OneWire Temperature Sensor into the Grove port marked `D4-5` on the Mayfly board.  
 
-From the menu select `File > Examples > Dallas Temperature > tester'. 
-
-Open the code in the Arduino software and search for the line:  
-
-`#define ONE_WIRE_BUS 2`   
-  
-Change this line of code so that it reads as follows:  
-  
-`#define ONE_WIRE_BUS 4`       
-  
-Upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu.  
-
-Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu. Make sure the "`baud`" rate option at the bottom right side of the window is set to "`9600`".
-  
-![](/images/arduino_baud.jpg)
+  * From the menu select `File > Examples > Dallas Temperature > tester' 
+  * Search for the line: `#define ONE_WIRE_BUS 2`   
+  * Change this to: `#define ONE_WIRE_BUS 4`  
+  * Upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu  
+  * Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu.  
+  * Make sure the "`baud`" rate option at the bottom right side of the window is set to "`9600`"  
   
 The Serial Monitor should output the current temperature that the sensor is reading.  This is also helpful in conducting QC tests to determine how accurate your sensor is.  
   
@@ -287,9 +262,7 @@ The Serial Monitor should output the current temperature that the sensor is read
 **Extra Credit**  
 The output from the Serial Monitor scrolls by pretty quick but if you are comfortable with with making some changes, you can insert a `delay();` statement in the code to slow it down.  
   
-In the first line of the `loop()` function, right after the first opening brace `{`, insert the following line of code:  
-  
-`delay(500);`  
+In the first line of the `loop()` function, right after the first opening brace `{`, insert the following line of code: `delay(500);`  
   
 This will make the sketch wait briefly before printing the next temperature reading and make it easier to read.
   
@@ -310,7 +283,11 @@ The sketch for the Continuous Temperature Logger is currently set up to cycle th
   * Write the information to the SD card
   * Go back to sleep (to conserve power)
   
-[Download](https://github.com/movingplaid/Mayfly_TempProbeLogging) and open the Temperature Logging code from GitHub. Don't forget to place the file in a folder with the same name as mentioned at the start of this section.   
+Go to GitHub and [download](https://github.com/movingplaid/Mayfly_ContinuousTemperatureLogger) the Continuous Temperature Logging code. There will be a button on the page to "Clone or Download" the repository. Click on "Download ZIP" and save the file to your computer.  
+  
+![](images/github_download-repository.jpg)  
+  
+You will need to extract these files to your computer before using them.  If you are unsure how do this, check this link for extracting files in [Windows 10](https://support.microsoft.com/en-us/help/14200/windows-compress-uncompress-zip-files).  If you are using something other than Windows ([MacOS](https://www.google.com/search?client=firefox-b-1-d&ei=U0qHXsm1GtWGytMPoOWxkAI&q=how+to+extract+zip+files+on+mac&oq=how+to+extract+zip+files+on+mac&gs_lcp=CgZwc3ktYWIQARgAMgIIADICCAAyAggAMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB46BAgAEEdQhXRYyHZghIYBaABwBngAgAFWiAHzAZIBATOYAQCgAQGqAQdnd3Mtd2l6&sclient=psy-ab) or  [Linux](https://www.google.com/search?client=firefox-b-1-d&ei=qkmHXuafF6ikytMPss-suAg&q=how+to+extract+zip+files+on+linux&oq=how+to+extract+zip+files+on+linux&gs_lcp=CgZwc3ktYWIQAzICCAAyAggAMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjoECAAQR1CbmQpY1Z8KYOqgCmgAcAd4AIABVogBgQOSAQE1mAEAoAEBqgEHZ3dzLXdpeg&sclient=psy-ab&ved=0ahUKEwjmnLCevczoAhUoknIEHbInC4cQ4dUDCAo&uact=5)), the basic concept is the same.  You can do a quick Google search to find out more.  
   
 Look for the line of code that looks like this:  
   
