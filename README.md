@@ -215,10 +215,12 @@ In the Arduino software:
   * Type "`OneWire`" in the search bar   
   * Select the library named "`OneWire`"  
   * Click the "`Install`" button
-  * Close this window when finished  
-  
+  * Close this window when finished    
+
 Plug the OneWire Temperature Sensor into the Grove port marked `D4-5` on the Mayfly board.  
   
+![](images/mayfly_grove-connector.jpg)  
+
   * From the menu select `File > Examples > Dallas Temperature > oneWireSearch` to open the example code from this library  
   * Compile and Upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu  
   * Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu.  
@@ -247,7 +249,9 @@ In the Arduino software:
   * Close this window when finished   
 
 Plug the OneWire Temperature Sensor into the Grove port marked `D4-5` on the Mayfly board.  
-
+  
+![](images/mayfly_grove-connector.jpg)  
+  
   * From the menu select `File > Examples > Dallas Temperature > tester' 
   * Search for the line: `#define ONE_WIRE_BUS 2`   
   * Change this to: `#define ONE_WIRE_BUS 4`  
@@ -349,7 +353,7 @@ Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shif
   
 Location  
   
-![](/images/image-needed.jpg) 
+![](/images/mayfly_open-case.jpg) 
   
 Mounting Hardware  
   
