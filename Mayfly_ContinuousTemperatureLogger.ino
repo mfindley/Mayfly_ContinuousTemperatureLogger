@@ -1,10 +1,10 @@
 /*
  * ------------------------------------------------------------
  * 
- * This sketch puts the Mayfly board into sleep mode. 
- * It wakes up at specific times, records the temperature from 
- * the attached probe onto the microSD card, prints the data 
- * string to the serial port, and goes back to sleep.
+ * This sketch wakes the Mayfly up at specific times, records 
+ * the temperature from the attached probe, writes the data to 
+ * the microSD card, prints the data string to the serial port
+ * and goes back to sleep.
  * 
  * Change (currentminute % 1 == 0) in loop() function
  * to deired time to wake up and record data.
@@ -528,7 +528,7 @@ void setup()
 
   /*
    * Force a sensor request in setup() to avoid getting
-   * an 85C reading later is the sensor was not ready.
+   * an 85C reading later if the sensor was not ready.
    */
    
   sensors.requestTemperatures();
