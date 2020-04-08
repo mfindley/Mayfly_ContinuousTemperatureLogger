@@ -185,7 +185,7 @@ Use a "reference" point like like [Time.gov](http://www.time.gov/) to view the c
   
 Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu.  Make sure the "`baud`" rate option at the bottom right side of the window is set to "`57600`".  
   
-![](/images/image-needed.jpg)  
+![](/images/arduino_baud-57600.jpg)  
 
 The Serial Monitor should output the current date-time set on the Mayfly.  If you are unsatisfied with the results or you missed the reference time, change the "target time" (`DateTime dt()`) in the code, upload the sketch to the Mayfly and try again.
 
