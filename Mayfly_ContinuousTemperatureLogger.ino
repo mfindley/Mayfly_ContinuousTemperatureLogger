@@ -1,10 +1,13 @@
 /*
  * ------------------------------------------------------------
  * 
- * This sketch puts the Mayfly board into sleep mode. 
- * It wakes up at specific times, records the temperature from 
- * the attached probe onto the microSD card, prints the data 
- * string to the serial port, and goes back to sleep.
+ * This sketch wakes the Mayfly up at specific times, records 
+ * the temperature from the attached probe, writes the data to 
+ * the microSD card, prints the data string to the serial port
+ * and goes back to sleep.
+ * 
+ * Change (currentminute % 1 == 0) in loop() function
+ * to deired time to wake up and record data.
  * 
  * ------------------------------------------------------------
 */
@@ -14,7 +17,7 @@
 #include  <Wire.h> // library to communicate with I2C / TWI devices
 #include  <avr/sleep.h> // library to allow an application to sleep
 #include  <avr/wdt.h> // library for handling the watchdog timer 
-#include  <SPI.h> // library to communicate with SPI devices
+// #include  <SPI.h> // library to communicate with SPI devices
 #include  <SD.h> // library for reading and writing to SD cards
 #include  <RTCTimer.h> // library to schedule tasks using RTC 
 #include  <Sodaq_DS3231.h> // library for the DS3231 RTC
@@ -36,10 +39,10 @@ char*     filename = (char*)"logfile.csv"; // The data log file
 // #define   LOGGERNAME "SampleLogger"
 
 // Simple Header
-#define   DATA_HEADER "Date and Time in UTC-5,Temperature,Battery voltage,Temperature"
+// #define   DATA_HEADER "Date and Time in UTC-5,Temperature,Battery voltage,Temperature"
 
 // Alternate Header
-// #define   DATA_HEADER "Sampling Feature UUID: e75ac5ea-e07a-4511-976e-20106fa771f1,,,\r\nSensor Name:,Maxim_DS18B20,EnviroDIY_Mayfly Data Logger,EnviroDIY_Mayfly Data Logger\r\nVariable Name:,Temperature_C,Battery_Voltage,Board_Temp_C\r\nResult Unit:,degreeCelsius,volt,degreeCelsius\r\nResult UUID:,5d5afecc-62a7-460e-8e4b-4e2091cc15b5,478efb71-162d-496b-9a4d-0986271736a6,8bef93a1-2792-4772-b8d8-84aec3d312e3\r\nDate and Time in UTC-5,Temperature,Battery voltage,Temperature"
+#define   DATA_HEADER "Sampling Feature UUID: e75ac5ea-e07a-4511-976e-20106fa771f1,,,\r\nSensor Name:,Maxim_DS18B20,EnviroDIY_Mayfly Data Logger,EnviroDIY_Mayfly Data Logger\r\nVariable Name:,Temperature_C,Battery_Voltage,Board_Temp_C\r\nResult Unit:,degreeCelsius,volt,degreeCelsius\r\nResult UUID:,5d5afecc-62a7-460e-8e4b-4e2091cc15b5,478efb71-162d-496b-9a4d-0986271736a6,8bef93a1-2792-4772-b8d8-84aec3d312e3\r\nDate and Time in UTC-5,Temperature,Battery voltage,Temperature"
 
 #define   ONE_WIRE_BUS 4 // pin 4 (D4-5)
 
@@ -47,8 +50,14 @@ RTCTimer  timer;
 
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
+
+/*
+ * Unused
+ * Searching for sensor by index
+ */
+ 
 // DeviceAddress TempSensor = { 0x28, 0x3F, 0x75, 0xA0, 0x08, 0x00, 0x00, 0xE4 }; // Field Board
-DeviceAddress TempSensor = { 0x28, 0x48, 0x98, 0xD6, 0x0B, 0x00, 0x00, 0x8A }; // Dev Board
+// DeviceAddress TempSensor = { 0x28, 0x48, 0x98, 0xD6, 0x0B, 0x00, 0x00, 0x8A }; // Dev Board
 
 String    dataRec = "";
 
@@ -352,8 +361,8 @@ void logData(String rec)
  * 
  * Create a String type data record in csv format:
  * 
- * TimeDate, SensorTemp_C, SensorTemp_F, UNIX_Time, 
- * BoardTemp_C, BatteryVoltage
+ * DateTime, SensorTemp_C, BatteryVoltage, 
+ * BoardTemp_C 
  * 
  * --------------------------------------------------
  */
@@ -365,7 +374,13 @@ String createDataRecord()
 
   // Temperature Sensor ----------------------------------------
 
-  float tempC = sensors.getTempC(TempSensor);
+  /*
+   * We only care about one sensor
+   * located at index 0 right now
+   */
+
+  // float tempC = sensors.getTempC(TempSensor); 
+  float tempC = sensors.getTempCByIndex(0);
     
   if (tempC == -127.00) {
     Serial.println();
@@ -403,7 +418,11 @@ String createDataRecord()
     // Serial.print(DallasTemperature::toFahrenheit(tempC));
 
     data += tempC; // temperature Celcius
-    
+
+    /*
+     * Removed from DataRecord
+     */
+       
     // data += ","; // separator
     // data += (DallasTemperature::toFahrenheit(tempC)); // temperature Fahrenheit
     
@@ -432,7 +451,11 @@ String createDataRecord()
   
   // For Mayfly v0.5 and newer:
   batteryvoltage = (3.3/1023.) * 4.7 * batterysenseValue; 
-  
+
+  /*
+   * Removed from DataRecord
+   */
+   
   // data += ",";
   // data += currentepochtime;
 
@@ -485,7 +508,13 @@ void setup()
   greenred4flash(); // blink the LEDs to show the board is on
 
   sensors.begin(); // start up the library
-  sensors.setResolution(TempSensor, 10); // set resolution to 10 bit
+
+  /*
+   * Ignoring this for now.
+   * Sensor defaults to 12-bit resolution
+   */
+   
+  // sensors.setResolution(TempSensor, 10); // set resolution to 10 bit
   
   setupLogFile();
   setupTimer(); // Setup timer events
@@ -493,10 +522,16 @@ void setup()
  
   Serial.println("Power On, running: Temperature Logging");
   Serial.print("\n\r");
-  Serial.print("Data Header: ");
+  // Serial.print("Data Header: ");
   Serial.println(DATA_HEADER);
   Serial.print("\n\r"); 
-  
+
+  /*
+   * Force a sensor request in setup() to avoid getting
+   * an 85C reading later if the sensor was not ready.
+   */
+   
+  sensors.requestTemperatures();
   // showTime(getNow());
   
 }
@@ -536,7 +571,12 @@ void loop()
 
      }
 
-  delay(1000);
+  /*
+   * Really needed?
+   * Delay period is regulated by currentminute
+   */
+   
+  // delay(1000);
   
   systemSleep(); // Sleep
   
