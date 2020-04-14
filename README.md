@@ -1,10 +1,12 @@
 ## Introduction  
 
-This document outlines what you will need to build a Continuous Temperature Logger with the [EnviroDIY Mayfly Data  Logger](https://www.envirodiy.org/mayfly/).  It is meant to be simple and clear for new users, but those with more experience may want to expand on the application or experiment with different techniques.  There is no one specific way to do this, so if you feel that your site requires a taller or shorter mounting post, then do it. if you want a larger solar panel or bigger case, then buy them. Feel free to experiment and learn as you go.
+This document outlines what you will need to build a Continuous Temperature Logger with the [EnviroDIY Mayfly Data Logger](https://www.envirodiy.org/mayfly/). This is a great EnviroDIY starter project and utilizes the Mayfly Data Logger and a OneWire Temperature Sensor. 
   
-Originally set up as a low cost experiment to evaluate possible uses for Citizen Science and Educators, the example data logger used for this document was assembled with off-the-shelf-components and has been [deployed](https://monitormywatershed.org/sites/STWTR2/) since February 16th, 2020. It does not utilize the Xbee cellular module which means that it will not offer real-time data via the [Monitor My Watershed](https://monitormywatershed.org/) portal. All data is saved to the on-board micro-SD card and uploaded manually.  
+It is meant to be simple and clear for new users but those with more experience can adapt and improve on the set up and installation. Many of the instructions to follow are based on the [EnviroDIY Mayfly Sensor Station Manual](https://www.envirodiy.org/mayfly-sensor-station-manual/).
   
-**TABLE OF CONTENTS**
+It does not utilize the [XBee](https://www.digi.com/xbee) cellular module which means that it will not offer real-time data via the [Monitor My Watershed](https://monitormywatershed.org/) portal. All data is saved to the on-board micro-SD card and can be uploaded manually if you choose to do so.  
+  
+**TABLE OF CONTENTS**  
   
 - [Introduction](#introduction)
 - [Hardware](#hardware)
@@ -13,6 +15,7 @@ Originally set up as a low cost experiment to evaluate possible uses for Citizen
   * [3.7 Volt Lithium Polymer Battery](#37-volt-lithium-polymer-battery)
   * [OneWire Temperature Sensor](#onewire-temperature-sensor)
   * [Additional Hardware](#additional-hardware)
+  * [Putting it All Together](#putting-it-all-together)
 - [Setting up the Arduino Desktop IDE Software](#setting-up-the-arduino-desktop-ide-software)
   * [Download the Arduino IDE](#download-the-arduino-ide)
   * [Adding the EnviroDIY board to Arduino](#adding-the-envirodiy-board-to-arduino)
@@ -23,10 +26,10 @@ Originally set up as a low cost experiment to evaluate possible uses for Citizen
   * [Continuous Temperature Logging Code](#continuous-temperature-logging-code)
 - [Field Installation](#field-installation)
 - [MonitorMyWatershed](#monitormywatershed)
-  * [Creating an account](#creating-an-account)
-  * [Registering a Site](#registering-a-site)
+  * [[Creating an account](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#create-an-account-2)](#-creating-an-account--https---wikiwatershedorg-help-sensor-help-sharing-sensor-data--create-an-account-2-)
+  * [[Registering a Site](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#add-a-site-2)](#-registering-a-site--https---wikiwatershedorg-help-sensor-help-sharing-sensor-data--add-a-site-2-)
   * [Adding Sensors](#adding-sensors)
-  * [Uploading Data](#uploading-data)
+  * [[Uploading Data](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#sensor-data)](#-uploading-data--https---wikiwatershedorg-help-sensor-help-sharing-sensor-data--sensor-data-)
   * [Viewing Your Data](#viewing-your-data)  
   
 ## Hardware  
@@ -34,6 +37,8 @@ Originally set up as a low cost experiment to evaluate possible uses for Citizen
 ### Starter Kit  
   
 The [Mayfly Starter Kit](https://www.envirodiy.org/mayfly/hardware/starter-kit/) supplies you with the essential components for building your own data logger. Stroud Water Research offers this kit through [Amazon](https://www.amazon.com/EnviroDIY-Mayfly-Arduino-Compatible-Starter/dp/B01FCVALDW/ref=sr_1_2?keywords=Stroud+Water+Research+Center&qid=1585584911&sr=8-2) for about $90 plus shipping cost.    
+  
+![](images/mayfly_starter-kit.jpg)  
   
 The Starter Kit includes the following items:  
 
@@ -51,13 +56,19 @@ Some additional items will need to be purchased separately from the Starter Kit 
  
 The real-time clock battery is a small 3 volt button cell battery (like a watch battery) that helps the Mayfly retain the data and time when external power (Li-Po battery or USB) has been removed from the board. 
   
+![](images/mayfly_clock-battery.jpg)  
+
 You will need to install a CR1220 battery for the real-time clock on your Mayfly board by sliding it into the circular metal battery holder located on the board. Make sure that the orientation of the polarity (+ and -) is correct so the board is not damaged.  
   
 ### 3.7 Volt Lithium Polymer Battery  
   
-It is important to select a battery with enough storage capacity [mAh](https://www.google.com/search?rlz=1C1GCEU_enUS821US822&ei=NkePXomFAceGytMPhPGw2AI&q=mAh&oq=mAh&gs_lcp=CgZwc3ktYWIQAzIECAAQQzIHCAAQgwEQQzIECAAQQzIECAAQQzIECAAQQzIECAAQQzIECAAQQzIECAAQQzICCAAyAggAOgQIABBHOgUIABCDAUoPCBcSCzBnOTVnMjUxZzgzSgsIGBIHMGcxZzFnM1DZUlj_WWDPX2gAcAJ4AIAB8wGIAdQFkgEFMS4xLjKYAQCgAQGqAQdnd3Mtd2l6&sclient=psy-ab&ved=0ahUKEwiJ-N-C3NvoAhVHg3IEHYQ4DCsQ4dUDCAw&uact=5) to operate for a period of time without being charged or with very little opportunity to charge (not unlike your phone). This is important for installation sites that are well shaded or receive partial sunlight during the day (forests, shaded slopes or valleys).   
+If you plan to use your Mayfly while only attached to a computer, you will not need to have an external battery. You can simply power your Mayfly through the built in USB connection. 
   
-The battery must also have a 2 pin [JST-PH connector](https://www.google.com/search?rlz=1C1GCEU_enUS821US822&ei=REePXvuJIdmHytMP8_iH4AQ&q=JST-PH+connector&oq=JST-PH+connector&gs_lcp=CgZwc3ktYWIQAzICCAAyAggAMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjoECAAQR0oOCBcSCjMtMTFnMTEtOTBKDAgYEggzLTJnMTEtMVDDhAZYw4QGYL-LBmgAcAJ4AIABU4gBU5IBATGYAQCgAQKgAQGqAQdnd3Mtd2l6&sclient=psy-ab&ved=0ahUKEwj7u9aJ3NvoAhXZg3IEHXP8AUwQ4dUDCAw&uact=5). This is a small (2mm) connector with a key or ridge on one side that mates with the connector on the Mayfly.   
+If you plan to install your Mayfly out in the field, it is important to select a battery with enough storage capacity to operate for a period of time without being charged or with very little opportunity to charge). This is important for installation sites that are well shaded or receive partial sunlight during the day (forests, shaded slopes or valleys).  
+  
+![](images/lipo_no-connector.jpg)  
+  
+The battery need to have a 2 pin [JST-PH connector](https://www.google.com/search?rlz=1C1GCEU_enUS821US822&ei=REePXvuJIdmHytMP8_iH4AQ&q=JST-PH+connector&oq=JST-PH+connector&gs_lcp=CgZwc3ktYWIQAzICCAAyAggAMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjoECAAQR0oOCBcSCjMtMTFnMTEtOTBKDAgYEggzLTJnMTEtMVDDhAZYw4QGYL-LBmgAcAJ4AIABU4gBU5IBATGYAQCgAQKgAQGqAQdnd3Mtd2l6&sclient=psy-ab&ved=0ahUKEwj7u9aJ3NvoAhXZg3IEHXP8AUwQ4dUDCAw&uact=5). This is a small (2mm) connector with a key or ridge on one side that mates with the connector on the Mayfly (see [Assembling the Mayfly Data Logger](https://www.envirodiy.org/mayfly-sensor-station-manual/#assembling-the-mayfly-data-logger)).   
   
 **It is important to look at the polarity (positive & negative) of the wires coming from the battery in relation to the polarity on the Mayfly board.**  
   
@@ -66,19 +77,39 @@ The battery must also have a 2 pin [JST-PH connector](https://www.google.com/sea
   * These must match up when connecting the battery to the Mayfly `(red + & black -) `  
   * If your battery does not match up you will need to change the wires so they do  
   
+![](images/danger_symbol.jpg)  
+  
 **CONNECTING A BATTERY WITH INCORRECT POLARITY CAN BE HAZARDOUS TO YOUR WELL BEING AND TO THE MAYFLY**    
   
-It is also a good measure to purchase some [additional JST connectors](https://www.digikey.com/catalog/en/partgroup/ph-series/8404). Having a few extra will help with changing the wiring on you LiPo batteries if you received them with the polarity reversed. They are very fragile and will become loose fitting if care is not taken when un-connecting them from the wiring.  
+It is also a good measure to purchase some [additional JST connectors](https://www.digikey.com/catalog/en/partgroup/ph-series/8404). Having a few extra will help with changing the wiring on you Li-Po batteries if you received them with the polarity reversed. They are very fragile and will become loose fitting if care is not taken when unconnecting them from the wiring.  
 
 ### OneWire Temperature Sensor   
   
-Seeed Studio offers a [OneWire temperature sensor](https://www.seeedstudio.com/One-Wire-Temperature-Sensor-p-1235.html) that comes complete with a Grove connector, making it very simple to connect and use the sensor with little to no modification.  The only downside to have a sensor pre-wired with a connector is routing it through the waterproof enclosure.  This is where the a cable gland or silicone sealant is useful.
+Seeed Studio offers a [OneWire temperature sensor](https://www.seeedstudio.com/One-Wire-Temperature-Sensor-p-1235.html) that comes complete with a Grove connector, making it very simple to connect and use the sensor with little to no modification.  The only downside to have a sensor pre-wired with a connector is routing it through the waterproof enclosure.  A cable gland or silicone sealant will be needed if you plan to deploy your logger in the field.  
+  
+![](images/seeed_temperature-sensor.jpg)  
   
 ### Additional Hardware  
   
-  * MicroSD card - If you plan to keep the logger in the field for an extended period of time, you may want to buy an additional microSD card so that you can swap cards whn retrieving your data.
-  * Larger Solar Panel - Adafruit sells larger solar panels if you need more power for your logger.  This will also need to have a JST connector or an adapter to connect with the logger.
+The following items are helpful but not essential to the completion of the Mayfly setup:  
+  
+  * MicroSD card - If you plan to deply the logger in the field, you may want to buy an additional microSD card so that you can swap cards when retrieving your data.
+  * Larger Solar Panel - [Voltaic Systems](https://voltaicsystems.com/solar-panels/) sells larger solar panels if you need more power for your logger.  This will also need to have a JST connector or an [adapter](https://voltaicsystems.com/3511-ext-jst/) to connect with the logger.
   * Cable Glands/Silicone Sealer - Needed to keep the sensor cable in place and to keep moisture from entering the enclosure.
+  
+### Putting it All Together  
+  
+Once you have gotten this far, you can start putting the pieces together to get an idea what your set up will look like.  
+
+![](images/mayfly_battery-solar.jpg)  
+  
+  * Plug the Li-Po battery into the connector marked `LIPO BATTERY`. There are two of them and it does not matter which one you use. The second is for powering the XBee cellular module, which is not used in this example.  
+  * Plug the solar panel into the connector marked `SOLAR` on the Mayfly board.  
+  * Plug the OneWire Temperature Sensor into the Grove connector marked `D4-5` on the Mayfly.   
+  
+![](images/mayfly_grove-connector.jpg)  
+  
+These are the basic connections you will have to make when deploying your logger. If you are not using the Mayfly in a field location and only plan to have it connected to a computer, the solar panel and Li-Po battery will not be needed. 
   
 ## Setting up the Arduino Desktop IDE Software    
   
@@ -98,33 +129,41 @@ You will need to [download](https://www.arduino.cc/en/main/software) `version 1.
 Before getting started in the section, you should have the following items ready:  
   
   * Arduino IDE software (installed)  
-  * Mayfly board  
-  * USB cable  
-  * Clock battery (CR1220)  
+  * Mayfly board (clock battery installed) 
+  * USB cable   
 
 First, we need to add some information to the Arduino software to tell it a little about the specifics of the board we are using. Start the Arduino software, then click on `File > Preferences` and paste the following URL into the text box labeled `Additional Boards Manager URLs`:  
 
-`https://raw.githubusercontent.com/EnviroDIY/Arduino_boards/master/package_EnviroDIY_index.json` 
+`https://raw.githubusercontent.com/EnviroDIY/Arduino_boards/master/package_EnviroDIY_index.json`   
+  
+![](images/arduino_preferences.jpg)  
   
 Click the "`OK`" button to close this window and return to the main screen when finished.  
   
 You will need to make the Mayfly the active board in the IDE  by going to `Tools > Board > Boards Manager` from the menu of the main screen. 
   
   * A new window will open and in the drop-down list on the top left of the screen `Type > Contributed`" and then type in  `EnviroDIY` In the search bar.
-  * You should see a search result for the `EnviroDIY ATmega Boards`. Click the "`Install`" button to complete your selection and click the "`Close`" button when it has finished.  
+  * You should see a search result for the `EnviroDIY ATmega Boards`. Click the "`Install`" button to complete your selection and click the "`Close`" button when it has finished.   
+    
+  ![](images/arduino_board-manager.jpg)  
+  
   * Now, from the `Tools > Board` menu in the main window of the IDE, select the `EnviroDIY Mayfly 1284P` from the list of available boards.  
-  
+
 ### Connecting to a Computer  
-  
-**NOTE:** Give more explanation on how the process works (compiling, uploading, serial monitor, etc.)  
   
 Follow the instructions in the [Sensor Station Manual](https://www.envirodiy.org/mayfly-sensor-station-manual/#connecting-a-computer-to-the-mayfly-data-logger) on the EnviroDIY website to connect the Mayfly to your computer. (`Section 4.2.Connecting a Computer to the Mayfly Data Logger`)  
     
+![](images/arduino_connect-usb.jpg)  
+ 
   * Attach the USB cable to the Mayfly and to the computer  
   * Turn on the Mayfly using the `off/on` switch  
   * Select the `COM Port` in the Arduino software under the menu `Tools > Port`
   
+![](images/arduino_com-port.jpg)  
+  
 Open the Serial Monitor to view the pre-loaded sketch that come with the Mayfly by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu.  Make sure the "`baud`" rate option at the bottom right side of the window is set to "`57600`".
+  
+![](images/arduino_baud-57600.jpg)  
   
 ## Compiling and Uploading Code  
   
@@ -151,11 +190,13 @@ Look at the following line of code in the `setup()` function. This is where the 
 This line of code translates to `year, month, date, hour, min, sec and week-day(starts from 0-Sunday and goes to 6-Saturday)`  
    
   * Change the time in this line of code to be a time in the near future (about a minute or two).  We will call this the "target time". 
-  * Compile and upload the sketch, by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu.   
+  * Compile and upload the sketch, by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from the menu.   
   * Use a "reference" point like like [Time.gov](http://www.time.gov/) to view the current time.  When the reference is about 3 seconds from the "target time" we set in the code, press the `Reset` button on the Mayfly (this gives the Mayfly a few seconds to reset itself).  
   * Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu.  Make sure the "`baud`" rate option at the bottom right side of the window is set to "`57600`".  
-  * The Serial Monitor should output the current date-time set on the Mayfly.  If you are unsatisfied with the results or you missed the reference time, change the "target time" (`DateTime dt()`) in the code, upload the sketch to the Mayfly and try again.
-
+  * The Serial Monitor should output the current date-time set on the Mayfly.  If you are unsatisfied with the results or you missed the reference time, change the "target time" (`DateTime dt()`) in the code, upload the sketch to the Mayfly and try again.  
+  
+![](images/arduino_serial-monitor-rtc.jpg)  
+  
 At this point, the RTC is set but if you were to turn the Mayfly off and back on or press the `Reset` button a second time, the time would revert to the time we set in `DateTime dt()`. We want to change that line of code so that the time is NOT SET AGAIN in the `setup()` function.  
   
 Close the Serial Monitor and return the the line where we set the date-time (`DateTime dt();`).  Use two slashes in front of the line of code so it looks like the following:  
@@ -184,7 +225,7 @@ Plug the OneWire Temperature Sensor into the Grove port marked `D4-5` on the May
   * From the menu select `File > Examples > Dallas Temperature > tester' 
   * Search for the line: `#define ONE_WIRE_BUS 2`   
   * Change this to: `#define ONE_WIRE_BUS 4`  
-  * Upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu  
+  * Upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from the menu  
   * Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu  
   * Make sure the "`baud`" rate option at the bottom right side of the window is set to "`9600`"  
   
@@ -192,9 +233,9 @@ The Serial Monitor should output the current temperature that the sensor is read
   
 **Extra Credit**  
 
-The output from the Serial Monitor scrolls by pretty quick but if you are comfortable with with making some changes, you can insert a `delay();` statement in the code to slow it down.  
+The output from the Serial Monitor scrolls by pretty quick but if you are comfortable with with making some changes, you can insert a `delay()` statement in the code to slow it down.  
   
-In the first line of the `loop()` function, right after the first opening brace `{`, insert the following line of code: `delay(500);`. This will make the sketch wait briefly before printing the next temperature reading and make it easier to read.
+In the first line of the `loop()` function, right after the first opening brace `{`, insert the following line of code: `delay(500)`. This will make the sketch wait briefly before printing the next temperature reading and make it easier to read.
   
 When you are finished, you can close the Arduino window and select `No` when asked to save the file.   
   
@@ -215,9 +256,11 @@ The sketch for the Continuous Temperature Logger is currently set up to cycle th
   
 Go to GitHub and [download](https://github.com/movingplaid/Mayfly_ContinuousTemperatureLogger) the Continuous Temperature Logging code. There will be a button on the page to "Clone or Download" the repository. Click on "Download ZIP" and save the file to your computer.  
   
+![](images/github_download-repository.jpg)  
+  
 You will need to extract these files to your computer before using them.  If you are unsure how do this, check this link for extracting files in [Windows 10](https://support.microsoft.com/en-us/help/14200/windows-compress-uncompress-zip-files).  If you are using something other than Windows (MacOS or Linux), the basic concept is the same.  You can do a quick Google search to find out more.  
   
-Look for the line of code that looks like this:  
+Open the file (`Mayfly_ContinuousTemperatureLogger.ino`) in the Aurduino IDE and look for the line of code that looks like this:  
   
 `// Simple Header`  
 `#define   DATA_HEADER "Date and Time ...` 
@@ -245,17 +288,21 @@ For each library you will need to do the following:
   
   * In the Arduino IDE, go to `Tools > Manage Libraries` and type the name of the library in the search bar and press "`Enter`" on your keyboard.  
   * Select the library found and click the "`Install`" button.   
-  * Click the `Close` button when you have finished instaling all of the libraries.
+  * Click the `Close` button when you have finished installing all of the libraries.
   
 If you want to change the interval that the Mayfly wakes up to record data, search for the following line (in the `loop()` function):  
   
 `if(currentminute % 1 == 0) {`  
   
 You can change `currentminute % 1` to whatever value suits your needs.  For testing purposes, it is convenient to have the time set low so you do not have to wait long for each reading.  In the field you may want to increase the time to 5 or 15 minutes, depending on how precise you want your data to be.  
+  
+Plug the OneWire Temperature Sensor into the Grove port marked `D4-5` on the Mayfly board.
+  
+Upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from the menu.  
 
-Upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from then menu.  
-
-Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu. Make sure the "`baud`" rate option at the bottom right side of the window is set to "`9600`".  
+Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu. Make sure the "`baud`" rate option at the bottom right side of the window is set to "`9600`". 
+  
+**The logger prints out blah blah ...**
 
 ## Field Installation  
   
@@ -278,10 +325,10 @@ Getting started with MonitorMyWatershed is (almost) as easy as one-two-three.
   * Upload your data (in this example we are manually uploading data and it must be formatted correctly)
   * View your data  (fingers crossed)
   
-### Creating an account  
+### [Creating an account](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#create-an-account-2)  
   
-  [Creating an account](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#create-an-account-2)  
-
+![](images/mmw_signup.jpg)  
+  
 The very first step to getting your data on-line is to [register](https://monitormywatershed.org/register/) a new account.  Like many other websites, some basic information is required to sign up:
   
   * First name  
@@ -293,13 +340,17 @@ The very first step to getting your data on-line is to [register](https://monito
   
 Once you have enter this information, all you need to do is agree to the [Terms of Use](https://monitormywatershed.org/terms/) for the website and click the `Register` button.  
   
-### Registering a Site  
+### [Registering a Site](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#add-a-site-2)  
   
-  [Registering a Site](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#add-a-site-2)  
-
+![](images/mmw_my-sites.jpg)  
+  
 On the menu bar at the top of the page, click on `My Sites`. This will open a new page where you can register a new site or display the sites you have already created.   
   
+![](images/mmw_register-new-site.jpg)  
+  
 Click the button on this page that reads `Register a New Site` and a page will open where you can enter the physical information about your site such as location and type.  
+   
+![](images/mmw_register-site-page.jpg)  
   
    * Site code  
    * Site name  
@@ -313,6 +364,8 @@ Click the button on this page that reads `Register a New Site` and a page will o
   
 Once your site is set up, you can proceed to adding sensor information.  Look for the button `MANAGE SENSORS` and click on it.  
   
+![](images/mmw_manage-sensors.jpg)  
+  
 The page will open to show which sensors have been added to the site. If this is a new site there will be no sensors listed. This example shows the list for the logger on Stillwater Run.  
   
 It is important to note that anything you want to record and display data for is considered a sensor. Even the Mayfly and the battery are sensors in this context.  
@@ -323,11 +376,9 @@ Click on the plus sign `+` to create a new sensor entry and fill out the require
   * Mayfly Data Logger (EnviroDIY_Mayfly_Batt)  
   * Mayfly Data Logger (EnviroDIY_Mayfly_Temp)  
 
-### Uploading Data
-  
-  [Sending/Uploading Sensor Data](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#sensor-data)  
+### [Uploading Data](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#sensor-data)
     
-  You will also need to edit the header information (DATA_HEADER) to match your individual site (see `Customizing Header Information & Uploading the CSV Sensor Data`).  
+You will also need to edit the header information (DATA_HEADER) to match your individual site (see `Customizing Header Information & Uploading the CSV Sensor Data`).  
   
   [Stroud Example File](https://wikiwatershed.org/wp-content/uploads/example-file-for-upload.csv)  
   
@@ -340,6 +391,9 @@ Example:
   [View Site Data](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#view-site-data)  
     
   [Sensor Observations](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#sensor-observations)  
+
+
+
 
 
 
