@@ -25,11 +25,12 @@ It does not utilize the [XBee](https://www.digi.com/xbee) cellular module which 
   * [Testing the OneWire Temperature Sensor](#testing-the-onewire-temperature-sensor)
   * [Continuous Temperature Logging Code](#continuous-temperature-logging-code)
 - [Field Installation](#field-installation)
+  * [Location](#location)
 - [MonitorMyWatershed](#monitormywatershed)
   * [[Creating an account](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#create-an-account-2)](#-creating-an-account--https---wikiwatershedorg-help-sensor-help-sharing-sensor-data--create-an-account-2-)
   * [[Registering a Site](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#add-a-site-2)](#-registering-a-site--https---wikiwatershedorg-help-sensor-help-sharing-sensor-data--add-a-site-2-)
   * [Adding Sensors](#adding-sensors)
-  * [[Uploading Data](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#sensor-data)](#-uploading-data--https---wikiwatershedorg-help-sensor-help-sharing-sensor-data--sensor-data-)
+  * [Uploading Data](#uploading-data)
   * [Viewing Your Data](#viewing-your-data)  
   
 ## Hardware  
