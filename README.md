@@ -26,6 +26,7 @@ It does not utilize the [XBee](https://www.digi.com/xbee) cellular module which 
   * [Continuous Temperature Logging Code](#continuous-temperature-logging-code)
 - [Field Installation](#field-installation)
   * [Location](#location)
+  * [Mounting Hardware and Installation](#mounting-hardware-and-installation)
 - [MonitorMyWatershed](#monitormywatershed)
   * [Creating an account](#creating-an-account)
   * [Registering a Site](#registering-a-site)
@@ -316,15 +317,20 @@ If your intent is to deploy the Mayfly in the field, continue on to the followin
   
 ## Field Installation  
   
-This section will guide you through some of the tasks you will need to perform in order to set up your Mayfly in the field. Some of this information has been altered from the methods used in the EnviroDIY Sensor Station Manual, but feel free to experiment or come up with solutions that work best for your situation and location.  
+This section will guide you through some of the tasks you will need to perform in order to set up your Mayfly in the field. Because this was a low cost experiment using as few components as needed and paying attention to overall cost, some of this information has been altered from the methods used in the [EnviroDIY Sensor Station Manual](https://www.envirodiy.org/mayfly-sensor-station-manual/#installation-steps), but feel free to experiment or come up with solutions that work best for your situation and location.  
 
 ### Location  
   
-Ideally, you would like an open location that receives plenty of sunlight and is also close to the water source you wish to monitor.  Remember that your sensor cable is limited in its length and so, your sensor should be close to the water while still being positioned in a stable location.  
+Ideally, you would like an open [location](https://www.envirodiy.org/mayfly-sensor-station-manual/#choosing-an-installation-location) that receives plenty of sunlight and is also close to the water source you wish to monitor.  Remember that your sensor cable is limited in its length and so, your sensor should be close to the water while still being positioned in a stable location.  
   
 The height of the mounting device you choose will also determine how close to the source you will have to be and still have enough sensor cable to reach it.  
 
-Mounting Hardware  
+### Mounting Hardware and Installation 
+
+Some basic hardware and preparation will be required to install your logger in the field:  
+  
+Hardware:  
+  
   * Mounting pole for the data logger and enclosure.  
   * Tie wraps to secure any slack on the sensor cable. 
   * Landscaping pins to hold down the sensor cable leading from the pole to the water.  
@@ -332,6 +338,26 @@ Mounting Hardware
   * PVC pipe to protect the sensor installation.  
   * Nuts, bolts, washers and any other hardware to mount the logger to the mounting pole.   
   
+Preparation:
+
+  * You will need to drill at least two holes in the enclosure provided with the Mayfly Starter Kit: One for mounting to the pole you choose and one for the sensor to exit the enclosure. For this example, a 1/4" hole was used for mounting and a 7/16" hole for the cable gland that holds the sensor cable.  
+  * A hammer or mallet to drive the mounting pole into the ground at your chosen location.  A block of wood is also useful so that the mounting pole does not get damaged when hammering.
+  * You will also need the hammer or mallet to drive the rebar stake into the stream for your sensor mounting.  
+  * Wire cutters, if you plan to trim the ties wraps after securing the sensor cable.
+  * A saw for cutting the PVC pipe, if you choose to use it. For the example installation, a section of PVC (1" diameter) was cut to 6"-8". This slides over the rebar and sensor cable to protect it from debris that might run into it and snag the cable. Additional holes (1/8") were drilled into the PVC to allow securing it with tie wraps.
+    
+Installation:  
+  
+  * Drive the mounting pole into the ground with the hammer or mallet at the desired location.
+  * Drive the rebar stake into the stream at the desired location.
+  * Secure the enclosure for the Mayfly to the mounting pole.
+  * Run the sensor cable down the length of the mounting pole and through the piece of cut PVC pipe. Make sure you have enough cable and some slack to reach the rebar stake in the stream.
+  * Slide the PVC with the sensor cable inside, over the rebar stake in the stream.
+  * Set your sensor height in the water and secure it near the end with a tie wrap. If you leave a little extra tie wrap hanging out (not cut flush) the PVC pipe can rest on top of this and it will not slide down cover the tip of the sensor.
+  * Use additional tie wraps to secure the PVC pipe to the rebar stake.  
+  * Secure the sensor cable to the mounting pole with tie wraps. 
+  * Use the landscaping pins to secure the length of sensor cable running from the mounting pole to the water's edge.  
+
 ## MonitorMyWatershed 
   
 Getting started with MonitorMyWatershed is (almost) as easy as one-two-three.  
