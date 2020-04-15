@@ -2,7 +2,7 @@
 
 This document outlines what you will need to build a Continuous Temperature Logger with the [EnviroDIY Mayfly Data Logger](https://www.envirodiy.org/mayfly/). This is a great EnviroDIY starter project and utilizes the Mayfly Data Logger and a OneWire Temperature Sensor. 
   
-It is meant to be simple and clear for new users but those with more experience can adapt and improve on the set up and installation. Many of the instructions to follow are based on the [EnviroDIY Mayfly Sensor Station Manual](https://www.envirodiy.org/mayfly-sensor-station-manual/).
+Many of the instructions to used in this document are based on the [EnviroDIY Mayfly Sensor Station Manual](https://www.envirodiy.org/mayfly-sensor-station-manual/) but you can adjust your set up based on your comfort level or budget. It is meant to be simple and clear for new users but those with more experience can adapt and improve on the set up and installation.
   
 It does not utilize the [XBee](https://www.digi.com/xbee) cellular module which means that it will not offer real-time data via the [Monitor My Watershed](https://monitormywatershed.org/) portal. All data is saved to the on-board micro-SD card and can be uploaded manually if you choose to do so.  
   
@@ -46,7 +46,7 @@ The Starter Kit includes the following items:
   * Waterproof enclosure with clear lid  
   * microUSB programming cable (1-meter long)  
   * 2 [Grove](http://wiki.seeedstudio.com/Grove_System/) cables (20cm long)  
-  * 4GB [microSD](https://en.wikipedia.org/wiki/SD_card) memory card with SD card size adapter  
+  * 4GB [micro-SD](https://en.wikipedia.org/wiki/SD_card) memory card with SD card size adapter  
   * 0.5 watt solar panel with [JST connector](https://en.wikipedia.org/wiki/JST_connector)  
   * Mayfly micro-SD vertical adapter board  
 
@@ -105,7 +105,8 @@ Once you have gotten this far, you can start putting the pieces together to get 
   
   * Plug the Li-Po battery into the connector marked `LIPO BATTERY`. There are two of them and it does not matter which one you use. The second is for powering the XBee cellular module, which is not used in this example.  
   * Plug the solar panel into the connector marked `SOLAR` on the Mayfly board.  
-  * Plug the OneWire Temperature Sensor into the Grove connector marked `D4-5` on the Mayfly.   
+  * Plug the OneWire Temperature Sensor into the Grove connector marked `D4-5` on the Mayfly. 
+  * Insert the micro-SD card into the slot provided or into the vertical SD card adapter.  
   
 ![](images/mayfly_grove-connector.jpg)  
   
@@ -116,6 +117,8 @@ These are the basic connections you will have to make when deploying your logger
 Use of the [Arduino Desktop IDE](https://www.arduino.cc/en/Main/Software) will be needed to compile and upload the [sketches](https://www.arduino.cc/en/Tutorial/Sketch) to the Mayfly. While the process is fairly straight-forward and all of the sketches are provided for you to use and modify, you may want to take some time to explore the [Arduino website](https://www.arduino.cc/) to better understand the concepts explained in this document.  
   
 Detailed information on installing the Arduino software can be found on the Arduino website.  There is an [introduction](https://www.arduino.cc/en/Guide/Introduction) on what Arduino is and why you would want to use it as well as many other resources available to help you get started.
+
+Here is also the link to the [EnviroDIY Mayfly Sensor Station Manual](https://www.envirodiy.org/mayfly-sensor-station-manual/#installing-arduino) for more information regarding the Arduino Desktop IDE.   
   
 ### Download the Arduino IDE
 You will need to [download](https://www.arduino.cc/en/main/software) `version 1.6.5 or greater`. Please read the installation instructions for the corresponding operating system you are using:
@@ -151,13 +154,13 @@ You will need to make the Mayfly the active board in the IDE  by going to `Tools
 
 ### Connecting to a Computer  
   
-Follow the instructions in the [Sensor Station Manual](https://www.envirodiy.org/mayfly-sensor-station-manual/#connecting-a-computer-to-the-mayfly-data-logger) on the EnviroDIY website to connect the Mayfly to your computer. (`Section 4.2.Connecting a Computer to the Mayfly Data Logger`)  
+Follow the instructions in the [EnviroDIY Mayfly Sensor Station Manual](https://www.envirodiy.org/mayfly-sensor-station-manual/#connecting-a-computer-to-the-mayfly-data-logger) to connect the Mayfly to your computer.   
     
 ![](images/arduino_connect-usb.jpg)  
  
-  * Attach the USB cable to the Mayfly and to the computer  
-  * Turn on the Mayfly using the `off/on` switch  
-  * Select the `COM Port` in the Arduino software under the menu `Tools > Port`
+  * Attach the USB cable to the Mayfly and to the computer.  
+  * Turn on the Mayfly using the `off/on` switch.  
+  * Select the `COM Port` in the Arduino software under the menu `Tools > Port`. You may have to wait a moment while your computer recognizes the new hardware.
   
 ![](images/arduino_com-port.jpg)  
   
@@ -171,7 +174,7 @@ This section will help you get your Mayfly set up for the temperature logging co
   
 ### Setting the Date and Time on the Real-time clock    
 
-One of the most important first steps that needs to be done is setting up the real-time clock (RTC) so that your time-stamps in your logger data are correct Make sure you have installed the clock battery before continuing with this section.      
+One of the most important first steps that needs to be done is setting up the real-time clock (RTC) so that your time-stamps in your logger data are correct Make sure you have installed the clock battery before continuing with this section.  
   
 In the Arduino software:  
 
@@ -237,13 +240,17 @@ The output from the Serial Monitor scrolls by pretty quick but if you are comfor
   
 In the first line of the `loop()` function, right after the first opening brace `{`, insert the following line of code: `delay(500)`. This will make the sketch wait briefly before printing the next temperature reading and make it easier to read.
   
+  * Upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from the menu  
+  * Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu  
+  * Make sure the "`baud`" rate option at the bottom right side of the window is set to "`9600`" 
+  
 When you are finished, you can close the Arduino window and select `No` when asked to save the file.   
   
 ### Continuous Temperature Logging Code  
   
-Finally, this is the part where we get to the real world application of the Continuous Temperature Logger.  
+Finally, this is the part where we get to the real world application of the Continuous Temperature Logger.  Make sure that you have followed the steps for setting the real-time clock and have inserted the micro-SD card into the slot provided.  
   
-**NOTE:** While it may appear to be a lot more code and more complex, there is very little you will have to change to get this running. The hard part has been done and you only need to add in your sensor address and configure the data header for the file that is saved to the SD card.  
+**NOTE:** While it may appear to be a lot more code and more complex, there is very little you will have to change to get this running. The hard part has been done and you only need to configure the data header if you plan to upload your data to MonitorMyWatershed.org.  
   
 The sketch for the Continuous Temperature Logger is currently set up to cycle through the following operations at one minute intervals:  
   
@@ -296,24 +303,33 @@ If you want to change the interval that the Mayfly wakes up to record data, sear
   
 You can change `currentminute % 1` to whatever value suits your needs.  For testing purposes, it is convenient to have the time set low so you do not have to wait long for each reading.  In the field you may want to increase the time to 5 or 15 minutes, depending on how precise you want your data to be.  
   
-Plug the OneWire Temperature Sensor into the Grove port marked `D4-5` on the Mayfly board.
+  * Plug the OneWire Temperature Sensor into the Grove port marked `D4-5` on the Mayfly board.
+  * Upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from the menu.  
+  * Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu. Make sure the "`baud`" rate option at the bottom right side of the window is set to "`9600`". 
   
-Upload the sketch to the Mayfly by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from the menu.  
+The logger will start off by printing the data header that will be written to the micro-SD card followed by an initial sensor reading. The time set above (`currentminute`) will dictate how often the logger will update and take an new reading.  
 
-Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu. Make sure the "`baud`" rate option at the bottom right side of the window is set to "`9600`". 
+At this point, you have set up your logger.  If you are not uploading your data, you can begin to experiment with the temperature sensor, taking various reading or doing some initial quality control.
   
-**The logger prints out blah blah ...**
-
+If your intent is to deploy the Mayfly in the field, continue on to the following sections to set up a location and your MonitorMyWatershed information.
+  
 ## Field Installation  
   
-Location  
+This section will guide you through some of the tasks you will need to perform in order to set up your Mayfly in the field. Some of this information has been altered from the methods used in the EnviroDIY Sensor Station Manual, but feel free to experiment or come up with solutions that work best for your situation and location.  
+
+### Location  
   
+Ideally, you would like an open location that receives plenty of sunlight and is also close to the water source you wish to monitor.  Remember that your sensor cable is limited in its length and so, your sensor should be close to the water while still being positioned in a stable location.  
+  
+The height of the mounting device you choose will also determine how close to the source you will have to be and still have enough sensor cable to reach it.  
+
 Mounting Hardware  
-  * Mounting pole  
-  * Tie wraps  
-  * Lanscaping pins  
-  * Rebar stake  
-  * PVC pipe  
+  * Mounting pole for the data logger and enclosure.  
+  * Tie wraps to secure any slack on the sensor cable. 
+  * Landscaping pins to hold down the sensor cable leading from the pole to the water.  
+  * 3' Rebar stake for sensor support in the water.  
+  * PVC pipe to protect the sensor installation.  
+  * Nuts, bolts, washers and any other hardware to mount the logger to the mounting pole.   
   
 ## MonitorMyWatershed 
   
@@ -325,7 +341,7 @@ Getting started with MonitorMyWatershed is (almost) as easy as one-two-three.
   * Upload your data (in this example we are manually uploading data and it must be formatted correctly)
   * View your data  (fingers crossed)
   
-### [Creating an account](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#create-an-account-2)  
+### Creating an account
   
 ![](images/mmw_signup.jpg)  
   
@@ -340,7 +356,7 @@ The very first step to getting your data on-line is to [register](https://monito
   
 Once you have enter this information, all you need to do is agree to the [Terms of Use](https://monitormywatershed.org/terms/) for the website and click the `Register` button.  
   
-### [Registering a Site](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#add-a-site-2)  
+### Registering a Site 
   
 ![](images/mmw_my-sites.jpg)  
   
@@ -376,11 +392,11 @@ Click on the plus sign `+` to create a new sensor entry and fill out the require
   * Mayfly Data Logger (EnviroDIY_Mayfly_Batt)  
   * Mayfly Data Logger (EnviroDIY_Mayfly_Temp)  
 
-### [Uploading Data](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#sensor-data)
+### Uploading Data
     
 You will also need to edit the header information (DATA_HEADER) to match your individual site (see `Customizing Header Information & Uploading the CSV Sensor Data`).  
   
-  [Stroud Example File](https://wikiwatershed.org/wp-content/uploads/example-file-for-upload.csv)  
+[Stroud Example File](https://wikiwatershed.org/wp-content/uploads/example-file-for-upload.csv)  
   
 Example: 
   
