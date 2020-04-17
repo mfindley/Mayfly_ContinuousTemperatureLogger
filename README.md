@@ -281,7 +281,7 @@ This is the header information for the values that will be written to the SD car
   * Battery voltage  
   * Temperature (of the Mayfly)  
  
-If you do not plan to upload your data to MonitorMyWatershed.org, you can leave these values as is, but the must stay in this order unless you make further changes to the sketch.  
+If you do not plan to upload your data to MonitorMyWatershed.org, you can leave these values as they are, but the must stay in this order unless you make further changes to the sketch.  
 
 **NOTE:** MonitorMyWatershed expects values to be in a specific order which is not covered in this section. Please refer to the section `Registering a Sensor Station` later in this document.  
 
@@ -313,7 +313,11 @@ The logger will start off by printing the data header that will be written to th
 
 At this point, you have set up your logger.  If you are not uploading your data, you can begin to experiment with the temperature sensor, taking various reading or doing some initial quality control.
   
-If your intent is to deploy the Mayfly in the field, continue on to the following sections to set up a location and your MonitorMyWatershed information.
+If your intent is to deploy the Mayfly in the field, continue on to the `Field Installation` section to set up a location and your MonitorMyWatershed information.
+  
+### Quality Control  
+  
+Insert information here.  
   
 ## Field Installation  
   
@@ -360,6 +364,9 @@ Installation:
 
 ## MonitorMyWatershed 
   
+  **NOTE  
+Redirect the reader to the documentation on the MMW setup. No need to include all the information.**  
+  
 Getting started with MonitorMyWatershed is (almost) as easy as one-two-three.  
   
   * Create a new account (unless you already have one active)
@@ -368,8 +375,9 @@ Getting started with MonitorMyWatershed is (almost) as easy as one-two-three.
   * Upload your data (in this example we are manually uploading data and it must be formatted correctly)
   * View your data  (fingers crossed)
   
-### Creating an account
-  
+All of the reference information you need to set up a new account and register your station and sensors is covered in the [Monitor My Watershed Sensor Data Manual]()
+### Creating an account  
+
 ![](images/mmw_signup.jpg)  
   
 The very first step to getting your data on-line is to [register](https://monitormywatershed.org/register/) a new account.  Like many other websites, some basic information is required to sign up:
@@ -421,19 +429,30 @@ Click on the plus sign `+` to create a new sensor entry and fill out the require
 
 ### Uploading Data
     
-You will also need to edit the header information (DATA_HEADER) to match your individual site (see `Customizing Header Information & Uploading the CSV Sensor Data`).  
+You will also need to edit the header information (DATA_HEADER) in the Continuous Telperature Logger code to match your individual site (see `Customizing Header Information & Uploading the CSV Sensor Data`).  
   
 [Stroud Example File](https://wikiwatershed.org/wp-content/uploads/example-file-for-upload.csv)  
   
 Example: 
   
-`Sampling Feature UUID: [sampling feature UUID],,,\r\nSensor Name:,Maxim_DS18B20,EnviroDIY_Mayfly Data Logger,EnviroDIY_Mayfly Data Logger\r\nVariable Name:,Temperature_C,Battery_Voltage,Board_Temp_C\r\nResult Unit:,degreeCelsius,volt,degreeCelsius\r\nResult UUID:,[variable 1 UUID],[variable 1 UUID],[variable 1 UUID]\r\nDate and Time in UTC-5,Temperature,Battery voltage,Temperature`  
+In the code for the Continuous Data Logger, below the lines:  
+  
+`// Simple Header`  
+`#define   DATA_HEADER "Date and Time ...`  
+
+There is an alternate header that was created to be used with MonitorMyWatershed.  
+  
+`// Alternate Header`  
+`// #define   DATA_HEADER Sampling Feature UUID: v[sampling feature UUID],,,\r\nSensor Name:,Maxim_DS18B20,EnviroDIY_Mayfly Data Logger,EnviroDIY_Mayfly Data Logger\r\nVariable Name:,Temperature_C,Battery_Voltage,Board_Temp_C\r\nResult Unit:,degreeCelsius,volt,degreeCelsius\r\nResult UUID:,[variable 1 UUID],[variable 1 UUID],[variable 1 UUID]\r\nDate and Time in UTC-5,Temperature,Battery voltage,Temperature`  
+  
+This data header provides you with a template for formatting your logfile to be useable with MonitorMyWatershed.  You will need to replace the entries between the braces `[ ]` with the values that your are given with your sensor setup.  
   
 ### Viewing Your Data  
   
   [View Site Data](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#view-site-data)  
     
   [Sensor Observations](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#sensor-observations)  
+
 
 
 
