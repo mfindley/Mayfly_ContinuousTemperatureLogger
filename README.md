@@ -24,6 +24,7 @@ It does not utilize the [XBee](https://www.digi.com/xbee) cellular module which 
   * [Setting the Date and Time on the Real-time clock](#setting-the-date-and-time-on-the-real-time-clock)
   * [Testing the OneWire Temperature Sensor](#testing-the-onewire-temperature-sensor)
   * [Continuous Temperature Logging Code](#continuous-temperature-logging-code)
+  * [Quality Control](#quality-control)
 - [Field Installation](#field-installation)
   * [Location](#location)
   * [Mounting Hardware and Installation](#mounting-hardware-and-installation)
@@ -32,7 +33,7 @@ It does not utilize the [XBee](https://www.digi.com/xbee) cellular module which 
   * [Registering a Site](#registering-a-site)
   * [Adding Sensors](#adding-sensors)
   * [Uploading Data](#uploading-data)
-  * [Viewing Your Data](#viewing-your-data)  
+  * [Viewing Your Data](#viewing-your-data) 
   
 ## Hardware  
 
@@ -237,7 +238,6 @@ Plug the OneWire Temperature Sensor into the Grove port marked `D4-5` on the May
 The Serial Monitor should output the current temperature that the sensor is reading.  This is also helpful in conducting QC tests to determine how accurate your sensor is.  
   
 **Extra Credit**  
-
 The output from the Serial Monitor scrolls by pretty quick but if you are comfortable with with making some changes, you can insert a `delay()` statement in the code to slow it down.  
   
 In the first line of the `loop()` function, right after the first opening brace `{`, insert the following line of code: `delay(500)`. This will make the sketch wait briefly before printing the next temperature reading and make it easier to read.
@@ -271,19 +271,12 @@ You will need to extract these files to your computer before using them.  If you
   
 Open the file (`Mayfly_ContinuousTemperatureLogger.ino`) in the Aurduino IDE and look for the line of code that looks like this:  
   
-`// Simple Header`  
-`#define   DATA_HEADER "Date and Time ...` 
+`// Data Header`  
+`#define   DATA_HEADER Sampling Feature UUID: v[sampling feature UUID],,,\r\nSensor Name:,Maxim_DS18B20,EnviroDIY_Mayfly Data Logger,EnviroDIY_Mayfly Data Logger\r\nVariable Name:,Temperature_C,Battery_Voltage,Board_Temp_C\r\nResult Unit:,degreeCelsius,volt,degreeCelsius\r\nResult UUID:,[variable 1 UUID],[variable 1 UUID],[variable 1 UUID]\r\nDate and Time in UTC-5,Temperature,Battery voltage,Temperature`
   
-This is the header information for the values that will be written to the SD card.  For now, we will keep it as it is:  
-  
-  * Date and Time in UTC-5  
-  * Temperature (of the Sensor)  
-  * Battery voltage  
-  * Temperature (of the Mayfly)  
+This is the header information for the values that will be written to the SD card.  For now, we will keep it as it is, but you will need to change the UUID codes in the braces `[ ]` once you have set up your sensors when [adding your sensors](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#sensor-data) to MonitorMyWatershed. 
  
-If you do not plan to upload your data to MonitorMyWatershed.org, you can leave these values as they are, but the must stay in this order unless you make further changes to the sketch.  
-
-**NOTE:** MonitorMyWatershed expects values to be in a specific order which is not covered in this section. Please refer to the section `Registering a Sensor Station` later in this document.  
+If you do not plan to upload your data to MonitorMyWatershed.org, you can leave these values as they are, but the must stay in this order unless you make further changes to the sketch.    
 
 The following libraries will need to be installed via the library manager found under `Tools > Manage Libraries`. 
   
@@ -363,7 +356,7 @@ Preparation:
   
   * A hammer or mallet to drive the mounting pole into the ground at your chosen location.  A block of wood is also useful so that the mounting pole does not get damaged when hammering.
   * You will also need the hammer or mallet to drive the rebar stake into the stream for your sensor mounting.  
-  * Wire cutters, if you plan to trim the ties wraps after securing the sensor cable.
+  * Wire cutters or scissors, if you plan to trim the ties wraps after securing the sensor cable.
   * A saw for cutting the PVC pipe, if you choose to use it. For the example installation, a section of PVC (1" diameter) was cut to 6"-8". This slides over the rebar and sensor cable to protect it from debris that might run into it and snag the cable. Additional holes (1/8") were drilled into the PVC to allow securing it with tie wraps.
     
 Installation:  
@@ -380,21 +373,17 @@ Installation:
 
 ## MonitorMyWatershed 
   
-  **NOTE  
-Redirect the reader to the documentation on the MMW setup. No need to include all the information.**  
+This section will briefly cover some of the basic tasks you will need to do in order to get your data to the MonitorMyWatershed data portal.  For more in-depth information, you should read through the [Monitor My Watershed Sensor Data Manual](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/).  
   
 Getting started with MonitorMyWatershed is (almost) as easy as one-two-three.  
   
-  * Create a new account (unless you already have one active)
-  * Register a site (this is a physical location)
-  * Add your sensors (temperature sensor, battery and the Mayfly)
-  * Upload your data (in this example we are manually uploading data and it must be formatted correctly)
-  * View your data  (fingers crossed)
+  * [Create a new account](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#create-an-account-2)  
+  * [Register a site](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#add-a-site-2)  
+  * [Add your sensors](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#sensor-data)  
+  * [Upload your data](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#sensor-data)  
+  * [View your data](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#site-data)
   
-All of the reference information you need to set up a new account and register your station and sensors is covered in the [Monitor My Watershed Sensor Data Manual]()
 ### Creating an account  
-
-![](images/mmw_signup.jpg)  
   
 The very first step to getting your data on-line is to [register](https://monitormywatershed.org/register/) a new account.  Like many other websites, some basic information is required to sign up:
   
@@ -405,39 +394,25 @@ The very first step to getting your data on-line is to [register](https://monito
   * Password  
   * Organization (optional)  
   
-Once you have enter this information, all you need to do is agree to the [Terms of Use](https://monitormywatershed.org/terms/) for the website and click the `Register` button.  
+Once you have enter this information, you can proceed to the next section to register your site.    
   
 ### Registering a Site 
   
-![](images/mmw_my-sites.jpg)  
-  
-On the menu bar at the top of the page, click on `My Sites`. This will open a new page where you can register a new site or display the sites you have already created.   
-  
-![](images/mmw_register-new-site.jpg)  
+Once you have logged in, click on `My Sites` at the top of the page. This will open a new page where you can register a new site or display the sites you have already created.   
   
 Click the button on this page that reads `Register a New Site` and a page will open where you can enter the physical information about your site such as location and type.  
-   
-![](images/mmw_register-site-page.jpg)  
-  
-   * Site code  
-   * Site name  
-   * Site type  
-   * Stream name  
-   * Major watershed and sub-basin  
-   * Notes 
-   * Latitude and longitude  
   
 ### Adding Sensors 
   
 Once your site is set up, you can proceed to adding sensor information.  Look for the button `MANAGE SENSORS` and click on it.  
   
-![](images/mmw_manage-sensors.jpg)  
-  
 The page will open to show which sensors have been added to the site. If this is a new site there will be no sensors listed. This example shows the list for the logger on Stillwater Run.  
+  
+![](images/mmw_manage-sensor-results.jpg)  
   
 It is important to note that anything you want to record and display data for is considered a sensor. Even the Mayfly and the battery are sensors in this context.  
   
-Click on the plus sign `+` to create a new sensor entry and fill out the required fields for each sensor you wish to add (in the order listed below).  You should have a total of three when you are finished:  
+Click on the plus sign `+` to create a new sensor entry and fill out the required fields for each sensor you wish to add. If you are building a duplicate of the logger used in the document, you should have a total of three when you are finished:  
   
   * DS18B20 Waterproof Digital temperature sensor (Maxim_DS18B20_Temp)  
   * Mayfly Data Logger (EnviroDIY_Mayfly_Batt)  
@@ -445,29 +420,26 @@ Click on the plus sign `+` to create a new sensor entry and fill out the require
 
 ### Uploading Data
     
-You will also need to edit the header information (DATA_HEADER) in the Continuous Telperature Logger code to match your individual site (see `Customizing Header Information & Uploading the CSV Sensor Data`).  
+You will also need to [edit the header information](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#sensor-data) (DATA_HEADER) in the Continuous Temperature Logger code to match your individual site.   
   
-[Stroud Example File](https://wikiwatershed.org/wp-content/uploads/example-file-for-upload.csv)  
+For reference, here is the [Stroud Example File](https://wikiwatershed.org/wp-content/uploads/example-file-for-upload.csv) which shows the basic format.  
   
-Example: 
-  
-In the code for the Continuous Data Logger, below the lines:  
-  
-`// Simple Header`  
-`#define   DATA_HEADER "Date and Time ...`  
-
-There is an alternate header that was created to be used with MonitorMyWatershed.  
+In the code for the Continuous Data Logger, find the following lines:   
   
 `// Alternate Header`  
-`// #define   DATA_HEADER Sampling Feature UUID: v[sampling feature UUID],,,\r\nSensor Name:,Maxim_DS18B20,EnviroDIY_Mayfly Data Logger,EnviroDIY_Mayfly Data Logger\r\nVariable Name:,Temperature_C,Battery_Voltage,Board_Temp_C\r\nResult Unit:,degreeCelsius,volt,degreeCelsius\r\nResult UUID:,[variable 1 UUID],[variable 1 UUID],[variable 1 UUID]\r\nDate and Time in UTC-5,Temperature,Battery voltage,Temperature`  
+`#define   DATA_HEADER Sampling Feature UUID: v[sampling feature UUID],,,\r\nSensor Name:,Maxim_DS18B20,EnviroDIY_Mayfly Data Logger,EnviroDIY_Mayfly Data Logger\r\nVariable Name:,Temperature_C,Battery_Voltage,Board_Temp_C\r\nResult Unit:,degreeCelsius,volt,degreeCelsius\r\nResult UUID:,[variable 1 UUID],[variable 1 UUID],[variable 1 UUID]\r\nDate and Time in UTC-5,Temperature,Battery voltage,Temperature`  
   
-This data header provides you with a template for formatting your logfile to be useable with MonitorMyWatershed.  You will need to replace the entries between the braces `[ ]` with the values that your are given with your sensor setup.  
+This data header provides you with a template for formatting your logfile to be useable with MonitorMyWatershed.  You will need to replace the entries between the braces `[ ]` with the values that your are given with your sensor setup.
   
 ### Viewing Your Data  
   
-  [View Site Data](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#view-site-data)  
-    
-  [Sensor Observations](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#sensor-observations)  
+Once you have uploaded your first batch of data, you can view it ...  
+
+[View Site Data](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#view-site-data)  
+  
+## Conclusion  
+  
+
 
 
 

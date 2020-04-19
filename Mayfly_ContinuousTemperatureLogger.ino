@@ -38,11 +38,8 @@ char*     filename = (char*)"logfile.csv"; // The data log file
 
 // #define   LOGGERNAME "SampleLogger"
 
-// Simple Header
-#define   DATA_HEADER "Date and Time in UTC-5,Temperature,Battery voltage,Temperature"
-
-// Alternate Header
-// #define   DATA_HEADER "Sampling Feature UUID: [sampling feature UUID],,,\r\nSensor Name:,Maxim_DS18B20,EnviroDIY_Mayfly Data Logger,EnviroDIY_Mayfly Data Logger\r\nVariable Name:,Temperature_C,Battery_Voltage,Board_Temp_C\r\nResult Unit:,degreeCelsius,volt,degreeCelsius\r\nResult UUID:,[variable 1 UUID],[variable 1 UUID],[variable 1 UUID]\r\nDate and Time in UTC-5,Temperature,Battery voltage,Temperature"
+// Data Header
+#define   DATA_HEADER "Sampling Feature UUID: [sampling feature UUID],,,\r\nSensor Name:,Maxim_DS18B20,EnviroDIY_Mayfly Data Logger,EnviroDIY_Mayfly Data Logger\r\nVariable Name:,Temperature_C,Battery_Voltage,Board_Temp_C\r\nResult Unit:,degreeCelsius,volt,degreeCelsius\r\nResult UUID:,[variable 1 UUID],[variable 1 UUID],[variable 1 UUID]\r\nDate and Time in UTC-5,Temperature,Battery voltage,Temperature"
 
 #define   ONE_WIRE_BUS 4 // pin 4 (D4-5)
 
