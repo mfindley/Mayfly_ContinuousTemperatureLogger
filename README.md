@@ -359,7 +359,7 @@ Preparation:
     
   * Place the Mayfly into the enclosure. You may need to angle it slightly to clear the bolt and strain relief. Use the screws provided with the kit to secure the board in the enclosure.  
 
-  ![](images/enclosure_angled-board.jpg) 24![](images/enclosure_board-screws.jpg)  
+  ![](images/enclosure_angled-board.jpg) ![](images/enclosure_board-screws.jpg)  
   
   * A hammer or mallet to drive the mounting pole into the ground at your chosen location.  A block of wood is also useful so that the mounting pole does not get damaged when hammering.
   * You will also need the hammer or mallet to drive the rebar stake into the stream for your sensor mounting.  
