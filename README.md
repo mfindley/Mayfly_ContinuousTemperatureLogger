@@ -344,7 +344,23 @@ Hardware:
   
 Preparation:
 
-  * You will need to drill at least two holes in the enclosure provided with the Mayfly Starter Kit: One for mounting to the pole you choose and one for the sensor to exit the enclosure. For this example, a 1/4" hole was used for mounting and a 7/16" hole for the cable gland that holds the sensor cable.  
+  * You will need to drill at least two holes in the enclosure provided with the Mayfly Starter Kit: One for mounting to the pole you choose and one for the sensor to exit the enclosure.  
+  * Place one rubber washer on the bolt and insert it into the hole for the mounting pole. 
+      
+  ![](images/enclosure_two-holes.jpg)![](images/enclosure_mounting-screw.jpg)  
+  
+  * Place the strain relief around the senor cable, close it and then insert it into the hole for the sensor.  You will also need to apply some silicone sealant or plumbers putty around the relief to keep it waterproof once it is assembled in the case.  
+    
+  ![](images/enclosure_strain-relief-setup.jpg)![](/images/enclosure_strain-relief_assembled.jpg)  
+     
+  * If you have the skill or experience, you can also use a cable gland in place of the strain relief but you will need to remove the Grove connector before running the cable though the gland.  
+    
+  ![](images/enclosure_cable-gland-setup.jpg)![](images/enclosure_cable-gland-assmbled.jpg)  
+    
+  * Place the Mayfly into the enclosure. You may need to angle it slightly to clear the bolt and strain relief. Use the screws provided with the kit to secure the board in the enclosure.  
+
+  ![](images/enclosure_angled-board.jpg)![](images/enclosure_board-screws.jpg)  
+  
   * A hammer or mallet to drive the mounting pole into the ground at your chosen location.  A block of wood is also useful so that the mounting pole does not get damaged when hammering.
   * You will also need the hammer or mallet to drive the rebar stake into the stream for your sensor mounting.  
   * Wire cutters, if you plan to trim the ties wraps after securing the sensor cable.
