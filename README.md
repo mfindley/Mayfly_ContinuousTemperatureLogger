@@ -8,6 +8,34 @@ It does not utilize the [XBee](https://www.digi.com/xbee) cellular module which 
   
 **TABLE OF CONTENTS**  
  
+- [Introduction](#introduction)
+- [Hardware](#hardware)
+  * [Starter Kit](#starter-kit)
+  * [Real-time Clock Battery](#real-time-clock-battery)
+  * [3.7 Volt Lithium Polymer Battery](#37-volt-lithium-polymer-battery)
+  * [OneWire Temperature Sensor](#onewire-temperature-sensor)
+  * [Additional Hardware](#additional-hardware)
+  * [Putting it All Together](#putting-it-all-together)
+- [Setting up the Arduino Desktop IDE Software](#setting-up-the-arduino-desktop-ide-software)
+  * [Download the Arduino IDE](#download-the-arduino-ide)
+  * [Adding the EnviroDIY board to Arduino](#adding-the-envirodiy-board-to-arduino)
+  * [Connecting to a Computer](#connecting-to-a-computer)
+- [Compiling and Uploading Code](#compiling-and-uploading-code)
+  * [Setting the Date and Time on the Real-time clock](#setting-the-date-and-time-on-the-real-time-clock)
+  * [Testing the OneWire Temperature Sensor](#testing-the-onewire-temperature-sensor)
+  * [Continuous Temperature Logging Code](#continuous-temperature-logging-code)
+  * [Quality Control](#quality-control)
+- [Field Installation](#field-installation)
+  * [Location](#location)
+  * [Mounting Hardware and Installation](#mounting-hardware-and-installation)
+- [MonitorMyWatershed](#monitormywatershed)
+  * [Creating an account](#creating-an-account)
+  * [Registering a Site](#registering-a-site)
+  * [Adding Sensors](#adding-sensors)
+  * [Uploading Data](#uploading-data)
+  * [Viewing Your Data](#viewing-your-data)
+- [Conclusion](#conclusion)
+
 ## Hardware  
 
 ### Starter Kit  
@@ -317,11 +345,11 @@ Some basic hardware and preparation will be required to install your logger in t
   
   * Place the strain relief around the senor cable, close it and then insert it into the hole for the sensor.  You will also need to apply some silicone sealant or plumbers putty around the relief to keep it waterproof once it is assembled in the case.  
     
-  ![](images/enclosure_strain-relief-setup.jpg) ![](/images/enclosure_strain-relief_assembled.jpg)  
+  ![](images/enclosure_strain-relief-setup.jpg) ![](/images/enclosure_strain-relief-assembled.jpg)  
      
   * If you have the skill or experience, you can also use a cable gland in place of the strain relief but you will need to remove the Grove connector before running the cable though the gland.  
     
-  ![](images/enclosure_cable-gland-setup.jpg) ![](images/enclosure_cable-gland-assmbled.jpg)  
+  ![](images/enclosure_cable-gland-setup.jpg) ![](images/enclosure_cable-gland-assembled.jpg)  
     
   * Place the Mayfly into the enclosure. You may need to angle it slightly to clear the bolt and strain relief. Use the screws provided with the kit to secure the board in the enclosure.  
 
