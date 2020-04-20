@@ -7,34 +7,7 @@ Many of the instructions to used in this document are based on the [EnviroDIY Ma
 It does not utilize the [XBee](https://www.digi.com/xbee) cellular module which means that it will not offer real-time data via the [Monitor My Watershed](https://monitormywatershed.org/) portal. All data is saved to the on-board micro-SD card and can be uploaded manually if you choose to do so.  
   
 **TABLE OF CONTENTS**  
-  
-- [Introduction](#introduction)
-- [Hardware](#hardware)
-  * [Starter Kit](#starter-kit)
-  * [Real-time Clock Battery](#real-time-clock-battery)
-  * [3.7 Volt Lithium Polymer Battery](#37-volt-lithium-polymer-battery)
-  * [OneWire Temperature Sensor](#onewire-temperature-sensor)
-  * [Additional Hardware](#additional-hardware)
-  * [Putting it All Together](#putting-it-all-together)
-- [Setting up the Arduino Desktop IDE Software](#setting-up-the-arduino-desktop-ide-software)
-  * [Download the Arduino IDE](#download-the-arduino-ide)
-  * [Adding the EnviroDIY board to Arduino](#adding-the-envirodiy-board-to-arduino)
-  * [Connecting to a Computer](#connecting-to-a-computer)
-- [Compiling and Uploading Code](#compiling-and-uploading-code)
-  * [Setting the Date and Time on the Real-time clock](#setting-the-date-and-time-on-the-real-time-clock)
-  * [Testing the OneWire Temperature Sensor](#testing-the-onewire-temperature-sensor)
-  * [Continuous Temperature Logging Code](#continuous-temperature-logging-code)
-  * [Quality Control](#quality-control)
-- [Field Installation](#field-installation)
-  * [Location](#location)
-  * [Mounting Hardware and Installation](#mounting-hardware-and-installation)
-- [MonitorMyWatershed](#monitormywatershed)
-  * [Creating an account](#creating-an-account)
-  * [Registering a Site](#registering-a-site)
-  * [Adding Sensors](#adding-sensors)
-  * [Uploading Data](#uploading-data)
-  * [Viewing Your Data](#viewing-your-data) 
-  
+ 
 ## Hardware  
 
 ### Starter Kit  
@@ -326,16 +299,16 @@ The height of the mounting device you choose will also determine how close to th
 
 Some basic hardware and preparation will be required to install your logger in the field:  
   
-Hardware:  
+**Hardware:** 
   
-  * Mounting pole for the data logger and enclosure.  
-  * Tie wraps to secure any slack on the sensor cable. 
-  * Landscaping pins to hold down the sensor cable leading from the pole to the water.  
-  * 3' Rebar stake for sensor support in the water.  
-  * PVC pipe to protect the sensor installation.  
-  * Nuts, bolts, washers and any other hardware to mount the logger to the mounting pole.   
+  * Mounting pole for the data logger and enclosure (Many hardware stores sell an inexpensive [fence post](https://www.lowes.com/pd/Blue-Hawk-Common-3-1-2-in-x-5-ft-Actual-0-6-in-x-3-5-in-x-5-ft-Powder-Coated-Steel-Garden-Fence-U-post-Post/4780965) that works well).  
+  * [Tie wraps](https://www.lowes.com/pd/Utilitech-20-Pack-8-in-Cable-Ties/50005720) to secure any slack on the sensor cable. 
+  * [Landscaping pins](https://www.lowes.com/pd/Jobe-s-25-Pack-3-1-2-in-Steel-Landscape-Fabric-Pins/3638366) to hold down the sensor cable leading from the pole to the water.  
+  * 3' or 4' [Rebar stake](https://www.lowes.com/pd/Hillman-1-2-in-dia-x-3-ft-L-Plain-Hot-Rolled-Steel-Weldable-Rebar-Rod/3057575) for sensor support in the water.  
+  * [PVC pipe](https://www.lowes.com/pd/Charlotte-Pipe-1-in-dia-x-2-ft-L-450-PSI-PVC-Pipe/3341536) to protect the sensor installation.  
+  * Nuts, bolts, washers and any other hardware to mount the logger to the mounting pole (This example uses 1/4" hardware).   
   
-Preparation:
+**Preparation:**
 
   * You will need to drill at least two holes in the enclosure provided with the Mayfly Starter Kit: One for mounting to the pole you choose and one for the sensor to exit the enclosure.  
   * Place one rubber washer on the bolt and insert it into the hole for the mounting pole. 
@@ -357,20 +330,28 @@ Preparation:
   * A hammer or mallet to drive the mounting pole into the ground at your chosen location.  A block of wood is also useful so that the mounting pole does not get damaged when hammering.
   * You will also need the hammer or mallet to drive the rebar stake into the stream for your sensor mounting.  
   * Wire cutters or scissors, if you plan to trim the ties wraps after securing the sensor cable.
-  * A saw for cutting the PVC pipe, if you choose to use it. For the example installation, a section of PVC (1" diameter) was cut to 6"-8". This slides over the rebar and sensor cable to protect it from debris that might run into it and snag the cable. Additional holes (1/8") were drilled into the PVC to allow securing it with tie wraps.
+  * A saw for cutting the PVC pipe, if you choose to use it. For the example installation, a section of PVC (1" diameter) was cut to 10". This slides over the rebar and sensor cable to protect it from debris that might run into it and snag the cable. Additional holes (1/8") were drilled into the PVC to allow securing it with tie wraps.
     
-Installation:  
+**Installation:**  
   
   * Drive the mounting pole into the ground with the hammer or mallet at the desired location.
   * Drive the rebar stake into the stream at the desired location.
   * Secure the enclosure for the Mayfly to the mounting pole.
   * Run the sensor cable down the length of the mounting pole and through the piece of cut PVC pipe. Make sure you have enough cable and some slack to reach the rebar stake in the stream.
   * Slide the PVC with the sensor cable inside, over the rebar stake in the stream.
-  * Set your sensor height in the water and secure it near the end with a tie wrap. If you leave a little extra tie wrap hanging out (not cut flush) the PVC pipe can rest on top of this and it will not slide down cover the tip of the sensor.
-  * Use additional tie wraps to secure the PVC pipe to the rebar stake.  
+  * Set your sensor height in the water and secure it near the end with a tie wrap. If you leave a little extra tie wrap hanging out (not cut flush) the PVC pipe can rest on top of this and it will not slide down cover the tip of the sensor.  
+  
+  ![](images/mayfly_sensor-installation.jpg)  
+    
+  * Use additional tie wraps to secure the PVC pipe to the rebar stake using the 1/8" holes drilled previously.  
   * Secure the sensor cable to the mounting pole with tie wraps. 
+  
+  ![](images/mayfly_sensor-cable-on-post.jpg)  
+    
   * Use the landscaping pins to secure the length of sensor cable running from the mounting pole to the water's edge.  
-
+  
+![](images/mayfly_landscape-pins.jpg)    
+  
 ## MonitorMyWatershed 
   
 This section will briefly cover some of the basic tasks you will need to do in order to get your data to the MonitorMyWatershed data portal.  For more in-depth information, you should read through the [Monitor My Watershed Sensor Data Manual](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/).  
@@ -404,7 +385,7 @@ Click the button on this page that reads `Register a New Site` and a page will o
   
 ### Adding Sensors 
   
-Once your site is set up, you can proceed to adding sensor information.  Look for the button `MANAGE SENSORS` and click on it.  
+Once your site is set up, you can proceed to adding sensor information.  Look for the button `MANAGE SENSORS` on your site page and click on it.  
   
 The page will open to show which sensors have been added to the site. If this is a new site there will be no sensors listed. This example shows the list for the logger on Stillwater Run.  
   
@@ -420,16 +401,18 @@ Click on the plus sign `+` to create a new sensor entry and fill out the require
 
 ### Uploading Data
     
-You will also need to [edit the header information](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#sensor-data) (DATA_HEADER) in the Continuous Temperature Logger code to match your individual site.   
+You will also need to [edit the header information](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#sensor-data) (DATA_HEADER) in the Continuous Temperature Logger code to match your individual site (o manually do it after retrieving your data from the logger.   
   
 For reference, here is the [Stroud Example File](https://wikiwatershed.org/wp-content/uploads/example-file-for-upload.csv) which shows the basic format.  
   
 In the code for the Continuous Data Logger, find the following lines:   
   
-`// Alternate Header`  
+`// Data Header`  
 `#define   DATA_HEADER Sampling Feature UUID: v[sampling feature UUID],,,\r\nSensor Name:,Maxim_DS18B20,EnviroDIY_Mayfly Data Logger,EnviroDIY_Mayfly Data Logger\r\nVariable Name:,Temperature_C,Battery_Voltage,Board_Temp_C\r\nResult Unit:,degreeCelsius,volt,degreeCelsius\r\nResult UUID:,[variable 1 UUID],[variable 1 UUID],[variable 1 UUID]\r\nDate and Time in UTC-5,Temperature,Battery voltage,Temperature`  
   
-This data header provides you with a template for formatting your logfile to be useable with MonitorMyWatershed.  You will need to replace the entries between the braces `[ ]` with the values that your are given with your sensor setup.
+This data header provides you with a template for formatting your data to be usable with MonitorMyWatershed.  You will need to replace the entries between the braces `[ ]` with the values that your are given with your sensor setup. 
+  
+![](images/mmw_sensor-uuid.jpg)  
   
 ### Viewing Your Data  
   
