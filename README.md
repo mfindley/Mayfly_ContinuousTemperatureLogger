@@ -366,7 +366,10 @@ Some basic hardware and preparation will be required to install your logger in t
   * Drive the rebar stake into the stream at the desired location.
   * Secure the enclosure for the Mayfly to the mounting pole.
   * Run the sensor cable down the length of the mounting pole and through the piece of cut PVC pipe. Make sure you have enough cable and some slack to reach the rebar stake in the stream.
-  * Slide the PVC with the sensor cable inside, over the rebar stake in the stream.
+  * Slide the PVC with the sensor cable inside, over the rebar stake in the stream.  
+    
+  ![](images/image-needed.jpg)  
+    
   * Set your sensor height in the water and secure it near the end with a tie wrap. If you leave a little extra tie wrap hanging out (not cut flush) the PVC pipe can rest on top of this and it will not slide down cover the tip of the sensor.  
   
   ![](images/mayfly_sensor-installation.jpg)  
@@ -409,11 +412,15 @@ Once you have enter this information, you can proceed to the next section to reg
   
 Once you have logged in, click on `My Sites` at the top of the page. This will open a new page where you can register a new site or display the sites you have already created.   
   
+![](images/mmw_register-new-site.jpg)  
+  
 Click the button on this page that reads `Register a New Site` and a page will open where you can enter the physical information about your site such as location and type.  
   
 ### Adding Sensors 
   
 Once your site is set up, you can proceed to adding sensor information.  Look for the button `MANAGE SENSORS` on your site page and click on it.  
+  
+![](images/mmw_manage-sensors.jpg)  
   
 The page will open to show which sensors have been added to the site. If this is a new site there will be no sensors listed. This example shows the list for the logger on Stillwater Run.  
   
@@ -422,6 +429,8 @@ The page will open to show which sensors have been added to the site. If this is
 It is important to note that anything you want to record and display data for is considered a sensor. Even the Mayfly and the battery are sensors in this context.  
   
 Click on the plus sign `+` to create a new sensor entry and fill out the required fields for each sensor you wish to add. If you are building a duplicate of the logger used in the document, you should have a total of three when you are finished:  
+  
+![](images/mmw_add-new-sensor.jpg)  
   
   * DS18B20 Waterproof Digital temperature sensor (Maxim_DS18B20_Temp)  
   * Mayfly Data Logger (EnviroDIY_Mayfly_Batt)  
@@ -441,6 +450,12 @@ In the code for the Continuous Data Logger, find the following lines:
 This data header provides you with a template for formatting your data to be usable with MonitorMyWatershed.  You will need to replace the entries between the braces `[ ]` with the values that your are given with your sensor setup. 
   
 ![](images/mmw_sensor-uuid.jpg)  
+  
+Once you have collected some data and are ready to upload it to MonitorMyWatershed, return to your site page and click the `MANAGE SENSORS` button. Look for the paper clip icon in the `Upload a data file (.csv)` section and click on it.  
+  
+![](images/mmw_upload-data.jpg)  
+  
+From here you can select your data file and then click the `Upload` button.  If you formatted your data correctly you should receive an `Upload Successful` message.
   
 ### Viewing Your Data  
   
