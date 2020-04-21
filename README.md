@@ -202,9 +202,21 @@ This line of code translates to `year, month, date, hour, min, sec and week-day(
   * Compile and upload the sketch, by clicking the `Upload` button, hold `Crtl+U` or select `Sketch > Upload` from the menu.   
   * Use a "reference" point like like [Time.gov](http://www.time.gov/) to view the current time.  When the reference is about 3 seconds from the "target time" we set in the code, press the `Reset` button on the Mayfly (this gives the Mayfly a few seconds to reset itself).  
   * Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu.  Make sure the "`baud`" rate option at the bottom right side of the window is set to "`57600`".  
-  * The Serial Monitor should output the current date-time set on the Mayfly.  If you are unsatisfied with the results or you missed the reference time, change the "target time" (`DateTime dt()`) in the code, upload the sketch to the Mayfly and try again.  
   
-![](images/arduino_serial-monitor-rtc.jpg)  
+```   
+2020/4/21 19:19:31
+Tue
+2020/4/21 19:19:32
+Tue
+2020/4/21 19:19:33
+Tue
+2020/4/21 19:19:34
+Tue
+2020/4/21 19:19:35
+Tue
+```  
+  
+  * The Serial Monitor should output the current date-time set on the Mayfly.  If you are unsatisfied with the results or you missed the reference time, change the "target time" (`DateTime dt()`) in the code, upload the sketch to the Mayfly and try again.  
   
 At this point, the RTC is set but if you were to turn the Mayfly off and back on or press the `Reset` button a second time, the time would revert to the time we set in `DateTime dt()`. We want to change that line of code so that the time is NOT SET AGAIN in the `setup()` function.  
   
@@ -238,6 +250,20 @@ Plug the OneWire Temperature Sensor into the Grove port marked `D4-5` on the May
   * Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu  
   * Make sure the "`baud`" rate option at the bottom right side of the window is set to "`9600`"  
   
+```  
+Requesting temperatures...DONE
+Temperature for device: 0
+Temp C: 18.00 Temp F: 64.40
+Requesting temperatures...DONE
+Temperature for device: 0
+Temp C: 18.00 Temp F: 64.40
+Requesting temperatures...DONE
+Temperature for device: 0
+Temp C: 18.00 Temp F: 64.40
+Requesting temperatures...DONE
+Temperature for device: 0
+Temp C: 18.00 Temp F: 64.40
+```  
 The Serial Monitor should output the current temperature that the sensor is reading.  This is also helpful in conducting QC tests to determine how accurate your sensor is.  
   
 **Extra Credit**  
@@ -274,9 +300,11 @@ You will need to extract these files to your computer before using them.  If you
   
 Open the file (`Mayfly_ContinuousTemperatureLogger.ino`) in the Aurduino IDE and look for the line of code that looks like this:  
   
-`// Data Header`  
-`#define   DATA_HEADER Sampling Feature UUID: v[sampling feature UUID],,,\r\nSensor Name:,Maxim_DS18B20,EnviroDIY_Mayfly Data Logger,EnviroDIY_Mayfly Data Logger\r\nVariable Name:,Temperature_C,Battery_Voltage,Board_Temp_C\r\nResult Unit:,degreeCelsius,volt,degreeCelsius\r\nResult UUID:,[variable 1 UUID],[variable 1 UUID],[variable 1 UUID]\r\nDate and Time in UTC-5,Temperature,Battery voltage,Temperature`
-  
+```
+// Data Header
+#define   DATA_HEADER Sampling Feature UUID: v[sampling feature UUID],,,\r\nSensor Name:,Maxim_DS18B20,EnviroDIY_Mayfly Data Logger,EnviroDIY_Mayfly Data Logger\r\nVariable Name:,Temperature_C,Battery_Voltage,Board_Temp_C\r\nResult Unit:,degreeCelsius,volt,degreeCelsius\r\nResult UUID:,[variable 1 UUID],[variable 1 UUID],[variable 1 UUID]\r\nDate and Time in UTC-5,Temperature,Battery voltage,Temperature
+```  
+
 This is the header information for the values that will be written to the SD card.  For now, we will keep it as it is, but you will need to change the UUID codes in the braces `[ ]` once you have set up your sensors when [adding your sensors](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#sensor-data) to MonitorMyWatershed. 
  
 If you do not plan to upload your data to MonitorMyWatershed.org, you can leave these values as they are, but the must stay in this order unless you make further changes to the sketch.    
@@ -306,14 +334,63 @@ You can change `currentminute % 1` to whatever value suits your needs.  For test
   * Open the Serial Monitor by pressing the `Serial Monitor` button, hold `Ctrl+Shift+M` or select `Tools > Serial Monitor` from the menu. Make sure the "`baud`" rate option at the bottom right side of the window is set to "`9600`". 
   
 The logger will start off by printing the data header that will be written to the micro-SD card followed by an initial sensor reading. The time set above (`currentminute`) will dictate how often the logger will update and take an new reading.  
+  
+```
+Power On, running: Temperature Logging
 
-At this point, you have set up your logger.  If you are not uploading your data, you can begin to experiment with the temperature sensor, taking various reading or doing some initial quality control.
+Sampling Feature UUID: [sampling feature UUID],,,
+Sensor Name:,Maxim_DS18B20,EnviroDIY_Mayfly Data Logger,EnviroDIY_Mayfly Data Logger
+Variable Name:,Temperature_C,Battery_Voltage,Board_Temp_C
+Result Unit:,degreeCelsius,volt,degreeCelsius
+Result UUID:,[variable 1 UUID],[variable 1 UUID],[variable 1 UUID]
+Date and Time in UTC-5,Temperature,Battery voltage,Temperature
+
+Initiating sensor reading and logging data to SDcard
+----------------------------------------------------
+
+Sensor temperature is: C: 18.00
+Data Record: 2020-04-20 19:08:23,18.00,4.61,18.5
+
+Initiating sensor reading and logging data to SDcard
+----------------------------------------------------
+
+Sensor temperature is: C: 18.00
+Data Record: 2020-04-20 19:09:00,18.00,4.59,18.5
+```
+
+At this point you have set up your logger and you can begin to experiment with the temperature sensor, taking various reading or doing some initial quality control.
   
 If your intent is to deploy the Mayfly in the field, continue on to the `Field Installation` section to set up a location and your MonitorMyWatershed information.
   
 ### Quality Control  
   
 Insert information here.  
+  
+```  
+Sensing Temperature - Local 	-55Â°C ~ 125Â°C 		
+Output Type 			1-WireÂ® 	
+Voltage - Supply 		3V ~ 5.5V 	
+Resolution 			12 b 		
+Accuracy - Highest (Lowest) 	Â±0.5Â°C (Â±2Â°C) 	
+Test Condition 			-10Â°C ~ 85Â°C (-55Â°C ~ 125Â°C) 	
+Operating Temperature 		-55Â°C ~ 125Â°C    
+```  
+```  
+Date		Logger	Therm	Diff	Time
+------------------------------------------------
+3/24/2020	9.75	10.40	0.65	16:08:00  
+3/26/2020	10.75	11.10	0.35	17:09:00  
+3/29/2020	8.75	9.00	0.25	12:20:00  
+4/1/2020	10.75	10.90	0.15	14:08:00  
+4/6/2020	13.25	14.70	1.45	17:15:00  
+4/7/2020	13.00	14.70,	1.70	17:00:00  
+4/10/2020	8.75	8.80	0.05	11:30:00  
+4/12/2020	9.00	8.90	0.05	11:45:00  
+4/16/2020	10.25	9.80	0.45	17:16:00  
+4/20/2020,	12.25	12.20	0.05	17:06:00  
+```  
+
+![](images/onewire_qc-temperature.jpg)  
   
 ## Field Installation  
   
@@ -444,10 +521,12 @@ You will also need to [edit the header information](https://wikiwatershed.org/he
   
 For reference, here is the [Stroud Example File](https://wikiwatershed.org/wp-content/uploads/example-file-for-upload.csv) which shows the basic format.  
   
-In the code for the Continuous Data Logger, find the following lines:   
+In the code for the Continuous Data Logger, find the following line:   
   
-`// Data Header`  
-`#define   DATA_HEADER Sampling Feature UUID: v[sampling feature UUID],,,\r\nSensor Name:,Maxim_DS18B20,EnviroDIY_Mayfly Data Logger,EnviroDIY_Mayfly Data Logger\r\nVariable Name:,Temperature_C,Battery_Voltage,Board_Temp_C\r\nResult Unit:,degreeCelsius,volt,degreeCelsius\r\nResult UUID:,[variable 1 UUID],[variable 1 UUID],[variable 1 UUID]\r\nDate and Time in UTC-5,Temperature,Battery voltage,Temperature`  
+```
+// Data Header
+#define   DATA_HEADER Sampling Feature UUID: v[sampling feature UUID],,,\r\nSensor Name:,Maxim_DS18B20,EnviroDIY_Mayfly Data Logger,EnviroDIY_Mayfly Data Logger\r\nVariable Name:,Temperature_C,Battery_Voltage,Board_Temp_C\r\nResult Unit:,degreeCelsius,volt,degreeCelsius\r\nResult UUID:,[variable 1 UUID],[variable 1 UUID],[variable 1 UUID]\r\nDate and Time in UTC-5,Temperature,Battery voltage,Temperature
+```   
   
 This data header provides you with a template for formatting your data to be usable with MonitorMyWatershed.  You will need to replace the entries between the braces `[ ]` with the values that your are given with your sensor setup. 
   
