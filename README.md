@@ -445,8 +445,6 @@ Some basic hardware and preparation will be required to install your logger in t
   * Run the sensor cable down the length of the mounting pole and through the piece of cut PVC pipe. Make sure you have enough cable and some slack to reach the rebar stake in the stream.
   * Slide the PVC with the sensor cable inside, over the rebar stake in the stream.  
     
-  ![](images/image-needed.jpg)  
-    
   * Set your sensor height in the water and secure it near the end with a tie wrap. If you leave a little extra tie wrap hanging out (not cut flush) the PVC pipe can rest on top of this and it will not slide down cover the tip of the sensor.  
   
   ![](images/mayfly_sensor-installation.jpg)  
@@ -532,9 +530,11 @@ This data header provides you with a template for formatting your data to be usa
   
 Once you have collected some data and are ready to upload it to MonitorMyWatershed, return to your site page and click the `MANAGE SENSORS` button. Look for the paper clip icon in the `Upload a data file (.csv)` section and click on it.  
   
-![](images/mmw_upload-data.jpg)  
+![](images/mmw_upload-selected.jpg)  
   
-From here you can select your data file and then click the `Upload` button.  If you formatted your data correctly you should receive an `Upload Successful` message.
+From here you can select your data file and then click the `Upload` button.  If you formatted your data correctly you should receive an `Upload Successful` message.  
+  
+![](images/mmw_upload_success.jpg)  
   
 ### Viewing Your Data  
   
