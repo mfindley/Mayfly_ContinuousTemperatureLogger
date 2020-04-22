@@ -145,8 +145,6 @@ First, we need to add some information to the Arduino software to tell it a litt
 
 `https://raw.githubusercontent.com/EnviroDIY/Arduino_boards/master/package_EnviroDIY_index.json`   
   
-![](images/arduino_preferences.jpg)  
-  
 Click the "`OK`" button to close this window and return to the main screen when finished.  
   
 You will need to make the Mayfly the active board in the IDE  by going to `Tools > Board > Boards Manager` from the menu of the main screen. 
