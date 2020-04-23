@@ -8,6 +8,8 @@ Many of the instructions to used in this document are based on the [EnviroDIY Ma
   
 It does not utilize the [XBee](https://www.digi.com/xbee) cellular module which means that it will not offer real-time data via the [Monitor My Watershed](https://monitormywatershed.org/) portal. All data is saved to the on-board micro-SD card and can be uploaded manually if you choose to do so.  
   
+<div style="page-break-after: always;"></div>  
+
 **TABLE OF CONTENTS**  
  
 - [Building a Continuous Temperature Logger  with the EnviroDIY Mayfly](#building-a-continuous-temperature-logger--with-the-envirodiy-mayfly)
@@ -38,6 +40,8 @@ It does not utilize the [XBee](https://www.digi.com/xbee) cellular module which 
     + [Uploading Data](#uploading-data)
     + [Viewing Your Data](#viewing-your-data)
   * [Conclusion](#conclusion)  
+
+<div style="page-break-after: always;"></div>   
 
 ## Hardware  
 
@@ -119,6 +123,8 @@ Once you have gotten this far, you can start putting the pieces together to get 
   
 These are the basic connections you will have to make when deploying your logger. If you are not using the Mayfly in a field location and only plan to have it connected to a computer, the solar panel and Li-Po battery will not be needed. 
   
+<div style="page-break-after: always;"></div>  
+
 ## Setting up the Arduino Desktop IDE Software    
   
 Use of the [Arduino Desktop IDE](https://www.arduino.cc/en/Main/Software) will be needed to compile and upload the [sketches](https://www.arduino.cc/en/Tutorial/Sketch) to the Mayfly. While the process is fairly straight-forward and all of the sketches are provided for you to use and modify, you may want to take some time to explore the [Arduino website](https://www.arduino.cc/) to better understand the concepts explained in this document.  
@@ -173,6 +179,8 @@ Open the Serial Monitor to view the pre-loaded sketch that come with the Mayfly 
   
 ![](images/arduino_baud-57600.jpg)  
   
+<div style="page-break-after: always;"></div>  
+
 ## Compiling and Uploading Code  
   
 This section will help you get your Mayfly set up for the temperature logging code that will run once the unit has been deployed in the field. These sketches are provided with  the libraries that will be installed in each example.
@@ -389,6 +397,8 @@ Date		Logger	Therm	Diff	Time
 
 ![](images/onewire_qc-temperature.jpg)  
   
+<div style="page-break-after: always;"></div>  
+
 ## Field Installation  
   
 This section will guide you through some of the tasks you will need to perform in order to set up your Mayfly in the field. Because this was a low cost experiment using as few components as needed and paying attention to overall cost, some of this information has been altered from the methods used in the [EnviroDIY Sensor Station Manual](https://www.envirodiy.org/mayfly-sensor-station-manual/#installation-steps), but feel free to experiment or come up with solutions that work best for your situation and location.  
@@ -457,6 +467,8 @@ Some basic hardware and preparation will be required to install your logger in t
   
 ![](images/mayfly_landscape-pins.jpg)    
   
+<div style="page-break-after: always;"></div>  
+
 ## MonitorMyWatershed 
   
 This section will briefly cover some of the basic tasks you will need to do in order to get your data to the MonitorMyWatershed data portal.  For more in-depth information, you should read through the [Monitor My Watershed Sensor Data Manual](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/).  
@@ -541,6 +553,8 @@ Once you have uploaded your first batch of data, you can view it ...
 
 [View Site Data](https://wikiwatershed.org/help/sensor-help/sharing-sensor-data/#view-site-data)  
   
+<div style="page-break-after: always;"></div>  
+
 ## Conclusion  
   
 
