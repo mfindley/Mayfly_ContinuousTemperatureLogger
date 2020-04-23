@@ -10,33 +10,34 @@ It does not utilize the [XBee](https://www.digi.com/xbee) cellular module which 
   
 **TABLE OF CONTENTS**  
  
-- [Introduction](#introduction)
-- [Hardware](#hardware)
-  * [Starter Kit](#starter-kit)
-  * [Real-time Clock Battery](#real-time-clock-battery)
-  * [3.7 Volt Lithium Polymer Battery](#37-volt-lithium-polymer-battery)
-  * [OneWire Temperature Sensor](#onewire-temperature-sensor)
-  * [Additional Hardware](#additional-hardware)
-  * [Putting it All Together](#putting-it-all-together)
-- [Setting up the Arduino Desktop IDE Software](#setting-up-the-arduino-desktop-ide-software)
-  * [Download the Arduino IDE](#download-the-arduino-ide)
-  * [Adding the EnviroDIY board to Arduino](#adding-the-envirodiy-board-to-arduino)
-  * [Connecting to a Computer](#connecting-to-a-computer)
-- [Compiling and Uploading Code](#compiling-and-uploading-code)
-  * [Setting the Date and Time on the Real-time clock](#setting-the-date-and-time-on-the-real-time-clock)
-  * [Testing the OneWire Temperature Sensor](#testing-the-onewire-temperature-sensor)
-  * [Continuous Temperature Logging Code](#continuous-temperature-logging-code)
-  * [Quality Control](#quality-control)
-- [Field Installation](#field-installation)
-  * [Location](#location)
-  * [Mounting Hardware and Installation](#mounting-hardware-and-installation)
-- [MonitorMyWatershed](#monitormywatershed)
-  * [Creating an account](#creating-an-account)
-  * [Registering a Site](#registering-a-site)
-  * [Adding Sensors](#adding-sensors)
-  * [Uploading Data](#uploading-data)
-  * [Viewing Your Data](#viewing-your-data)
-- [Conclusion](#conclusion)
+- [Building a Continuous Temperature Logger  with the EnviroDIY Mayfly](#building-a-continuous-temperature-logger--with-the-envirodiy-mayfly)
+  * [Introduction](#introduction)
+  * [Hardware](#hardware)
+    + [Starter Kit](#starter-kit)
+    + [Real-time Clock Battery](#real-time-clock-battery)
+    + [3.7 Volt Lithium Polymer Battery](#37-volt-lithium-polymer-battery)
+    + [OneWire Temperature Sensor](#onewire-temperature-sensor)
+    + [Additional Hardware](#additional-hardware)
+    + [Putting it All Together](#putting-it-all-together)
+  * [Setting up the Arduino Desktop IDE Software](#setting-up-the-arduino-desktop-ide-software)
+    + [Download the Arduino IDE](#download-the-arduino-ide)
+    + [Adding the EnviroDIY board to Arduino](#adding-the-envirodiy-board-to-arduino)
+    + [Connecting to a Computer](#connecting-to-a-computer)
+  * [Compiling and Uploading Code](#compiling-and-uploading-code)
+    + [Setting the Date and Time on the Real-time clock](#setting-the-date-and-time-on-the-real-time-clock)
+    + [Testing the OneWire Temperature Sensor](#testing-the-onewire-temperature-sensor)
+    + [Continuous Temperature Logging Code](#continuous-temperature-logging-code)
+    + [Quality Control](#quality-control)
+  * [Field Installation](#field-installation)
+    + [Location](#location)
+    + [Mounting Hardware and Installation](#mounting-hardware-and-installation)
+  * [MonitorMyWatershed](#monitormywatershed)
+    + [Creating an account](#creating-an-account)
+    + [Registering a Site](#registering-a-site)
+    + [Adding Sensors](#adding-sensors)
+    + [Uploading Data](#uploading-data)
+    + [Viewing Your Data](#viewing-your-data)
+  * [Conclusion](#conclusion)  
 
 ## Hardware  
 
@@ -362,17 +363,15 @@ If your intent is to deploy the Mayfly in the field, continue on to the `Field I
   
 ### Quality Control  
   
-Insert information here.  
+The DS18B20 IC that is used in the OneWire temperature sensor has the following specifications:
   
 ```  
-Sensing Temperature - Local 	-55Â°C ~ 125Â°C 		
-Output Type 			1-WireÂ® 	
-Voltage - Supply 		3V ~ 5.5V 	
-Resolution 			12 b 		
-Accuracy - Highest (Lowest) 	Â±0.5Â°C (Â±2Â°C) 	
-Test Condition 			-10Â°C ~ 85Â°C (-55Â°C ~ 125Â°C) 	
-Operating Temperature 		-55Â°C ~ 125Â°C    
+Power Supply		3V to 5.5V  
+Current Consumption	1mA  
+Temperature Range	-55 to 125°C  
+Accuracy		±0.5°C    
 ```  
+
 ```  
 Date		Logger	Therm	Diff	Time
 ------------------------------------------------
@@ -532,7 +531,7 @@ Once you have collected some data and are ready to upload it to MonitorMyWatersh
   
 ![](images/mmw_upload-selected.jpg)  
   
-From here you can select your data file and then click the `Upload` button.  If you formatted your data correctly you should receive an `Upload Successful` message.  
+From here you can select your data file and then click the `Upload` button.  If you formatted your data correctly you should receive an `Data was uploaded successfully` message.  
   
 ![](images/mmw_upload_success.jpg)  
   
