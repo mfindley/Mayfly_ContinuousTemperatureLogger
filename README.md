@@ -30,16 +30,16 @@ It does not utilize the [XBee](https://www.digi.com/xbee) cellular module which 
     + [Testing the OneWire Temperature Sensor](#testing-the-onewire-temperature-sensor)
     + [Continuous Temperature Logging Code](#continuous-temperature-logging-code)
   * [Quality Control](#quality-control)
-  * [Field Installation](#field-installation)
-    + [Location](#location)
-    + [Mounting Hardware and Installation](#mounting-hardware-and-installation)
   * [MonitorMyWatershed](#monitormywatershed)
     + [Creating an account](#creating-an-account)
     + [Registering a Site](#registering-a-site)
     + [Adding Sensors](#adding-sensors)
     + [Uploading Data](#uploading-data)
     + [Viewing Your Data](#viewing-your-data)
-  * [Conclusion](#conclusion)   
+  * [Field Installation](#field-installation)
+    + [Location](#location)
+    + [Mounting Hardware and Installation](#mounting-hardware-and-installation)
+  * [Conclusion](#conclusion)    
 
 <div style="page-break-after: always;"></div>   
 
