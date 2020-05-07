@@ -568,12 +568,7 @@ void loop()
 
      }
 
-  /*
-   * Really needed?
-   * Delay period is regulated by currentminute
-   */
-   
-  // delay(1000);
+  delay(1000);
   
   systemSleep(); // Sleep
   
