@@ -550,7 +550,7 @@ void loop()
   // Update the timer 
   timer.update();
   
-  if(currentminute % 15 == 0) {  // change to wake up logger every X minutes
+  if(currentminute % 1 == 0) {  // change to wake up logger every X minutes
 
           greenred4flash(); // blink the LEDs to show the board is on
           
