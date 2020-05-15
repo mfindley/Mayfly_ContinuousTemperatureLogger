@@ -53,8 +53,8 @@ DallasTemperature sensors(&oneWire);
  * Searching for sensor by index
  */
  
-// DeviceAddress TempSensor = { 0x28, 0x3F, 0x75, 0xA0, 0x08, 0x00, 0x00, 0xE4 }; // Field Board
-// DeviceAddress TempSensor = { 0x28, 0x48, 0x98, 0xD6, 0x0B, 0x00, 0x00, 0x8A }; // Dev Board
+// DeviceAddress TempSensor = { 0x28, 0x3F, 0x75, 0xA0, 0x08, 0x00, 0x00, 0xE4 }; // Field Sensor
+// DeviceAddress TempSensor = { 0x28, 0x48, 0x98, 0xD6, 0x0B, 0x00, 0x00, 0x8A }; // Dev Sensor
 
 String    dataRec = "";
 
@@ -507,11 +507,15 @@ void setup()
   sensors.begin(); // start up the library
 
   /*
-   * Ignoring this for now.
-   * Sensor defaults to 12-bit resolution
+   * The resolution of the temperature sensor is
+   * user-configurable to 9, 10, 11, or 12 bits, 
+   * corresponding to increments of 0.5°C, 0.25°C, 
+   * 0.125°C, and 0.0625°C, respectively.  
+   * 
+   * The default resolution at power-up is 12-bit.  
    */
    
-  // sensors.setResolution(TempSensor, 10); // set resolution to 10 bit
+  sensors.setResolution(11); // set resolution to 11 bits
   
   setupLogFile();
   setupTimer(); // Setup timer events
@@ -546,7 +550,7 @@ void loop()
   // Update the timer 
   timer.update();
   
-  if(currentminute % 1 == 0) {  // change to wake up logger every X minutes
+  if(currentminute % 15 == 0) {  // change to wake up logger every X minutes
 
           greenred4flash(); // blink the LEDs to show the board is on
           
@@ -568,7 +572,12 @@ void loop()
 
      }
 
-  delay(1000);
+  /*
+   * Really needed?
+   * Delay period is regulated by currentminute
+   */
+   
+  // delay(1000);
   
   systemSleep(); // Sleep
   
