@@ -1,13 +1,21 @@
 /*
  * ------------------------------------------------------------
  * 
- * This sketch wakes the Mayfly up at specific times, records 
- * the temperature from the attached probe, writes the data to 
- * the microSD card, prints the data string to the serial port
- * and goes back to sleep.
+ * This sketch wakes the Mayfly up at specific times, 
+ * records the temperature and relative humidity from the attached DHT22 sensor, 
+ * writes the data to the microSD card,
+ * prints the data string to the serial port,
+ * and then goes back to sleep.
+ * 
+ * merged two open source does to create this sketch:
+ *   
+ *   https://github.com/movingplaid/Mayfly_ContinuousTemperatureLogger (Mayfly_ContinuousTemperatureLogger.ino)
+ *      and
+ *   https://github.com/adafruit/DHT-sensor-library (DHTTester.ino)
+ *   
  * 
  * Change (currentminute % 1 == 0) in loop() function
- * to deired time to wake up and record data.
+ * to desired time to wake up and record data.
  * 
  * ------------------------------------------------------------
 */
@@ -17,44 +25,30 @@
 #include  <Wire.h> // library to communicate with I2C / TWI devices
 #include  <avr/sleep.h> // library to allow an application to sleep
 #include  <avr/wdt.h> // library for handling the watchdog timer 
-// #include  <SPI.h> // library to communicate with SPI devices
 #include  <SD.h> // library for reading and writing to SD cards
 #include  <RTCTimer.h> // library to schedule tasks using RTC 
 #include  <Sodaq_DS3231.h> // library for the DS3231 RTC
 #include  <Sodaq_PcInt.h> // library to handle Pin Change Interrupts
 
-#include  <OneWire.h> // Access 1-wire temperature sensors, memory and other chips
-#include  <DallasTemperature.h> // library for the Maxim (previously Dallas) DS18B20 
+#include <DHT.h> // library to read the DHT22 temp/RH sensor
 
 #define   RTC_PIN A7 // RTC Interrupt pin
 #define   RTC_INT_PERIOD EveryMinute
  
 #define   SD_SS_PIN 12 // Digital pin 12 is the MicroSD slave select pin on the Mayfly
+#define   DHTTYPE DHT22
 
 char*     filename = (char*)"logfile.csv"; // The data log file
 
-// https://stackoverflow.com/questions/20944784/why-is-conversion-from-string-constant-to-char-valid-in-c-but-invalid-in-c
-// #define   FILE_NAME "logfile.txt" // ERROR - ISO C++ forbids converting a string constant to 'char*
-
-// #define   LOGGERNAME "SampleLogger"
 
 // Data Header
-#define   DATA_HEADER "Sampling Feature UUID: [sampling feature UUID],,,\r\nSensor Name:,Maxim_DS18B20,EnviroDIY_Mayfly Data Logger,EnviroDIY_Mayfly Data Logger\r\nVariable Name:,Temperature_C,Battery_Voltage,Board_Temp_C\r\nResult Unit:,degreeCelsius,volt,degreeCelsius\r\nResult UUID:,[variable 1 UUID],[variable 1 UUID],[variable 1 UUID]\r\nDate and Time in UTC-5,Temperature,Battery voltage,Temperature"
+#define   DATA_HEADER "Sensor Name:,DHT22,DHT22,EnviroDIY_Mayfly Data Logger,EnviroDIY_Mayfly Data Logger\r\nVariable Name:,Temperature_C,Relative_Humidity, Battery_Voltage,Board_Temp_C\r\nResult Unit:,degreeCelsius,percent,volt,degreeCelsius\r\nDate and Time in MDT (UTC-6),Temperature,Relative humidity,Battery voltage,Temperature"
 
-#define   ONE_WIRE_BUS 4 // pin 4 (D4-5)
+#define   DHTPIN 4 // digital pin 4
 
 RTCTimer  timer;
 
-OneWire oneWire(ONE_WIRE_BUS);
-DallasTemperature sensors(&oneWire);
-
-/*
- * Unused
- * Searching for sensor by index
- */
- 
-// DeviceAddress TempSensor = { 0x28, 0x3F, 0x75, 0xA0, 0x08, 0x00, 0x00, 0xE4 }; // Field Sensor
-// DeviceAddress TempSensor = { 0x28, 0x48, 0x98, 0xD6, 0x0B, 0x00, 0x00, 0x8A }; // Dev Sensor
+DHT dht(DHTPIN, DHTTYPE);
 
 String    dataRec = "";
 
@@ -369,61 +363,17 @@ String createDataRecord()
   String data = getDateTime();
   data += ",";
 
-  // Temperature Sensor ----------------------------------------
+  float tempC = dht.readTemperature();
+  float rh = dht.readHumidity();
 
-  /*
-   * We only care about one sensor
-   * located at index 0 right now
-   */
-
-  // float tempC = sensors.getTempC(TempSensor); 
-  float tempC = sensors.getTempCByIndex(0);
-    
-  if (tempC == -127.00) {
-    Serial.println();
-    Serial.print("Error getting temperature. Check if probe is connected.");
-    
-   /*
-    * --------------------------------------------------
-    * 
-    * -127C means bad or no connection.
-    *  85C means you haven't gotten a read yet.
-    * 
-    * --------------------------------------------------
-    */
-    
-    data += "Error"; // Temp_C
-
-    // data += ",";
-    // data += "Error";
-    
-  } else {
-
-    delay(2000);
-    
-    Serial.print("\n\r");
-    // Serial.print("Getting temperatures...\n\r");
-    sensors.requestTemperatures();
-
-    Serial.print("Sensor temperature is: ");
-    // printTemperature(TempSensor);
-  
-    Serial.print("C: ");
-    Serial.print(tempC);
-    
-    // Serial.print(" F: ");
-    // Serial.print(DallasTemperature::toFahrenheit(tempC));
-
-    data += tempC; // temperature Celcius
-
-    /*
-     * Removed from DataRecord
-     */
-       
-    // data += ","; // separator
-    // data += (DallasTemperature::toFahrenheit(tempC)); // temperature Fahrenheit
-    
+  // Check if any reads failed and exit early (to try again).
+  if (isnan(rh) || isnan(tempC)) {
+    Serial.println(F("Failed to read from DHT sensor!"));
   }
+  
+  data += tempC; // temperature Celcius
+  data += ",";
+  data += rh; // relative humidity
 
   // Battery Voltage and Board Temperature --------------------
 
@@ -449,13 +399,6 @@ String createDataRecord()
   // For Mayfly v0.5 and newer:
   batteryvoltage = (3.3/1023.) * 4.7 * batterysenseValue; 
 
-  /*
-   * Removed from DataRecord
-   */
-   
-  // data += ",";
-  // data += currentepochtime;
-
   data += ",";
   
   addFloatToString(data, batteryvoltage, 4, 2);
@@ -465,7 +408,6 @@ String createDataRecord()
   addFloatToString(data, boardtemp, 3, 1); // float 
   
   return data;
-
 }
 
 /*
@@ -501,22 +443,12 @@ void setup()
 
   pinMode(8, OUTPUT);
   pinMode(9, OUTPUT);
+   digitalWrite(DHTPIN, LOW);
  
   greenred4flash(); // blink the LEDs to show the board is on
 
-  sensors.begin(); // start up the library
+  dht.begin(); // start up the DHT22 library
 
-  /*
-   * The resolution of the temperature sensor is
-   * user-configurable to 9, 10, 11, or 12 bits, 
-   * corresponding to increments of 0.5°C, 0.25°C, 
-   * 0.125°C, and 0.0625°C, respectively.  
-   * 
-   * The default resolution at power-up is 12-bit.  
-   */
-   
-  sensors.setResolution(11); // set resolution to 11 bits
-  
   setupLogFile();
   setupTimer(); // Setup timer events
   setupSleep(); // Setup sleep mode
@@ -527,14 +459,6 @@ void setup()
   Serial.println(DATA_HEADER);
   Serial.print("\n\r"); 
 
-  /*
-   * Force a sensor request in setup() to avoid getting
-   * an 85C reading later if the sensor was not ready.
-   */
-   
-  sensors.requestTemperatures();
-  // showTime(getNow());
-  
 }
 
 /*
@@ -572,13 +496,6 @@ void loop()
 
      }
 
-  /*
-   * Really needed?
-   * Delay period is regulated by currentminute
-   */
-   
-  // delay(1000);
-  
   systemSleep(); // Sleep
   
 }
